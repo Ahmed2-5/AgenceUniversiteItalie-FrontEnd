@@ -7,7 +7,7 @@
 
 
 
-**Description **
+**Description Project **
 
 This project is the frontend of a web application designed for a travel agency that also specializes in assisting students with their study abroad applications.
 
