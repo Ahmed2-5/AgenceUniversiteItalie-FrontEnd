@@ -16,6 +16,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AdduserComponent } from 'src/app/dialogs/adduser/adduser.component';
 import { UpdateuserComponent } from 'src/app/dialogs/updateuser/updateuser.component';
 import { NotificationsComponent } from 'src/app/dialogs/notifications/notifications.component';
+import { UserslistforaddtaskComponent } from 'src/app/dialogs/userslistforaddtask/userslistforaddtask.component';
+import { AddtaskComponent } from 'src/app/dialogs/addtask/addtask.component';
+import { TaskdetailsComponent } from 'src/app/dialogs/taskdetails/taskdetails.component';
 
 @NgModule({
   imports: [
@@ -36,7 +39,10 @@ import { NotificationsComponent } from 'src/app/dialogs/notifications/notificati
     MapsComponent,
     AdduserComponent,
     UpdateuserComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    UserslistforaddtaskComponent,
+    AddtaskComponent,
+    TaskdetailsComponent
   ]
 })
 export class AdminLayoutModule {}

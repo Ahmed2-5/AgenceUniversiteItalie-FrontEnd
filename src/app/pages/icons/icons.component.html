@@ -111,10 +111,12 @@
             name="search"
         />
       </form>
-      <div style="height: 40px">
+
+      <!-- Show the 'Add Task' button only for SUPER_ADMIN -->
+      <div *ngIf="isSuperAdmin" style="height: 40px">
         <button class="btn btn-primary" (click)="openDialog()">
           <i style="padding-right: 8px;font-size: 18px;" class="fa fa-regular fa-plus"></i>
-          Add Task 
+          Add Task
         </button>
       </div>
     </div>
@@ -123,14 +125,32 @@
   <div class="d-flex flex-wrap justify-content-center">
     <div *ngFor="let task of filterTasks()" class="card1 text-light m-2" style="width: 18rem; cursor: pointer;">
       <div class="card-body">
-        <h5><i class="fa-solid fa-list-check icon"></i> <label class="card-title1">{{ task.titre }}</label></h5>
-        <h6 style="color: #555;" class="card-subtitle1 mb-1">{{ task.dateCreation }}</h6>
-        <p style="color: #000000" class="card-text1">
-          {{ task.description }}
+        <h5 (click)="editingTaskId === null && openTaskDetailsDialog(task.idtask)">
+          <ng-container *ngIf="editingTaskId !== task.idTache; else editMode">
+            <i class="fa-solid fa-list-check icon"></i>
+            <label class="card-title"> {{ task.titre }}</label>
+          </ng-container>
+          <ng-template #editMode>
+            <input class="form-control" type="text" [(ngModel)]="task.titre">
+          </ng-template>
+        </h5>
+        <h6 style="color: #555;" class="card-subtitle mb-1" (click)="editingTaskId === null && openTaskDetailsDialog(task.idtask)">Time</h6>
+        <p style="color: #000000" class="card-text" (click)="editingTaskId === null && openTaskDetailsDialog(task.idtask)">
+          <ng-container *ngIf="editingTaskId !== task.idTache; else editModeDescription">
+              {{ task.description }}
+          </ng-container>
+          <ng-template #editModeDescription>
+              <input class="form-control" type="text" [(ngModel)]="task.description">
+          </ng-template>
           <br>
-          <span class="deadline">Deadline: </span>
+          <span class="deadline" >Deadline :</span>
         </p>
         <span class="badge" [ngClass]="getTaskStatusClass(task.status)">{{ task.status }}</span>
+        
+        <!-- Show Delete and Edit buttons only for SUPER_ADMIN -->
+        <i *ngIf="isSuperAdmin" class="far fa-trash-alt delete float-right" (click)="deleteTask(task.idTache); $event.stopPropagation()"></i>
+        <i *ngIf="isSuperAdmin && editingTaskId !== task.idTache" class="far fa-edit edit float-right mr-2" (click)="toggleEdit(task.idTache); $event.stopPropagation()"></i>
+        <i *ngIf="isSuperAdmin && editingTaskId === task.idTache" class="far fa-check-circle save float-right mr-2" (click)="updateTask(task.idTache, task); $event.stopPropagation()"></i>
       </div>
     </div>
   </div>

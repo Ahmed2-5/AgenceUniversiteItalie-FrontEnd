@@ -118,4 +118,12 @@ export class UserService {
   getProfileImage(filename: string): Observable<Blob> {
     return this.httpclt.get(`${this.baseUrl}/uploads/${filename}`, { responseType: 'blob' });
   }
+
+  getUtilisateurByRole_LibelleRole(libelleRole: string): Observable<any> {
+    return this.httpclt.get<any>(`${this.baseUrl}/getUtilisateurByRole_LibelleRole/${libelleRole}`);
+  }
+
+  convertUsersToIds(users: any[]): Observable<number[]> {
+    return this.httpclt.post<number[]>(`${this.baseUrl}/convertUsersToIds`, users);
+  }
 }

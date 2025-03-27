@@ -1,0 +1,40 @@
+<div class="center-screen card">
+    <div class="title mx-auto">Task Details</div>
+    <span class="badge" [ngClass]="getTaskStatusClass(task.status)">{{ task.status }}</span>
+
+    <div class="main">
+      <hr>
+      <div class="detail-section">
+        <p><b>Task Title:</b> {{ task.titre }}</p>
+        <p><b>Task Description:</b> {{ task.description }}</p>
+        <p><b>Task Date:</b> {{ task.dateCreation| date: 'short' }}</p>
+        <p><b>Deadline:</b> {{ task.dueDate| date: 'short' }}</p>
+      </div>
+      <hr>
+      <div id="sub-title">
+        <p><b>Attached to:</b></p>
+      </div>
+      <div style="background-color: #eee4e4; margin-bottom: 8px; border-radius: 9px; border-width: 1px;" class="row" *ngFor="let user of users">
+        <div class="col-2 user-img-container">
+          <img class="img-fluid user-img" [src]="user.profileImageUrl" alt="User Image">
+        </div>
+        <div style="padding-bottom: 7px; padding-top: 7px;" class="col-6">
+          <div class="row d-flex">
+            <p><b>{{ user.prenom }} {{ user.nom }}</b></p>
+          </div>
+          <div class="row d-flex">
+            <p class="text-muted">{{ user.role.libelleRole }}</p>
+          </div>
+        </div>
+        <div style="padding-top: 15px;" class="col-3 d-flex justify-content-end">
+          <p><b>{{ user.statusCompte.libelleStatusCompte }}</b></p>
+        </div>
+      </div>
+      <hr>
+      <div class="btns-container" >
+        <button class="btn btn-cancel" (click)="closeDialog()">Close</button>
+      </div>
+  
+    </div>
+  </div>
+  

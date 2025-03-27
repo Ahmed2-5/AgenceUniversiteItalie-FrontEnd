@@ -1,0 +1,36 @@
+<div class="center-screen container">
+    <header class="text-center text-light my-4 g-mb-30">
+      <h1 class="text-color text-sm uppercase font-semibold">Admins List</h1>
+      <div class="d-flex justify-content-center align-items-center">
+        <form class="search" (submit)="$event.preventDefault()" style="flex-grow: 1">
+          <input
+            class="form-control m-auto"
+            type="text"
+            placeholder="search"
+            [(ngModel)]="searchTerm"
+            name="search"
+          />
+        </form>
+      </div>
+    </header>
+    <div class="row" style="padding-left: 20px;">
+      <div class="col-md-4 " *ngFor="let usr of filterTasks(); let i = index">
+        <article 
+          class="user-card" 
+          [class.selected]="isSelected(usr)" 
+          (click)="toggleSelection(usr)"
+        >
+          <img class="user-image" [src]="usr.profileImageUrl" alt="User Image">
+          <h4 class="user-name">{{usr.prenom}} {{usr.nom}}</h4>
+          <p class="user-role">{{usr.role.libelleRole}}</p>
+        </article>
+      </div>
+    </div>
+    <hr>
+    <div class="button-container">
+      <button class="btn btn-cancel" (click)="closeDialog()">Cancel</button>
+      <button class="btn btn-primary" (click)="closeDialog()">Confirm</button>
+  </div>
+  
+  </div>
+  

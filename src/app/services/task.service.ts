@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddtaskComponent } from '../dialogs/addtask/addtask.component';
 import { Observable } from 'rxjs';
 import { Tache } from '../models/Tache.model';
+import { Utilisateur } from '../models/Utilisateur.model';
 
 @Injectable({
   providedIn: 'root'
@@ -58,10 +59,20 @@ export class TaskService {
     return this.httpclt.put<Tache>(`${this.baseUrl}/${id}/status?adminEmail=${adminEmail}`, statusRequest, { headers });
   }
 
+  updateTask(task: Tache,idtask: number): Observable<Tache> {
+    const token = sessionStorage.getItem('jwt'); 
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.httpclt.put<Tache>(`${this.baseUrl}/updateTask/${idtask}`, task, { headers });
+  }
+
   // Delete Tache
   deleteTache(id: number, superAdminEmail: string): Observable<any> {
     const token = sessionStorage.getItem('jwt'); 
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     return this.httpclt.delete(`${this.baseUrl}/${id}?superAdminEmail=${superAdminEmail}`, { headers });
+  }
+
+  FindUsersFromIdtask(idtask: number): Observable<Utilisateur[]> {
+    return this.httpclt.get<Utilisateur[]>(`${this.baseUrl}/FindUsersFromIdtask/${idtask}`);
   }
 }

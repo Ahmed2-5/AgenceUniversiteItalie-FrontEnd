@@ -13,7 +13,9 @@ import { AppRoutingModule } from './app.routing';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ComponentsModule } from './components/components.module';
 
-import { MatDialogModule } from '@angular/material/dialog'; // Ensure this is imported
+import { MatDialogModule } from '@angular/material/dialog';
+import { UserslistforaddtaskComponent } from './dialogs/userslistforaddtask/userslistforaddtask.component';
+import { TaskdetailsComponent } from './dialogs/taskdetails/taskdetails.component'; // Ensure this is imported
 
 @NgModule({
   imports: [
