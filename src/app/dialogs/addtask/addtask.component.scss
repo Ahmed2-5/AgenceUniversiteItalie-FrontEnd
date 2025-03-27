@@ -1,0 +1,154 @@
+.add-task-container {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: auto;
+  position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.text-color {
+  color: #851345;
+  text-align: center;
+  
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control, .form-check-input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-control:focus, .form-check-input:focus {
+  border-color: #851345;
+  box-shadow: 0 0 5px rgba(133, 19, 69, 0.5);
+}
+
+.form-control-date {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.platform-cards {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.platform-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.platform-card.selected {
+  background-color: #851345;
+  border-color: #851345;
+  color: #fff;
+}
+
+.platform-card i {
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+.btn-primary {
+  background-color: #851345;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-primary:hover{
+  background-color: #943c62;
+
+}
+
+
+
+.add-btn {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: #851345;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 30px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  background-color: #6f1035;
+}
+
+.form-inline {
+  display: flex;
+  align-items: center;
+}
+
+.form-inline label {
+  margin-right: 10px;
+}
+
+.selected-users {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.user-bubble {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.user-bubble img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.delete-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #b3abae;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 12px;
+  cursor: pointer;
+  z-index: 1;
+}
