@@ -19,7 +19,8 @@
       <div id="sub-title">
         <p><b>Attached to:</b></p>
       </div>
-      <div style="background-color: #eee4e4; margin-bottom: 8px; border-radius: 9px; border-width: 1px;" class="row" *ngFor="let user of users">
+      <div style="background-color: #eee4e4; margin-bottom: 8px; border-radius: 9px; border-width: 1px;" class="row"
+       *ngFor="let user of users">
         <div class="col-2 user-img-container">
           <img class="img-fluid user-img" [src]="user.profileImageUrl" alt="User Image">
         </div>
@@ -41,10 +42,32 @@
         </div>
       </div>
       <hr>
-      <div class="btns-container" >
-        <button class="btn btn-cancel" (click)="closeDialog()">Close</button>
+    <div id="sub-title">
+      <p><b>Taken by:</b></p>
+    </div>
+    <div *ngIf="usr !== null" style="background-color: #eee4e4; margin-bottom: 8px; border-radius: 9px; border-width: 1px;"
+     class="row" >
+      <div class="col-2 user-img-container">
+        <img class="img-fluid user-img" [src]="usr.profileImageUrl" alt="User Image">
       </div>
-  
+      <div style="padding-bottom: 7px; padding-top: 7px;" class="col-6">
+        <div class="row d-flex">
+          <p><b>{{ usr.prenom }} {{ usr.nom }}</b></p>
+        </div>
+        <div class="row d-flex">
+          <p class="text-muted">{{ usr.role.libelleRole }}</p>
+        </div>
+      </div>
+    </div>
+      <hr>
+      <div class="button-container">
+        <button class="btn btn-cancel" (click)="closeDialog()">Cancel</button>
+        <button *ngIf="usrr.role?.libelleRole === 'ADMIN' && task.status === 'PAS_ENCORE'" 
+        class="btn btn-primary" (click)="TakeTask()">Take</button>
+        <button *ngIf="usrr.role?.libelleRole === 'ADMIN' && task.status === 'EN_COURS' && usrr.idUtilisateur === usr.idUtilisateur" 
+        class="btn btn-primary" 
+        (click)="Finish()">Finish</button>
+      </div>
     </div>
   </div>
   

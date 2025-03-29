@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Tache } from 'src/app/models/Tache.model';
 import { Utilisateur } from 'src/app/models/Utilisateur.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { TaskService } from 'src/app/services/task.service';
 
 @Component({
@@ -16,18 +17,37 @@ export class TaskdetailsComponent implements OnInit {
   task: Tache = new Tache();
   users: Utilisateur[] = [];
   usr: Utilisateur = new Utilisateur();
+  usrr: Utilisateur = new Utilisateur();
+  email: string = '';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { idtask: number },
               private taskserv: TaskService,
+              private authserv:AuthService,
               private dialogRef: MatDialogRef<TaskdetailsComponent>,
               private route: Router
             ) {}
 
   ngOnInit(): void {
-    this.idtask = this.data.idtask;
+    this.email = sessionStorage.getItem('email');
+    if (this.email) {
+      this.authserv.getUtilisateurByEmail(this.email).subscribe({
+        next: (data) => {
+          this.usrr = data;
+        },
+        error: (error) => {
+          console.error("Error fetching user:", error);
+        }
+      });
+    }
 
+    this.idtask = this.data.idtask;
+    this.taskserv.getUserTakenByIdtask(this.idtask).subscribe((data) => {
+      this.usr =data
+      if (this.usr.profileImageUrl) {
+        this.usr.profileImageUrl = `http://localhost:8082/api/utilisateurs/uploads/${data.profileImageUrl}`;
+     }
+   });
     this.taskserv.getTacheById(this.idtask).subscribe((data) => {
-      console.log(data)
       this.task = data;
       this.task.dateCreation = new Date(this.task.dateCreation); 
       this.task.dueDate = new Date(this.task.dueDate); 
@@ -37,6 +57,33 @@ export class TaskdetailsComponent implements OnInit {
         ...user,
         profileImageUrl: `http://localhost:8082/api/utilisateurs/uploads/${user.profileImageUrl}`
       }));
+    });
+  }
+
+  TakeTask(): void {
+    this.updateTaskStatus("EN_COURS");
+    
+  }
+  
+  Finish(){
+    this.taskserv.updateTacheStatus(this.idtask,"DONE",this.email ).subscribe(() => {
+        this.dialogRef.close(); 
+        location.reload();
+      }, (error) => {
+        console.error('Error:', error);
+      });
+  }
+  updateTaskStatus(newStatus: string): void {
+    this.taskserv.updateTacheStatus(this.idtask,newStatus,this.email ).subscribe(() => {
+      
+      this.taskserv.addTaskToUser(this.idtask, this.usrr.idUtilisateur).subscribe(() => {
+        this.dialogRef.close(); 
+        location.reload();
+      }, (error) => {
+        console.error('Error assigning task to user:', error);
+      });
+    }, (error) => {
+      console.error('Error updating task status:', error);
     });
   }
 

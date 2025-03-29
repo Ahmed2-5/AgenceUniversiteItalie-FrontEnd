@@ -16,14 +16,6 @@
     </form>
     <!-- User -->
     <ul class="navbar-nav align-items-center d-none d-md-flex">
-      <li class="nav-item">
-        <span (click)="openNotifdialog($event)" class="relative cursor-pointer notif-bell">
-          <i class="fa fa-bell text-size text-gray"></i>
-          <span *ngIf="getUnreadNotificationCount() > 0" class="absolute badge">
-            {{ getUnreadNotificationCount() }}
-          </span>
-        </span>
-      </li>
     
       <li class="nav-item" ngbDropdown placement="bottom-right">
         <a class="nav-link pr-0" role="button" ngbDropdownToggle>

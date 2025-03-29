@@ -8,6 +8,10 @@ import {
   chartExample1,
   chartExample2
 } from "../../variables/charts";
+import { Utilisateur } from 'src/app/models/Utilisateur.model';
+import { UserService } from 'src/app/services/user.service';
+import { TaskService } from 'src/app/services/task.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,45 +20,44 @@ import {
 })
 export class DashboardComponent implements OnInit {
 
-  public datasets: any;
-  public data: any;
-  public salesChart;
-  public clicked: boolean = true;
-  public clicked1: boolean = false;
+  totalUsers: number = 0;
+  totalAdmins: number = 0;
+  totalTasks: number = 0;
+  tasksEnCours: number = 0;
+  tasksDone: number = 0;
+  tasksEnCoursPercentage: number = 0;
+  tasksDonePercentage: number = 0;
 
-  ngOnInit() {
+  constructor(private userserv: UserService,
+              private taskService: TaskService
+  ) {}
 
-    this.datasets = [
-      [0, 20, 10, 30, 15, 40, 20, 60, 60],
-      [0, 20, 5, 25, 10, 30, 15, 40, 40]
-    ];
-    this.data = this.datasets[0];
-
-
-    var chartOrders = document.getElementById('chart-orders');
-
-    parseOptions(Chart, chartOptions());
-
-
-    var ordersChart = new Chart(chartOrders, {
-      type: 'bar',
-      options: chartExample2.options,
-      data: chartExample2.data
+  ngOnInit(): void {  
+    this.userserv.getCountOfAdmins().subscribe((data)=>{
+        this.totalAdmins =data
     });
+    this.taskService.getAllTasksCount().subscribe((total) => {
+      this.totalTasks = total;
 
-    var chartSales = document.getElementById('chart-sales');
+      this.taskService.getTasksEnCoursCount().subscribe((enCours) => {
+        this.tasksEnCours = enCours;
+        this.calculatePercentages();
+      });
 
-    this.salesChart = new Chart(chartSales, {
-			type: 'line',
-			options: chartExample1.options,
-			data: chartExample1.data
-		});
+      this.taskService.getTasksDoneCount().subscribe((done) => {
+        this.tasksDone = done;
+        this.calculatePercentages();
+      });
+
+    });
   }
 
-
-  public updateOptions() {
-    this.salesChart.data.datasets[0].data = this.data;
-    this.salesChart.update();
+  private calculatePercentages(): void {
+    if (this.totalTasks > 0) {
+      this.tasksEnCoursPercentage = (this.tasksEnCours / this.totalTasks) * 100;
+      this.tasksDonePercentage = (this.tasksDone / this.totalTasks) * 100;
+    }
   }
+
 
 }

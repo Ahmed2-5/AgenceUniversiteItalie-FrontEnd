@@ -126,4 +126,12 @@ export class UserService {
   convertUsersToIds(users: any[]): Observable<number[]> {
     return this.httpclt.post<number[]>(`${this.baseUrl}/convertUsersToIds`, users);
   }
+
+  getCountOfAdmins(): Observable<number> {
+    return this.httpclt.get<number>(`${this.baseUrl}/countAdmins`);
+  }
+
+  countUsers(): Observable<number> {
+    return this.httpclt.get<number>(`${this.baseUrl}/countUsers`);
+  }
 }

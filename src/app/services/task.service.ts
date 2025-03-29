@@ -59,6 +59,14 @@ export class TaskService {
     return this.httpclt.put<Tache>(`${this.baseUrl}/status/${id}?adminEmail=${adminEmail}`, statusRequest, { headers });
   }
 
+  addTaskToUser(idtask: number, iduser: number): Observable<any> {
+    return this.httpclt.post(`${this.baseUrl}/addTasktToUser/${idtask}/${iduser}`, {});
+  }
+
+  getUserTakenByIdtask(idtask: number): Observable<Utilisateur> {
+    return this.httpclt.get<Utilisateur>(`${this.baseUrl}/getUserTakedByIdtask/${idtask}`);
+  }
+
   updateTask(task: Tache,idtask: number): Observable<Tache> {
     const token = sessionStorage.getItem('jwt'); 
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
@@ -75,4 +83,17 @@ export class TaskService {
   FindUsersFromIdtask(idtask: number): Observable<Utilisateur[]> {
     return this.httpclt.get<Utilisateur[]>(`${this.baseUrl}/FindUsersFromIdtask/${idtask}`);
   }
+
+  getAllTasksCount(): Observable<number> {
+    return this.httpclt.get<number>(`${this.baseUrl}/countAll`);
+  }
+  
+  getTasksEnCoursCount(): Observable<number> {
+    return this.httpclt.get<number>(`${this.baseUrl}/countEnCours`);
+  }
+  
+  getTasksDoneCount(): Observable<number> {
+    return this.httpclt.get<number>(`${this.baseUrl}/countDone`);
+  }
+  
 }
