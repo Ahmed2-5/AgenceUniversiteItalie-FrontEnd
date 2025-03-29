@@ -56,7 +56,7 @@ export class TaskService {
     const token = sessionStorage.getItem('jwt'); 
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
     const statusRequest = { status: status.toString() };
-    return this.httpclt.put<Tache>(`${this.baseUrl}/${id}/status?adminEmail=${adminEmail}`, statusRequest, { headers });
+    return this.httpclt.put<Tache>(`${this.baseUrl}/status/${id}?adminEmail=${adminEmail}`, statusRequest, { headers });
   }
 
   updateTask(task: Tache,idtask: number): Observable<Tache> {

@@ -12,7 +12,7 @@
   .container {
     background-color: #ffffff;
     width: 600px;
-    height: 407px;
+    height: auto;
   }
   
   .user-card {
@@ -80,6 +80,7 @@
   .button-container {
     display: flex;
     justify-content: space-around; 
+    padding-bottom: 20px;
   }
   .btn-cancel {
     background-color: #ffffff;

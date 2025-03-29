@@ -15,7 +15,6 @@ export class TaskdetailsComponent implements OnInit {
   idtask!: number;
   task: Tache = new Tache();
   users: Utilisateur[] = [];
-  deadline!:Date
   usr: Utilisateur = new Utilisateur();
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { idtask: number },
@@ -26,20 +25,25 @@ export class TaskdetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.idtask = this.data.idtask;
+
     this.taskserv.getTacheById(this.idtask).subscribe((data) => {
+      console.log(data)
       this.task = data;
       this.task.dateCreation = new Date(this.task.dateCreation); 
-     // this.deadline = new Date(this.task.deadline); 
+      this.task.dueDate = new Date(this.task.dueDate); 
     });
     this.taskserv.FindUsersFromIdtask(this.idtask).subscribe((data) => {
-      this.users = data;
+      this.users = data.map(user => ({
+        ...user,
+        profileImageUrl: `http://localhost:8082/api/utilisateurs/uploads/${user.profileImageUrl}`
+      }));
     });
   }
-/*
+
   getDeadlineTimeDifference(): string {
    
 
-    const timeDifference = Math.abs(this.deadline.getTime() - this.task.dateCreation.getTime()) / 1000;
+    const timeDifference = Math.abs(this.task.dueDate.getTime() - this.task.dateCreation.getTime()) / 1000;
 
     const years = Math.floor(timeDifference / (3600 * 24 * 365.25));
     if (years > 0) {
@@ -58,7 +62,7 @@ export class TaskdetailsComponent implements OnInit {
 
     const hours = Math.floor(timeDifference / 3600);
     if (hours > 0) {
-      return `${hours} hours`;
+      return `${hours -1} hours`;
     }
 
     const minutes = Math.floor(timeDifference / 60);
@@ -68,7 +72,7 @@ export class TaskdetailsComponent implements OnInit {
 
     const seconds = Math.floor(timeDifference);
     return `${seconds} s`;
-  }*/
+  }
 
   closeDialog(): void {
     this.dialogRef.close();
@@ -82,5 +86,19 @@ export class TaskdetailsComponent implements OnInit {
       default: return 'bg-secondary';
     }
   }
+
+  getPriorityBadgeClass(priority: string) {
+    switch (priority) {
+      case 'Faible':
+        return 'bg-success';  // Green for low priority
+      case 'Moyenne':
+        return 'bg-warning';  // Yellow for medium priority
+      case 'EleVée':
+        return 'bg-danger';   // Red for high priority
+      default:
+        return 'bg-secondary'; // Grey for no priority
+    }
+  }
+  
 
 }

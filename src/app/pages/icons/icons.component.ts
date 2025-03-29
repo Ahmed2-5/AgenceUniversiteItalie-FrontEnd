@@ -16,7 +16,8 @@ export class IconsComponent implements OnInit {
   email: string = '';
   editingTaskId: number | null = null;
   isSuperAdmin: boolean = false; 
-
+  TaskDates: Set<Date> = new Set<Date>();
+  deadlinelist: Set<Date> = new Set<Date>();
   constructor(
     private taskserv : TaskService,
     private dialog: MatDialog
@@ -32,6 +33,7 @@ export class IconsComponent implements OnInit {
     } else if (role === "ADMIN") {
       this.loadAdminTasks(this.email);
     }
+    
   }
 
   // Fetch tasks created by SuperAdmin
@@ -39,6 +41,8 @@ export class IconsComponent implements OnInit {
     this.taskserv.getAllTachesCreatedBySuperAdmin(superAdminEmail).subscribe(
       (tasks: Tache[]) => {
         this.listoftasks = tasks;
+        this.TaskDates = new Set<Date>(tasks.map(task => new Date(task.dateCreation)));
+        this.deadlinelist = new Set<Date>(tasks.map(task => new Date(task.dueDate)));
       },
       (error) => {
         console.error('Error fetching tasks for Super Admin:', error);
@@ -51,6 +55,8 @@ export class IconsComponent implements OnInit {
     this.taskserv.getTachesAssignedToAdmin(adminEmail).subscribe(
       (tasks: Tache[]) => {
         this.listoftasks = tasks;
+        this.TaskDates = new Set<Date>(tasks.map(task => new Date(task.dateCreation)));
+        this.deadlinelist = new Set<Date>(tasks.map(task => new Date(task.dueDate)));
       },
       (error) => {
         console.error('Error fetching tasks for Admin:', error);
@@ -85,10 +91,13 @@ export class IconsComponent implements OnInit {
 
 
   updateTask(idtask: number, task: Tache) { 
-    this.taskserv.updateTask(task,idtask).subscribe(() => {
-      this.editingTaskId = null; 
-    }, (error) => console.log(error)
-  );
+    console.log("Updated Task Priority:", task.priority); // Debugging step
+    this.taskserv.updateTask(task, idtask).subscribe(
+      () => {
+        this.editingTaskId = null; 
+      }, 
+      (error) => console.log(error)
+    );
   }
 
   toggleEdit(taskId: number) {
@@ -102,6 +111,105 @@ export class IconsComponent implements OnInit {
       case 'EN_COURS': return 'bg-light-red';
       default: return 'bg-secondary';
     }
+  }
+
+  getPriorityBadge(priority: string): string {
+    switch (priority) {
+      case 'Aucun': return 'A';
+      case 'Faible': return 'F';
+      case 'Moyenne': return 'M';
+      case 'Élevée': return 'E';
+      default: return '-';
+    }
+  }
+  
+
+  getTaskDate(index: number): Date {
+    const taskDateArray = Array.from(this.TaskDates);
+    return taskDateArray[index];
+  }
+
+  getDeadline(index: number): Date {
+    const taskDateArray = Array.from(this.deadlinelist);
+    return taskDateArray[index];
+  }
+
+  getDeadlineTimeDifference(idtask: number): string {
+    const currentDate = new Date(); 
+    const Deadline = this.getDeadline(idtask); 
+
+    let timeDifference = Math.round(Math.abs(currentDate.getTime() - Deadline.getTime()) / 1000);
+  
+    const years = Math.floor(timeDifference / (3600 * 24 * 365.25));
+    if (years > 0) {
+      return `${years} y`;
+    }
+    timeDifference -= years * 3600 * 24 * 365.25;
+  
+    const months = Math.floor(timeDifference / (3600 * 24 * 30.44));
+    if (months > 0) {
+      return `${months} month`;
+    }
+    timeDifference -= months * 3600 * 24 * 30.44;
+  
+    const days = Math.floor(timeDifference / (3600 * 24));
+    if (days > 0) {
+      return `${days} days`;
+    }
+    timeDifference -= days * 3600 * 24;
+  
+    const hours = Math.floor(timeDifference / 3600);
+    if (hours > 0) {
+      return `${hours} hours`;
+    }
+    timeDifference -= hours * 3600;
+  
+    const minutes = Math.floor(timeDifference / 60);
+    if (minutes > 0) {
+      return `${minutes} min`;
+    }
+  
+    const seconds = Math.floor(timeDifference % 60);
+    return `${seconds} s`;
+  }
+
+  getTimeDifference(idtask: number): string {
+    const currentDate = new Date(); 
+    const TaskDate = this.getTaskDate(idtask);
+  
+    let timeDifference = Math.round(Math.abs(currentDate.getTime() - TaskDate.getTime()) / 1000);
+  
+    const years = Math.floor(timeDifference / (3600 * 24 * 365.25));
+    if (years > 0) {
+      return `${years}y`;
+    }
+    timeDifference -= years * 3600 * 24 * 365.25;
+  
+    const months = Math.floor(timeDifference / (3600 * 24 * 30.44));
+    if (months > 0) {
+      return `${months}month`;
+    }
+    timeDifference -= months * 3600 * 24 * 30.44;
+  
+    const days = Math.floor(timeDifference / (3600 * 24));
+    if (days > 0) {
+      return `${days}d`;
+    }
+    timeDifference -= days * 3600 * 24;
+  
+    const hours = Math.floor(timeDifference / 3600);
+    if (hours > 0) {
+      return `${hours}h`;
+    }
+    timeDifference -= hours * 3600;
+  
+    const minutes = Math.floor(timeDifference / 60);
+    if (minutes > 0) {
+      return `${minutes}min`;
+    }
+  
+    const seconds = Math.floor(timeDifference % 60);
+    return `${seconds}s`;
   }
 
   openDialog(): void {

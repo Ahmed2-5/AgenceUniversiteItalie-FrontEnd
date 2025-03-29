@@ -99,58 +99,59 @@
 
 <div class="container-fluid">
   <header class="text-center text-light my-4">
-    <h1 class="text-color uppercase font-semibold">Tasks List</h1>
+    <h1 class="text-uppercase">Tasks List</h1>
     <div class="d-flex justify-content-center align-items-center">
       <form class="search" (submit)="$event.preventDefault()">
-        <input
-            class="form-control m-auto"
-            style="height: 40px;"
-            type="text"
-            placeholder="search"
-            [(ngModel)]="searchTerm"
-            name="search"
-        />
+        <input class="form-control m-auto" type="text" placeholder="Search" [(ngModel)]="searchTerm" name="search" />
       </form>
-
-      <!-- Show the 'Add Task' button only for SUPER_ADMIN -->
-      <div *ngIf="isSuperAdmin" style="height: 40px">
-        <button class="btn btn-primary" (click)="openDialog()">
-          <i style="padding-right: 8px;font-size: 18px;" class="fa fa-regular fa-plus"></i>
-          Add Task
-        </button>
+      <div *ngIf="isSuperAdmin">
+        <button class="btn btn-primary" (click)="openDialog()">+ Add Task</button>
       </div>
     </div>
   </header>
 
   <div class="d-flex flex-wrap justify-content-center">
-    <div *ngFor="let task of filterTasks()" class="card1 text-light m-2" style="width: 18rem; cursor: pointer;">
+    <div *ngFor="let task of filterTasks(); let i = index" class="card1 text-dark m-2">
+      <h6 class="card-subtitle">{{ getTimeDifference(i) }}</h6>
       <div class="card-body">
-        <h5 (click)="editingTaskId === null && openTaskDetailsDialog(task.idtask)">
+        <h5 (click)="editingTaskId === null && openTaskDetailsDialog(task.idTache)">
           <ng-container *ngIf="editingTaskId !== task.idTache; else editMode">
             <i class="fa-solid fa-list-check icon"></i>
-            <label class="card-title"> {{ task.titre }}</label>
+            <span class="card-title">{{ task.titre }}</span>
           </ng-container>
           <ng-template #editMode>
             <input class="form-control" type="text" [(ngModel)]="task.titre">
           </ng-template>
         </h5>
-        <h6 style="color: #555;" class="card-subtitle mb-1" (click)="editingTaskId === null && openTaskDetailsDialog(task.idtask)">Time</h6>
-        <p style="color: #000000" class="card-text" (click)="editingTaskId === null && openTaskDetailsDialog(task.idtask)">
+        <p class="card-text">
           <ng-container *ngIf="editingTaskId !== task.idTache; else editModeDescription">
-              {{ task.description }}
+            {{ task.description }}
           </ng-container>
           <ng-template #editModeDescription>
-              <input class="form-control" type="text" [(ngModel)]="task.description">
+            <input class="form-control" type="text" [(ngModel)]="task.description">
           </ng-template>
           <br>
-          <span class="deadline" >Deadline :</span>
+          <span class="deadline">Deadline in: {{ getDeadlineTimeDifference(i) }}</span>
         </p>
         <span class="badge" [ngClass]="getTaskStatusClass(task.status)">{{ task.status }}</span>
         
-        <!-- Show Delete and Edit buttons only for SUPER_ADMIN -->
-        <i *ngIf="isSuperAdmin" class="far fa-trash-alt delete float-right" (click)="deleteTask(task.idTache); $event.stopPropagation()"></i>
-        <i *ngIf="isSuperAdmin && editingTaskId !== task.idTache" class="far fa-edit edit float-right mr-2" (click)="toggleEdit(task.idTache); $event.stopPropagation()"></i>
-        <i *ngIf="isSuperAdmin && editingTaskId === task.idTache" class="far fa-check-circle save float-right mr-2" (click)="updateTask(task.idTache, task); $event.stopPropagation()"></i>
+        <ng-container *ngIf="editingTaskId !== task.idTache; else editPriority">
+          <span class="priority-badge">{{task.priority }}</span>
+        </ng-container>
+        
+        <ng-template #editPriority>
+          <select class="form-control" [(ngModel)]="task.priority">
+            <option value="Aucun">Aucun</option>
+            <option value="Faible">Faible</option>
+            <option value="Moyenne">Moyenne</option>
+            <option value="EleVée">Elevée</option>
+          </select>
+        </ng-template>
+        
+
+        <i *ngIf="isSuperAdmin" class="far fa-trash-alt delete" (click)="deleteTask(task.idTache)"></i>
+        <i *ngIf="isSuperAdmin && editingTaskId !== task.idTache" class="far fa-edit edit" (click)="toggleEdit(task.idTache)"></i>
+        <i *ngIf="isSuperAdmin && editingTaskId === task.idTache" class="far fa-check-circle save" (click)="updateTask(task.idTache, task)"></i>
       </div>
     </div>
   </div>

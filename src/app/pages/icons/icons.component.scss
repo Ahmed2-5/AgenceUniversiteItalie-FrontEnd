@@ -1,171 +1,197 @@
+// Color Variables
+$primary-color: #4a154b;
+$secondary-color: #af2f64;
+$text-dark: #333;
+$text-light: #666;
+$text-muted: #444;
+$badge-bg: #6c757d;
 
-  
-  input[type="text"],
-  input[type="text"]:focus {
-    color: #fff;
-    border: none;
-    background: rgba(0, 0, 0, 0.2);
-    max-width: 400px;
+// Typography
+$font-size-lg: 2.5rem;
+$font-size-md: 1.8rem;
+$font-size-sm: 1rem;
+$font-size-xs: 0.9rem;
+
+// General Styles
+h1 {
+  font-size: $font-size-lg;
+  font-weight: 700;
+  color: $primary-color;
+}
+
+// Card Styling
+.card1 {
+  background: #d2d6db;
+  color: $text-dark;
+  border-radius: 10px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  position: relative;
+  width: 20rem;
+
+  .card-title {
+    font-size: $font-size-md;
+    font-weight: bold;
+    color: $secondary-color;
   }
-  
-  .card1 {
-    background: #b9b2b7;
-    color: #fff;
-    border-radius: 3%;
-    box-shadow: 2px 2px 2px rgb(172, 170, 170);
+
+  .card-subtitle {
+    font-size: $font-size-xs;
+    color: $text-light;
+    position: absolute;
+    top: 15px;
+    left: 15px;
   }
-  
-  .delete, .edit {
-    cursor: pointer;
+
+  .card-text {
+    font-size: $font-size-sm;
+    color: $text-muted;
   }
-  
-  .filtered {
-    display: none !important;
-  }
-  
-  .text-color {
-    --tw-text-opacity: 1;
-    color: #9D1953;
-  }
-  
-  .lg\:text-color {
-    --tw-text-opacity: 1;
-    color: #9D1953;
-  }
-  
-  .text-sm {
-    font-size: 1.675rem;
-    line-height: 1.25rem;
-  }
-  
-  .uppercase {
-    text-transform: uppercase;
-  }
-  
-  .font-semibold {
-    font-weight: 600;
-  }
-  
-  .icon {
-    color: #9D1953;
-    font-size: 1.7rem;
-    margin-right: 5px;
-  }
-  
-  .btn-primary {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #af2f64;
-    border: none;
-    border-radius: 7px;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-primary:hover {
-    background-color: #58293d;
-  }
-  
-  .card-body {
-    position: relative;
-  }
-  
-  .card-subtitle1 {
-    font-size: 0.6rem;
-  }
-  
-  .card-title1 {
-    color: #000000;
-    font-size: 1.2rem;
-    margin-left: 10px;
-    font-weight: 600;
-  }
-  
-  .card-text1 {
-    margin-bottom: 1rem;
-  }
-  
+
   .badge {
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 15px;
     font-size: 0.9rem;
   }
-  
-  .delete, .edit, .save {
-    cursor: pointer;
-    font-size: 1.2rem;
-  }
-  
-  .delete:hover, .edit:hover {
-    color: red;
-  }
-  
-  .save:hover {
-    color: green;
-  }
-  
-  .delete, .edit, .save {
+
+  .priority-badge {
     position: absolute;
     bottom: 10px;
+    left: 10px;
+    background-color: $badge-bg;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: inline-block; // Ensures it doesn't stretch
+    max-width: fit-content; // Ensures it takes only needed space
   }
-  
-  .edit, .save {
-    right: 40px;
+}
+
+// Input Styles
+input[type="text"],
+input[type="text"]:focus {
+  color: #000;
+  border: 2px solid $secondary-color;
+  background: #fff;
+  font-size: $font-size-sm;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+// Button Styling
+.btn-primary {
+  background-color: $primary-color;
+  border: none;
+  border-radius: 7px;
+  color: white;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #8c2676;
   }
-  
-  .delete {
-    right: 10px;
+}
+
+// Icons & Actions
+.icon {
+  color: $secondary-color;
+  font-size: 1.7rem;
+  margin-right: 5px;
+}
+
+.delete, .edit, .save {
+  cursor: pointer;
+  font-size: 1.2rem;
+  position: absolute;
+  bottom: 10px;
+}
+
+.delete {
+  right: 10px;
+  &:hover {
+    color: red;
   }
-  
-  .search {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    max-width: 500px;
-    margin-right: 10px;
+}
+
+.edit, .save {
+  right: 40px;
+
+  &:hover {
+    color: green;
   }
-  
-  @media (max-width: 768px) {
-    .grand-container {
-      padding: 10px;
-    }
-  
-    .btn-primary {
-      margin-top: 10px;
-    }
+}
+
+// Search Bar
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  max-width: 500px;
+  margin-right: 10px;
+}
+
+// Utility Classes
+.filtered {
+  display: none !important;
+}
+
+.text-color {
+  color: #9D1953;
+}
+
+.text-sm {
+  font-size: 1.675rem;
+  line-height: 1.25rem;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+// Background Colors
+.bg-light-blue {
+  background-color: #8dcde2;
+}
+
+.bg-light-green {
+  background-color: #121ba3;
+}
+
+.bg-light-gray {
+  background-color: #000000;
+}
+
+.bg-light-red {
+  background-color: #e2475e;
+}
+
+.bg-green {
+  background-color: #185a26;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .grand-container {
+    padding: 10px;
   }
-  
-  .deadline {
-    color: #000000;
-    font-size: 0.8rem;
+
+  .btn-primary {
+    margin-top: 10px;
   }
-  
-  /* Light blue */
-  .bg-light-blue {
-    background-color: #8dcde2;
-  }
-  
-  /* Light green */
-  .bg-light-green {
-    background-color: #121ba3;
-  }
-  
-  /* Light gray */
-  .bg-light-gray {
-    background-color: #000000;
-  }
-  
-  /* Light red */
-  .bg-light-red {
-    background-color: #e2475e;
-  }
-  
-  .bg-green {
-    background-color: #185a26;
-  }
-  
-  
+}
+
+// Deadline Text
+.deadline {
+  color: #000000;
+  font-size: 0.8rem;
+}

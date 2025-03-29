@@ -9,6 +9,11 @@
         <p><b>Task Description:</b> {{ task.description }}</p>
         <p><b>Task Date:</b> {{ task.dateCreation| date: 'short' }}</p>
         <p><b>Deadline:</b> {{ task.dueDate| date: 'short' }}</p>
+        <p><b>Priority: </b>
+          <span class="priority-badge" [ngClass]="getPriorityBadgeClass(task.priority)">
+            {{ task.priority }}
+          </span>
+        </p>
       </div>
       <hr>
       <div id="sub-title">
@@ -26,8 +31,13 @@
             <p class="text-muted">{{ user.role.libelleRole }}</p>
           </div>
         </div>
-        <div style="padding-top: 15px;" class="col-3 d-flex justify-content-end">
-          <p><b>{{ user.statusCompte.libelleStatusCompte }}</b></p>
+        <div class="col-3 d-flex justify-content-end">
+          <span class="badge badge-dot mr-4">
+            <i *ngIf="user.statusCompte.idStatusCompte === 2" class="bg-warning"></i>
+            <i *ngIf="user.statusCompte.idStatusCompte === 1" class="bg-success"></i>
+             {{user.statusCompte.libelleStatusCompte }}
+          </span>
+          
         </div>
       </div>
       <hr>

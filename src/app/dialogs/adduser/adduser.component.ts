@@ -16,6 +16,7 @@ export class AdduserComponent implements OnInit {
 
   forminput!: FormGroup;
   submitted: boolean = false; // Track form submission
+  selectedImage: File | null = null; // Store selected image file
 
   constructor(
     private fb: FormBuilder,
@@ -45,32 +46,58 @@ export class AdduserComponent implements OnInit {
   }
 
   Add() {
-    
-    let usr = new Utilisateur()
+    let usr = new Utilisateur();
+    usr.adresseMail = this.forminput.controls['email'].value;
 
-    usr.adresseMail= this.forminput.controls['email'].value
-    this.userserv.getRoleByLibelleRole(this.forminput.controls['role'].value).subscribe((d)=>{
-          usr.role=d;
-    })
-    usr.nom= this.forminput.controls['lname'].value
-    usr.prenom= this.forminput.controls['fname'].value 
-    usr.motDePasse=this.generatePassword(8)
-    this.userserv.createAdmin(
-      usr,
-      sessionStorage.getItem('email') || '' 
-    ).subscribe(
+    this.userserv.getRoleByLibelleRole(this.forminput.controls['role'].value).subscribe((d) => {
+      usr.role = d;
+    });
+
+    usr.nom = this.forminput.controls['lname'].value;
+    usr.prenom = this.forminput.controls['fname'].value;
+    usr.motDePasse = this.generatePassword(8);
+
+    // Create user first
+    this.userserv.createAdmin(usr, sessionStorage.getItem('email') || '').subscribe(
       (response: any) => {
         console.log(response);
+        // After user creation, upload the profile image if selected
+        if (this.selectedImage) {
+          this.uploadImage(this.selectedImage, response.idUtilisateur); // Upload image for the created user
+        } else {
+          this.closeDialog();
+          this.alertWithSuccess();
+        }
+      },
+      (error) => {
+        console.log(error);
+        this.alertWithError("Email is already in use!!!");
+      }
+    );
+  }
+
+  // Handle image selection
+  onImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input && input.files) {
+      this.selectedImage = input.files[0]; // Get the selected file
+    }
+  }
+
+  uploadImage(file: File, userId: number): void {
+    if (!userId) return;
+
+    this.userserv.uploadProfileImage(file, userId).subscribe(
+      (response) => {
+        console.log('Image uploaded successfully:', response);
         this.closeDialog();
         this.alertWithSuccess();
       },
       (error) => {
-        console.log(error);
-        
-        this.alertWithError("Email is already in use !!!");
+        console.error('Error uploading image:', error);
+        this.alertWithError('Failed to upload image.');
       }
     );
-    
   }
 
   closeDialog(): void {

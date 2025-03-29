@@ -1,6 +1,6 @@
 <div class="center-screen container">
     <header class="text-center text-light my-4 g-mb-30">
-      <h1 class="text-color text-sm uppercase font-semibold">Admins List</h1>
+      <h1 class="text-color text-sm uppercase font-semibold"> List of Administrators</h1>
       <div class="d-flex justify-content-center align-items-center">
         <form class="search" (submit)="$event.preventDefault()" style="flex-grow: 1">
           <input
@@ -22,7 +22,11 @@
         >
           <img class="user-image" [src]="usr.profileImageUrl" alt="User Image">
           <h4 class="user-name">{{usr.prenom}} {{usr.nom}}</h4>
-          <p class="user-role">{{usr.role.libelleRole}}</p>
+          <span style="margin-bottom: 10px!important;" class="badge badge-dot mr-4">
+            <i *ngIf="usr.statusCompte.idStatusCompte === 2" class="bg-warning"></i>
+            <i *ngIf="usr.statusCompte.idStatusCompte === 1" class="bg-success"></i>
+             {{usr.statusCompte.libelleStatusCompte }}
+          </span>
         </article>
       </div>
     </div>
@@ -30,7 +34,7 @@
     <div class="button-container">
       <button class="btn btn-cancel" (click)="closeDialog()">Cancel</button>
       <button class="btn btn-primary" (click)="closeDialog()">Confirm</button>
-  </div>
+    </div>
   
   </div>
   

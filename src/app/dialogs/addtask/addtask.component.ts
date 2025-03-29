@@ -31,7 +31,9 @@ export class AddtaskComponent implements OnInit {
     this.taskForm = this.fb.group({
       "title": ['', Validators.required],
       "description": ['', Validators.required],
-      "deadline": ['', Validators.required]
+      "deadline": ['', Validators.required],
+      "priority": ['Aucun', Validators.required],
+
     });
 
     this.taskrequest.task = new Tache();
@@ -60,8 +62,9 @@ export class AddtaskComponent implements OnInit {
 
     this.taskrequest.task.titre = this.taskForm.controls['title'].value;
     this.taskrequest.task.description = this.taskForm.controls['description'].value;
-   // this.taskrequest.task.dueDate = this.formatDateForServer(this.taskForm.controls['deadline'].value)
-  
+    this.taskrequest.task.dueDate = this.taskForm.controls['deadline'].value
+    this.taskrequest.task.priority = this.taskForm.controls['priority'].value
+
     
     this.taskrequest.usersIDs = this.selectedUsersIDs;
     

@@ -8,7 +8,6 @@
         <h1 style="color: #5e72e4; padding-top: 15px; font-size: 2em; font-weight: bold;">ADD USER</h1>
         <hr class="mt-1 border-b-1 border-blueGray-300" />
       </div>
-      
 
       <form [formGroup]="forminput">
         <div class="flex flex-wrap">
@@ -84,14 +83,22 @@
             </div>
           </div>
 
-          <!-- Email Info -->
-          <div>
-            <label class="inline-flex items-center cursor-pointer">
-              <span class="ml-2 text-sm font-semibold text-blueGray-600">
-                *Email and password will be sent by email to the added user.
-              </span>
-            </label>
+          <!-- Profile Image Upload -->
+          <div class="w-full lg:w-6/12 px-4">
+            <div class="relative w-full mb-3">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="inputProfileImage">
+                Profile Image
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                id="inputProfileImage"
+                (change)="onImageSelected($event)"
+              />
+            </div>
           </div>
+
         </div>
 
         <!-- Submit Button -->
