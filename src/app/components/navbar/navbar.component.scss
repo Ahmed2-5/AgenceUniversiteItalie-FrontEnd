@@ -1,0 +1,48 @@
+.notif-bell {
+    position: relative;
+    margin-right: 15px;
+    cursor: pointer;
+  }
+  
+  .notif-bell .fa-bell {
+    font-size: 1.5rem;
+    color: gray;
+  }
+  
+
+  .notif-bell .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    line-height: 18px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adds spacing between bell icon and user profile */
+  }
+
+
+  .custom-dialog-container {
+    position: absolute !important; /* Make sure it's positioned absolutely */
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white;
+    width: 350px;  /* Set a fixed width */
+    max-height: 440px; /* Allow vertical scrolling for long content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19); /* Add shadow */
+    z-index: 9999 !important; /* Ensure it's above the navbar */
+    display: block !important; /* Ensure it is visible */
+    border-radius: 5px;
+    overflow-y: auto; /* Enable scrolling */
+  }

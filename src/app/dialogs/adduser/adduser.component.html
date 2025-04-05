@@ -1,0 +1,109 @@
+<div class="center-screen">
+  <div
+    style="height: 70%;"  
+    class="relative flex flex-col min-w-0 break-words w-full shadow-lg rounded-lg bg-blueGray-100 border-0"
+  >
+    <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+      <div class="text-center mb-3 font-bold">
+        <h1 style="color: #5e72e4; padding-top: 15px; font-size: 2em; font-weight: bold;">ADD USER</h1>
+        <hr class="mt-1 border-b-1 border-blueGray-300" />
+      </div>
+      
+
+      <form [formGroup]="forminput">
+        <div class="flex flex-wrap">
+          
+          <!-- First Name -->
+          <div class="w-full lg:w-6/12 px-4">
+            <div class="relative w-full mb-3">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="inputFirstname">
+                First name
+              </label>
+              <input
+                type="text"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                placeholder="First name" id="inputFirstname" formControlName="fname"
+              />
+              <div *ngIf="submitted && forminput.controls['fname'].errors?.['required']" class="alert alert-danger" role="alert">
+                This field is required!
+              </div>
+            </div>
+          </div>
+
+          <!-- Last Name -->
+          <div class="w-full lg:w-6/12 px-4">
+            <div class="relative w-full mb-3">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="inputLastname">
+                Last name
+              </label>
+              <input
+                type="text"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                placeholder="Last name" id="inputLastname" formControlName="lname"
+              />
+              <div *ngIf="submitted && forminput.controls['lname'].errors?.['required']" class="alert alert-danger" role="alert">
+                This field is required!
+              </div>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="w-full lg:w-6/12 px-4">
+            <div class="relative w-full mb-3">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="inputEmail4">
+                Email
+              </label>
+              <input
+                type="email"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                placeholder="Email" id="inputEmail4" formControlName="email"
+              />
+              <div *ngIf="submitted && forminput.controls['email'].errors?.['required']" class="alert alert-danger" role="alert">
+                Email is required.
+              </div>
+              <div *ngIf="submitted && forminput.controls['email'].errors?.['email']" class="alert alert-danger" role="alert">
+                Email syntax is wrong!
+              </div>
+            </div>
+          </div>
+
+          <!-- Role -->
+          <div class="w-full lg:w-6/12 px-4">
+            <div class="relative w-full mb-3">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="inputRole">
+                Role
+              </label>
+              <select class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                id="inputRole" formControlName="role">
+                <option value="" disabled selected>Select Role</option>
+                <option value="ADMIN">ADMIN</option>
+              </select>
+              <div *ngIf="submitted && forminput.controls['role'].errors?.['required']" class="alert alert-danger" role="alert">
+                Role is required.
+              </div>
+            </div>
+          </div>
+
+          <!-- Email Info -->
+          <div>
+            <label class="inline-flex items-center cursor-pointer">
+              <span class="ml-2 text-sm font-semibold text-blueGray-600">
+                *Email and password will be sent by email to the added user.
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center mt-2">
+          <button
+            class="btn-sm btn-primary bg-blue-600 text-white active:bg-blue-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+            type="button" (click)="onAddClick()"
+          >
+            Add Account
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+.notifications {
+  width: 350px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+}
+
+/* Adjust for the header of notifications */
+.notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+}
+
+/* Ensure the notifications items have some spacing and are properly aligned */
+.notifications-item, .notifications-itemNotReaded {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding: 6px 9px;
+  margin-bottom: 2px;
+  height: 100px;
+  cursor: pointer;
+}
+
+.notifications-item:hover, .notifications-itemNotReaded:hover {
+  background-color: #eee;
+}
+
+/* Icon styling and image styles */
+img {
+  display: block;
+  width: 60px;
+  height: 60px;
+  margin-right: 9px;
+  border-radius: 50%;
+}
+
+/* Show more button styles */
+.show-more {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  border: none;
+  background-color: #af2f64;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.show-more:hover {
+  background-color: #961c50;
+}
