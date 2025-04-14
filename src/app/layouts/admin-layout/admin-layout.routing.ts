@@ -5,17 +5,24 @@ import { IconsComponent } from '../../pages/icons/icons.component';
 import { MapsComponent } from '../../pages/maps/maps.component';
 import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
 import { TablesComponent } from '../../pages/tables/tables.component';
+<<<<<<< HEAD
 import { TestComponent } from 'src/app/test/test.component';
 import { ClientsComponent } from 'src/app/pages/clients/clients.component';
 import { ListClientsAdvancedComponent } from 'src/app/pages/list-clients-advanced/list-clients-advanced.component';
+=======
+>>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'tables',         component: TablesComponent },
     { path: 'icons',          component: IconsComponent },
+<<<<<<< HEAD
     { path: 'maps',           component: MapsComponent },
     { path: 'clients',           component: ClientsComponent },
     { path: 'clientsAV',           component: ListClientsAdvancedComponent },
     { path: 'test',           component: TestComponent }
+=======
+    { path: 'maps',           component: MapsComponent }
+>>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 ];

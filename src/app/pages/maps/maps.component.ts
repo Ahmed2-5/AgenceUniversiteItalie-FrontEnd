@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+<<<<<<< HEAD
 import { UserService } from 'src/app/services/user.service';
+=======
+>>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 
 @Component({
   selector: 'app-maps',
   templateUrl: './maps.component.html',
   styleUrls: ['./maps.component.scss']
 })
+<<<<<<< HEAD
 export class MapsComponent {
 
  selectedFile: File | null = null;
@@ -33,5 +37,13 @@ uploadImage() {
     }
   });
 }
+=======
+export class MapsComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+   }
+>>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 
 }

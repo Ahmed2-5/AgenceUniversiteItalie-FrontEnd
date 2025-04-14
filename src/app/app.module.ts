@@ -13,7 +13,11 @@ import { AppRoutingModule } from './app.routing';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ComponentsModule } from './components/components.module';
 
+<<<<<<< HEAD
 import { MatDialogModule } from '@angular/material/dialog';
+=======
+import { MatDialogModule } from '@angular/material/dialog'; // Ensure this is imported
+>>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 
 @NgModule({
   imports: [
@@ -30,8 +34,13 @@ import { MatDialogModule } from '@angular/material/dialog';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+<<<<<<< HEAD
     AuthLayoutComponent
         ],
+=======
+    AuthLayoutComponent,
+  ],
+>>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],

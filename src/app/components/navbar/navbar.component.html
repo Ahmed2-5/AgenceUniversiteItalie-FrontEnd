@@ -2,14 +2,43 @@
   <div class="container-fluid">
     <!-- Brand -->
     <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" routerLinkActive="active" [routerLink]="['/dashboard']">{{getTitle()}}</a>
+<<<<<<< HEAD
     <!-- User -->
     <ul class="navbar-nav align-items-center d-none d-md-flex">
+=======
+    <!-- Form -->
+    <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+      <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">
+        <div class="input-group input-group-alternative">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control" placeholder="Search" type="text" (focus)="focus = true"
+          (blur)="focus = false">
+        </div>
+      </div>
+    </form>
+    <!-- User -->
+    <ul class="navbar-nav align-items-center d-none d-md-flex">
+      <li class="nav-item">
+        <span (click)="openNotifdialog($event)" class="relative cursor-pointer notif-bell">
+          <i class="fa fa-bell text-size text-gray"></i>
+          <span *ngIf="getUnreadNotificationCount() > 0" class="absolute badge">
+            {{ getUnreadNotificationCount() }}
+          </span>
+        </span>
+      </li>
+>>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
     
       <li class="nav-item" ngbDropdown placement="bottom-right">
         <a class="nav-link pr-0" role="button" ngbDropdownToggle>
           <div class="media align-items-center">
             <span class="avatar avatar-sm rounded-circle">
+<<<<<<< HEAD
               <img alt="User Image" [src]="user.profileImageUrl || 'assets/img/new profile image.png'" class="avatar avatar-sm rounded-circle">
+=======
+              <img alt="User Image" src="assets/img/theme/team-4-800x800.jpg">
+>>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
             </span>
             <div class="media-body ml-2 d-none d-lg-block">
               <span class="mb-0 text-sm font-weight-bold">{{user.prenom}} {{user.nom}}</span>

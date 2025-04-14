@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
+=======
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+>>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 import { AdduserComponent } from '../dialogs/adduser/adduser.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Utilisateur } from '../models/Utilisateur.model';
@@ -19,7 +25,11 @@ export class UserService {
   createAdmin(admin: Utilisateur, superAdminEmail: string): Observable<Utilisateur> {
     const token = sessionStorage.getItem('jwt'); 
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+<<<<<<< HEAD
     
+=======
+  
+>>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
     return this.httpclt.post<Utilisateur>(
       `${this.baseUrl}/create-Admin?superAdminEmail=${superAdminEmail}`,
       admin, 
@@ -100,6 +110,7 @@ export class UserService {
     return this.httpclt.get<string>(`${this.baseUrl}/desactiver-compte`, { headers, params});
   }
   
+<<<<<<< HEAD
   uploadProfileImage( file: File,userId: number): Observable<string> {
     const formData = new FormData();
     formData.append('file', file);
@@ -134,4 +145,6 @@ export class UserService {
   countUsers(): Observable<number> {
     return this.httpclt.get<number>(`${this.baseUrl}/countUsers`);
   }
+=======
+>>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 }
