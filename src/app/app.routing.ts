@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { ClientByIdComponent } from './dialogs/client-by-id/client-by-id.component';
 
 const routes: Routes = [
   {
@@ -29,10 +30,8 @@ const routes: Routes = [
         loadChildren: () => import('src/app/layouts/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule)
       }
     ]
-  }, {
-    path: '**',
-    redirectTo: 'dashboard'
-  }
+  },    { path: 'clientID',           component: ClientByIdComponent },
+
 ];
 
 @NgModule({

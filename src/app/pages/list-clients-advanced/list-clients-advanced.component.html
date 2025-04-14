@@ -1,0 +1,71 @@
+<app-dashboard></app-dashboard>
+
+<div class="scrollable-table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Pack</th>
+        <th>Nom et prénom</th>
+        <th>Communication</th>
+        <th>Date de début</th>
+        <th>Drive</th>
+        <th>Agent</th>
+        <th>Montant à payer</th>
+        <th>Reste</th>
+        <th>Payement</th>
+        <th>Tranche 1</th>
+        <th>Tranche 2</th>
+        <th>Tranche 3</th>
+        <th>Tranche 4</th>
+        <th>Tranche 5</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of clients">
+        <td>{{ client.id }}</td>
+
+        <!-- Pack button -->
+        <td>
+            <select
+              class="select-btn"
+              [ngClass]="client.pack.toLowerCase()"
+              [(ngModel)]="client.pack"
+              (change)="changePack(client)">
+              <option *ngFor="let option of packOptions" [value]="option">{{ option }}</option>
+            </select>
+        </td>
+
+        <!-- Link to open dialog -->
+        <td>
+          <a href="#" (click)="openClientDialog(client.id)">
+            {{ client.nomPrenom }}
+          </a>
+        </td>
+
+        <td>{{ client.communication }}</td>
+        <td>{{ client.dateDebut }}</td>
+        <td><span class="red-text">{{ client.drive }}</span></td>
+
+        <!-- Agent button -->
+        <td>
+            <select
+              class="select-btn agent-btn"
+              [(ngModel)]="client.agent"
+              (change)="changeAgent(client)">
+              <option *ngFor="let agent of agentOptions" [value]="agent">{{ agent }}</option>
+            </select>
+        </td>
+
+        <td class="green-text">{{ client.montant }}</td>
+        <td class="red-bg">{{ client.reste }}</td>
+        <td>{{ client.payement }}</td>
+        <td>{{ client.tranche1 }}</td>
+        <td>{{ client.tranche2 }}</td>
+        <td>{{ client.tranche3 }}</td>
+        <td>{{ client.tranche4 }}</td>
+        <td>{{ client.tranche5 }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

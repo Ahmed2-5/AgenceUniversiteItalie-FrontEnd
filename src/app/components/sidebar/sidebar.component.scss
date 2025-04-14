@@ -1,0 +1,15 @@
+/* Increase the height of the container */
+.custom-navbar-container {
+    height: 100px; /* You can adjust this value to make the container taller or shorter */
+    width: 100px; /* You can adjust this value to make the container taller or shorter */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .navbar-img {
+    justify-content: center;
+    align-items: center;
+    margin-left: 90px;
+  }
+

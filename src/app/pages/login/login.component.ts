@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   showEmailError = false;  
   showPasswordError = false;  
   forminput!: FormGroup;
-
+  isPasswordVisible = false;
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
@@ -64,5 +64,9 @@ export class LoginComponent implements OnInit {
         }, 3000);
       }
     }
+  }
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 }

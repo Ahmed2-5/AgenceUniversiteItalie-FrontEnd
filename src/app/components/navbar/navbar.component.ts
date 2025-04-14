@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
   
   constructor(location: Location,  private element: ElementRef, private router: Router,
     private authserv:AuthService,
-    private notificationService: NotificationService,
+  //  private notificationService: NotificationService,
     private dialog: MatDialog
   ) {
     this.location = location;
@@ -74,7 +74,7 @@ export class NavbarComponent implements OnInit {
     ).subscribe(filteredNotifications => {
       this.notifications = filteredNotifications;
     });
-  } */
+  } 
 
     openNotifdialog(event: MouseEvent) {
       const target = event.currentTarget as HTMLElement;
@@ -106,10 +106,7 @@ export class NavbarComponent implements OnInit {
       });
     }
     
-    
-    
-
-  getUnreadNotificationCount(): number {
+     getUnreadNotificationCount(): number {
     return this.notifications.length;
-  }
+  }*/
 }

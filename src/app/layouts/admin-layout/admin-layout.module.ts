@@ -19,6 +19,14 @@ import { NotificationsComponent } from 'src/app/dialogs/notifications/notificati
 import { UserslistforaddtaskComponent } from 'src/app/dialogs/userslistforaddtask/userslistforaddtask.component';
 import { AddtaskComponent } from 'src/app/dialogs/addtask/addtask.component';
 import { TaskdetailsComponent } from 'src/app/dialogs/taskdetails/taskdetails.component';
+import { CommentsComponent } from 'src/app/dialogs/comments/comments.component';
+import { TestComponent } from 'src/app/test/test.component';
+import { ClientsComponent } from 'src/app/pages/clients/clients.component';
+import { PayementByClientComponent } from 'src/app/dialogs/payement-by-client/payement-by-client.component';
+import { ClientByIdComponent } from 'src/app/dialogs/client-by-id/client-by-id.component';
+import { AddCondidatComponent } from 'src/app/dialogs/add-condidat/add-condidat.component';
+import { ListClientsAdvancedComponent } from 'src/app/pages/list-clients-advanced/list-clients-advanced.component';
+import { UpdateCondidatComponent } from 'src/app/dialogs/update-condidat/update-condidat.component';
 
 @NgModule({
   imports: [
@@ -42,7 +50,15 @@ import { TaskdetailsComponent } from 'src/app/dialogs/taskdetails/taskdetails.co
     NotificationsComponent,
     UserslistforaddtaskComponent,
     AddtaskComponent,
-    TaskdetailsComponent
+    TaskdetailsComponent,
+    CommentsComponent,
+    TestComponent,
+    ClientsComponent,
+    PayementByClientComponent,
+    ClientByIdComponent,
+    AddCondidatComponent,
+    ListClientsAdvancedComponent,
+    UpdateCondidatComponent
   ]
 })
 export class AdminLayoutModule {}

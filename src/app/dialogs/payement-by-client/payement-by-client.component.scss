@@ -1,0 +1,190 @@
+.center-screen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1050;
+}
+
+.payment-details-container {
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    padding: 20px;
+    width: 800px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-family: sans-serif;
+    color: #333;
+  
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+  
+      .title {
+        font-size: 1.5em;
+        font-weight: bold;
+      }
+  
+      .close-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        color: #777;
+        transition: color 0.3s ease;
+  
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+  
+        &:hover {
+          color: #333;
+        }
+      }
+    }
+  
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+  
+      div {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+        text-align: center;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  
+        .label {
+          font-size: 0.8em;
+          color: #777;
+          margin-bottom: 5px;
+        }
+  
+        .value {
+          font-weight: bold;
+        }
+      }
+  
+      .remaining-due {
+        background-color: #ffe0e0;
+        color: #d32f2f;
+      }
+    }
+  
+    .installments-list {
+      .installment-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        margin-bottom: 10px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+  
+        &.paid {
+          background-color: #e6ffe6;
+          color: #4caf50;
+        }
+  
+        &.unpaid {
+          background-color: #ffe0e0;
+          color: #d32f2f;
+        }
+  
+        .installment-info {
+          display: flex;
+          gap: 20px;
+          align-items: center;
+  
+          .name {
+            font-weight: bold;
+          }
+  
+          .amount {
+            color: #555;
+          }
+  
+          .due-date {
+            color: #777;
+            font-size: 0.9em;
+          }
+        }
+  
+        .installment-actions {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+  
+          .status-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+  
+            &.paid {
+              background-color: #4caf50;
+              color: #fff;
+  
+              svg {
+                width: 14px;
+                height: 14px;
+              }
+            }
+  
+            &.unpaid {
+              background-color: #f44336;
+  
+              svg {
+                fill: white;
+                width: 10px;
+                height: 10px;
+              }
+            }
+          }
+  
+          .mark-paid-button {
+            background: none;
+            border: 1px solid #4caf50;
+            color: #4caf50;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: background-color 0.3s ease, color 0.3s ease;
+  
+            &:hover {
+              background-color: #4caf50;
+              color: #fff;
+            }
+          }
+  
+          .share-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #777;
+            padding: 5px;
+            transition: color 0.3s ease;
+  
+            svg {
+              width: 20px;
+              height: 20px;
+            }
+  
+            &:hover {
+              color: #333;
+            }
+          }
+        }
+      }
+    }
+  }
+  

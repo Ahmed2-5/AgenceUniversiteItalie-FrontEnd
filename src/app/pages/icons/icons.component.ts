@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { CommentsComponent } from 'src/app/dialogs/comments/comments.component';
 import { TaskdetailsComponent } from 'src/app/dialogs/taskdetails/taskdetails.component';
 import { Tache } from 'src/app/models/Tache.model';
 import { TaskService } from 'src/app/services/task.service';
@@ -18,6 +19,9 @@ export class IconsComponent implements OnInit {
   isSuperAdmin: boolean = false; 
   TaskDates: Set<Date> = new Set<Date>();
   deadlinelist: Set<Date> = new Set<Date>();
+  selectedStatus: string = 'ALL';  // Default status filter
+
+
   constructor(
     private taskserv : TaskService,
     private dialog: MatDialog
@@ -65,12 +69,15 @@ export class IconsComponent implements OnInit {
   }
 
   filterTasks() {
-    if (!this.searchTerm.trim()) {
-      return this.listoftasks;
-    }
-    return this.listoftasks.filter(task =>
-      task.titre.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+    return this.listoftasks.filter(task => {
+      const matchesSearch = !this.searchTerm.trim() || task.titre.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchesStatus = this.selectedStatus === 'ALL' || task.status === this.selectedStatus;
+      return matchesSearch && matchesStatus;
+    });
+  }
+
+  setStatusFilter(status: string) {
+    this.selectedStatus = status;
   }
 
   deleteTask(idtask: number) {
@@ -216,9 +223,10 @@ export class IconsComponent implements OnInit {
     this.taskserv.openAddtaskDialog();
   }
 
-  openTaskDetailsDialog(idtask : number){
-    const dialogRef = this.dialog.open(TaskdetailsComponent, {
-      data: { idtask: idtask }
+  openCommentDialog(idtask: number) {
+    const dialogRef = this.dialog.open(CommentsComponent, {
+      data: { taskID: idtask },
+      disableClose: true, // This ensures the dialog closes when clicking outside
     });
   
     dialogRef.afterClosed().subscribe(result => {
@@ -227,4 +235,17 @@ export class IconsComponent implements OnInit {
       }
     });
   }
+  
+  openTaskDetailsDialog(idtask: number) {
+    const dialogRef = this.dialog.open(TaskdetailsComponent, {
+      data: { idtask: idtask },
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Dialog closed with result:', result);
+      }
+    });
+  }
+  
 }

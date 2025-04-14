@@ -1,0 +1,61 @@
+
+<app-dashboard></app-dashboard>
+<div class="table-wrapper">
+    <div style="margin-bottom: 10px;">
+     <div class="row align-items-center">
+      <div class="col-8">
+         <h2 class="mb-0">Liste des Candidats</h2>
+      </div>
+      <div class="col-4 text-right">
+        <button 
+        class="btn btn-sm btn-primary" type="button" (click)="openAddDialog()">+ Ajouter Candidat</button>
+      </div>
+     </div> 
+    </div>     
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Date de naissance</th>
+          <th>Email</th>
+          <th>Téléphone</th>
+          <th>Code postal</th>
+          <th>Adresse</th>
+          <th>Langue</th>
+          <th>Service</th>
+          <th>Référence</th>
+          <th>Ville</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of pagedClients">
+          <td>{{ c.nomClient }} {{ c.prenomClient }}</td>
+          <td>{{ c.dateNaissanceClient | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ c.emailClient }}</td>
+          <td>{{ c.telephoneClient }}</td>
+          <td>{{ c.codePostale }}</td>
+          <td>{{ c.adresseClient }}</td>
+          <td>{{ c.langue }}</td>
+          <td>{{c.service}}</td>
+          <td>{{c.reference}}</td>
+          <td>{{ c.villeClient }}</td>
+          <td>
+            <button class="icon-button edit" (click)="openUpdateDialog(c.idClients)">
+              ✏️
+            </button>
+            <button class="icon-button delete" (click)="deleteClient(c)">
+              🗑️
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 0">← Précédent</button>
+      <span>Page {{ currentPage + 1 }} / {{ Math.ceil(clients.length / pageSize) }}</span>
+      <button (click)="nextPage()" [disabled]="(currentPage + 1) * pageSize >= clients.length">Suivant →</button>
+    </div>
+  </div>
+  

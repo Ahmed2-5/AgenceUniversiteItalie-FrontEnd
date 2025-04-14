@@ -1,4 +1,6 @@
+import { Clients } from "./Clients.model";
 import { Commentaire } from "./Commentaire.model";
+import { Document } from "./Document.model";
 import { Role } from "./Role.model";
 import { StatusCompte } from "./StatusCompte.model";
 import { Tache } from "./Tache.model";
@@ -11,6 +13,7 @@ export class Utilisateur {
     motDePasse!: string;
     telephone!: string;
     dateDeNaissance!: Date;
+    profileImageUrl!:string;
     idTypeAuthentification!: number;
     idFacebook!: string;
     idGoogle!: string;
@@ -21,5 +24,7 @@ export class Utilisateur {
     createdTaches!: Tache[];
     assignedTaches!: Tache[];
     commentaires!: Commentaire[];
-    profileImageUrl!:string;
+    documentAdded!: Document[];
+    clientsCreated!: Clients[];
+    clientsAssigned!: Clients[];
 }

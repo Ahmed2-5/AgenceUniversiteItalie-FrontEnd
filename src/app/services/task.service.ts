@@ -96,4 +96,15 @@ export class TaskService {
     return this.httpclt.get<number>(`${this.baseUrl}/countDone`);
   }
   
+  countAllTasksAssignedByUser(userId: number): Observable<number> {
+    return this.httpclt.get<number>(`${this.baseUrl}/countAllTasksAssignedByUser/${userId}`);
+  }
+
+  countTasksEnCoursByUser(userId: number): Observable<number> {
+    return this.httpclt.get<number>(`${this.baseUrl}/countTasksEnCoursByUser/${userId}`);
+  }
+
+  countTasksDoneByUser(userId: number): Observable<number> {
+    return this.httpclt.get<number>(`${this.baseUrl}/countTasksDoneByUser/${userId}`);
+  }
 }

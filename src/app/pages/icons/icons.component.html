@@ -1,10 +1,5 @@
 <app-dashboard></app-dashboard>
 
-
-
-
-
-
 <div class="container-fluid">
   <header class="text-center text-light my-4">
     <h1 class="text-uppercase">Tasks List</h1>
@@ -16,6 +11,15 @@
         <button class="btn btn-primary" (click)="openDialog()">+ Add Task</button>
       </div>
     </div>
+    
+    <!-- Status Filter Buttons -->
+    <div class="btn-group mt-3">
+      <button class="btn" [ngClass]="{'btn-primary': selectedStatus === 'ALL'}" (click)="setStatusFilter('ALL')">All</button>
+      <button class="btn" [ngClass]="{'btn-info': selectedStatus === 'PAS_ENCORE'}" (click)="setStatusFilter('PAS_ENCORE')">Not Started</button>
+      <button class="btn" [ngClass]="{'btn-warning': selectedStatus === 'EN_COURS'}" (click)="setStatusFilter('EN_COURS')">In Progress</button>
+      <button class="btn" [ngClass]="{'btn-success': selectedStatus === 'DONE'}" (click)="setStatusFilter('DONE')">Done</button>
+    </div>
+
   </header>
 
   <div class="d-flex flex-wrap justify-content-center">
@@ -56,11 +60,14 @@
           </select>
         </ng-template>
         
-
         <i *ngIf="isSuperAdmin" class="far fa-trash-alt delete" (click)="deleteTask(task.idTache)"></i>
         <i *ngIf="isSuperAdmin && editingTaskId !== task.idTache" class="far fa-edit edit" (click)="toggleEdit(task.idTache)"></i>
         <i *ngIf="isSuperAdmin && editingTaskId === task.idTache" class="far fa-check-circle save" (click)="updateTask(task.idTache, task)"></i>
+        <i *ngIf="isSuperAdmin" class="far fa-comment-alt comment" (click)="openCommentDialog(task.idTache)"></i>
+        <i *ngIf="!isSuperAdmin" class="far fa-comment-alt comment1" (click)="openCommentDialog(task.idTache)"></i>
+
       </div>
     </div>
   </div>
 </div>
+

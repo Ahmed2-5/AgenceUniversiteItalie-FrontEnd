@@ -14,8 +14,6 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ComponentsModule } from './components/components.module';
 
 import { MatDialogModule } from '@angular/material/dialog';
-import { UserslistforaddtaskComponent } from './dialogs/userslistforaddtask/userslistforaddtask.component';
-import { TaskdetailsComponent } from './dialogs/taskdetails/taskdetails.component'; // Ensure this is imported
 
 @NgModule({
   imports: [
@@ -32,8 +30,8 @@ import { TaskdetailsComponent } from './dialogs/taskdetails/taskdetails.componen
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent,
-  ],
+    AuthLayoutComponent
+        ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],

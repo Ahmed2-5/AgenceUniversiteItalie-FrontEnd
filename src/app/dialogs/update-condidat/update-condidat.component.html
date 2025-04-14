@@ -1,0 +1,76 @@
+<div class="page-layout center-screen">
+    <div class="form-and-table">
+      <div class="add-form-container">
+        <h3>Modifier le Candidat</h3>
+        <form (ngSubmit)="submitForm()" #editForm="ngForm">
+            <div class="form-group">
+                <label>Nom:</label>
+                <input type="text" name="nomClient" [(ngModel)]="updatedClient.nomClient" required />
+            </div>
+      
+            <div class="form-group">
+                <label>Prénom:</label>
+                <input type="text" name="prenomClient" [(ngModel)]="updatedClient.prenomClient" required />
+            </div>
+      
+            <div class="form-group">
+                <label>Date de naissance:</label>
+                <input type="date" name="dateNaissanceClient" [(ngModel)]="updatedClient.dateNaissanceClient" required />
+            </div>
+      
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" name="emailClient" [(ngModel)]="updatedClient.emailClient" required />
+            </div>
+      
+            <div class="form-group">
+                <label>Téléphone:</label>
+                <input type="text" name="telephoneClient" [(ngModel)]="updatedClient.telephoneClient" required />
+            </div>
+      
+            <div class="form-group">
+                <label>Code postal:</label>
+                <input type="text" name="codePostale" [(ngModel)]="updatedClient.codePostale" required />
+            </div>
+      
+            <div class="form-group">
+                <label>Adresse:</label>
+                <input type="text" name="adresseClient" [(ngModel)]="updatedClient.adresseClient" required />
+            </div>
+      
+            <div class="form-group">
+                <label>Langue:</label>
+                <select name="langue" [(ngModel)]="updatedClient.langue" required>
+                  <option value="">-- Choisir --</option>
+                  <option *ngFor="let l of langues" [value]="l">{{ l }}</option>
+                </select>
+            </div>
+      
+            <div class="form-group">
+                <label>Service:</label>
+                <select name="service" [(ngModel)]="updatedClient.service" required>
+                  <option value="">-- Choisir --</option>
+                  <option *ngFor="let s of services" [value]="s">{{ s }}</option>
+                </select>
+            </div>
+      
+            <div class="form-group">
+                <label>Référence:</label>
+                <input type="text" name="reference" [(ngModel)]="updatedClient.reference" />
+            </div>
+      
+            <div class="form-group">
+                <label>Ville:</label>
+                <select name="villeClient" [(ngModel)]="updatedClient.villeClient" required>
+                  <option value="">-- Choisir une ville --</option>
+                  <option *ngFor="let ville of villes" [value]="ville">{{ ville }}</option>
+                </select>
+            </div>
+          <div style="display: flex; justify-content: center; margin-top: 15px;">
+            <button type="submit" class="submit-btn">Mettre à jour</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

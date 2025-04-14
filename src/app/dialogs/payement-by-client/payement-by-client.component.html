@@ -1,0 +1,71 @@
+
+
+<div class="payment-details-container center-screen">
+    <div class="header">
+      <div class="title">Paiements</div>
+      <button class="close-button" (click)="closeDialog()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  
+    <div class="summary">
+      <div class="amount-due">
+        <div class="label">Montant à payer</div>
+        <div class="value">{{ totalAmountDue }}</div>
+      </div>
+      <div class="remaining-due">
+        <div class="label">Reste à payer</div>
+        <div class="value">{{ remainingAmountDue }}</div>
+      </div>
+      <div class="installments-count">
+        <div class="label">Tranches</div>
+        <div class="value">{{ numberOfInstallments }}</div>
+      </div>
+    </div>
+  
+    <div class="installments-list">
+        <div class="installment-item" 
+        *ngFor="let installment of installments; let i = index"
+        [@slideToggle]="installment.isPaid ? 'paid' : 'unpaid'"
+        [ngClass]="{ 'paid': installment.isPaid, 'unpaid': !installment.isPaid }">
+   
+     <div class="installment-info">
+       <div class="name">{{ installment.name }}</div>
+       <div class="amount">{{ installment.amount }}</div>
+       <div class="due-date">{{ installment.dueDate }}</div>
+     </div>
+   
+     <div class="installment-actions">
+       <div class="status-indicator" 
+            [class.paid]="installment.isPaid" 
+            [class.unpaid]="!installment.isPaid">
+         <svg *ngIf="installment.isPaid" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+           <polyline points="9 11 12 14 22 4"></polyline>
+         </svg>
+         <svg *ngIf="!installment.isPaid" viewBox="0 0 24 24" fill="currentColor">
+           <circle cx="12" cy="12" r="8"></circle>
+         </svg>
+       </div>
+   
+       <button *ngIf="!installment.isPaid" 
+               class="mark-paid-button"
+               (click)="markAsPaid(i)">
+         Mark as Paid
+       </button>
+   
+       <button class="share-button">
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+           <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+           <polyline points="16 6 12 2 8 6"></polyline>
+           <line x1="12" y1="2" x2="12" y2="15"></line>
+         </svg>
+       </button>
+     </div>
+   </div>
+   
+    </div>
+  </div>
