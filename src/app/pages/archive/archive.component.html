@@ -31,14 +31,17 @@
 
         <!-- Pack -->
         <td>
-          <select
-            class="select-btn"
-            [ngClass]="client.service.toLowerCase()"
-            [(ngModel)]="client.service"
-            (change)="changePack(client)">
-            <option *ngFor="let option of packOptions" [value]="option">{{ option }}</option>
-          </select>
-        </td>
+            <select
+              class="select-btn"
+              [ngClass]="client.service.toLowerCase()"
+              [(ngModel)]="client.service"
+              (change)="changePack(client)"
+              disabled
+            >
+              <option *ngFor="let option of packOptions" [value]="option">{{ option }}</option>
+            </select>
+          </td>
+          
 
         <!-- Communication -->
         <td>
@@ -81,16 +84,10 @@
         <!-- Actions -->
        <td>
         <button 
-         *ngIf="!client.payementClient[0]"
-         class="btn btn-sm btn-primary" 
-        (click)="openADDPaymenetDialog(client.idClients)">
-        + Ajouter Paiement
-        </button>
-        <button 
          *ngIf="client.payementClient[0]"
          class="icon-button"
-         (click)="Archiver(client.idClients)">
-         📂
+         (click)="Unarchiver(client.idClients)">
+         🔄
         </button>
       </td>
 

@@ -24,7 +24,6 @@ export class TablesComponent implements OnInit {
     this.loadusers()
   }
 
-<<<<<<< HEAD
   loadusers() {
     this.userserv.getAllUtilisateurs().subscribe(
       (tab) => {
@@ -36,15 +35,6 @@ export class TablesComponent implements OnInit {
     );
   }
   
-=======
-  loadusers(){
-    this.userserv.getAllUtilisateurs().subscribe(
-      (tab)=>(
-        this.listusr=tab
-      )
-    )
-  }
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 
   openAddUserDialog(): void {
 

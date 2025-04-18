@@ -86,41 +86,46 @@
         border-radius: 5px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         transition: all 0.3s ease;
-  
+    
         &.paid {
           background-color: #e6ffe6;
           color: #4caf50;
         }
-  
+    
         &.unpaid {
           background-color: #ffe0e0;
           color: #d32f2f;
         }
-  
+    
+        &.delayed {
+          background-color: #ffcc80;
+          color: #f57c00;
+        }
+    
         .installment-info {
           display: flex;
           gap: 20px;
           align-items: center;
-  
+    
           .name {
             font-weight: bold;
           }
-  
+    
           .amount {
             color: #555;
           }
-  
+    
           .due-date {
             color: #777;
             font-size: 0.9em;
           }
         }
-  
+    
         .installment-actions {
           display: flex;
           align-items: center;
           gap: 10px;
-  
+    
           .status-indicator {
             width: 20px;
             height: 20px;
@@ -128,28 +133,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-  
+    
             &.paid {
               background-color: #4caf50;
               color: #fff;
-  
-              svg {
-                width: 14px;
-                height: 14px;
-              }
             }
-  
+    
             &.unpaid {
               background-color: #f44336;
-  
-              svg {
-                fill: white;
-                width: 10px;
-                height: 10px;
-              }
+            }
+    
+            &.delayed {
+              background-color: #f57c00;
             }
           }
-  
+    
           .mark-paid-button {
             background: none;
             border: 1px solid #4caf50;
@@ -159,32 +157,14 @@
             cursor: pointer;
             font-size: 0.8em;
             transition: background-color 0.3s ease, color 0.3s ease;
-  
+    
             &:hover {
               background-color: #4caf50;
               color: #fff;
             }
           }
-  
-          .share-button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #777;
-            padding: 5px;
-            transition: color 0.3s ease;
-  
-            svg {
-              width: 20px;
-              height: 20px;
-            }
-  
-            &:hover {
-              color: #333;
-            }
-          }
         }
       }
     }
-  }
-  
+    
+}

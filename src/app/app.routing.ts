@@ -5,10 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-<<<<<<< HEAD
 import { ClientByIdComponent } from './dialogs/client-by-id/client-by-id.component';
-=======
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 
 const routes: Routes = [
   {
@@ -33,15 +30,8 @@ const routes: Routes = [
         loadChildren: () => import('src/app/layouts/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule)
       }
     ]
-<<<<<<< HEAD
   },    { path: 'clientID',           component: ClientByIdComponent },
 
-=======
-  }, {
-    path: '**',
-    redirectTo: 'dashboard'
-  }
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 ];
 
 @NgModule({

@@ -48,8 +48,9 @@ export class AddCondidatComponent implements OnInit {
       service: '',
       reference: '',
       archive: 'NON_ARCHIVER',
-      clientCreatedby: {} as any,
-      assignedTo: {} as any,
+      clientCreatedby: {} as Utilisateur,
+      assignedTo: {} as Utilisateur,
+      payementClient: [],
       documents: []
     };
   }
@@ -57,18 +58,22 @@ export class AddCondidatComponent implements OnInit {
   submitForm() {
     this.newClient.assignedTo = this.selectedAdmin;
     const assignedAdminEmail = this.selectedAdmin?.adresseMail || '';
-
+    
+    console.log('Admin Email:', this.email);
+    console.log('Assigned Admin Email:', assignedAdminEmail);
+  
     this.clientsService.createClient(this.newClient, this.email, assignedAdminEmail)
       .subscribe({
         next: (created) => {
           console.log('Client created:', created);
-          this.dialogRef.close(created); // To update the list outside
+          this.dialogRef.close(created);
         },
         error: (err) => {
           console.error('Error creating client:', err);
         }
       });
   }
+  
 
   openUsersDialog(): void {
     const dialogRef = this.dialog.open(UserslistforaddtaskComponent, {

@@ -1,4 +1,5 @@
-import { Document } from "./Document.model";
+import { ClientDocument } from "./ClientDocument.model";
+import { Payement } from "./Payement.model";
 import { Utilisateur } from "./Utilisateur.model";
 
 export class Clients {
@@ -17,6 +18,6 @@ export class Clients {
     archive!: string; 
     clientCreatedby!: Utilisateur;
     assignedTo!: Utilisateur;
-   // payementClient!: Payement[];
-    documents!: Document[];
+    payementClient!: Payement[];
+    documents!: ClientDocument[];
   }

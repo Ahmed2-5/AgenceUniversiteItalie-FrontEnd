@@ -29,10 +29,13 @@ export class ClientsComponent implements OnInit {
 
   loadClients() {
     this.clientsService.getAllClients().subscribe({
-      next: (data) => this.clients = data,
+      next: (data) => {
+        this.clients = data.filter(client => client.archive === 'NON_ARCHIVER');
+      },
       error: (err) => console.error('Error loading clients', err)
     });
   }
+  
 
   openAddDialog() {
     const dialogRef = this.dialog.open(AddCondidatComponent, {

@@ -3,7 +3,7 @@
     <!-- Dynamic Add Form -->
     <div class="add-form-container">
       <h3>Ajouter un Candidat</h3>
-      <form (ngSubmit)="submitForm()" #addForm="ngForm">
+      <form #addForm="ngForm">
         <div class="form-group">
           <label>Nom:</label>
           <input type="text" name="nomClient" [(ngModel)]="newClient.nomClient" required />
@@ -83,7 +83,7 @@
         </div>
 
         <div style="display: flex; justify-content: center; margin-top: 15px;">
-          <button type="submit" class="submit-btn">Ajouter</button>
+          <button type="button" class="submit-btn" (click)="submitForm()">Ajouter</button>
         </div>
       </form>
     </div>

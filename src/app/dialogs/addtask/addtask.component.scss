@@ -42,44 +42,11 @@
   width: 100%;
 }
 
-<<<<<<< HEAD
 .form-group select {
   width: 100%;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
-=======
-.platform-cards {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-  flex-wrap: wrap;
-}
-
-.platform-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  width: 100px;
-  height: 100px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-
-.platform-card.selected {
-  background-color: #851345;
-  border-color: #851345;
-  color: #fff;
-}
-
-.platform-card i {
-  font-size: 2rem;
-  margin-bottom: 5px;
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 }
 
 .btn-primary {

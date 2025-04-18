@@ -52,7 +52,6 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                 </div>
-<<<<<<< HEAD
                 <input 
                   class="form-control" 
                   id="inputPassword14" 
@@ -66,18 +65,12 @@
                     <i class="fa" [ngClass]="isPasswordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
                   </button>
                 </div>
-=======
-                <input class="form-control" id="inputPassword14" formControlName="password" placeholder="Your Password" type="password">
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
               </div>
               <div class="alert alert-danger" role="alert" *ngIf="showPasswordError && forminput.controls['password'].errors?.['required']">
                 Password is required.
               </div>
             </div>
-<<<<<<< HEAD
             
-=======
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
     
             <div class="text-center">
               <button type="button" (click)="login()" class="btn btn-primary my-4">Sign in</button>

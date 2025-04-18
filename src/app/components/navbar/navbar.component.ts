@@ -24,11 +24,7 @@ export class NavbarComponent implements OnInit {
   
   constructor(location: Location,  private element: ElementRef, private router: Router,
     private authserv:AuthService,
-<<<<<<< HEAD
   //  private notificationService: NotificationService,
-=======
-    private notificationService: NotificationService,
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
     private dialog: MatDialog
   ) {
     this.location = location;
@@ -41,12 +37,9 @@ export class NavbarComponent implements OnInit {
       this.authserv.getUtilisateurByEmail(email).subscribe({
         next: (data) => {
           this.user = data;
-<<<<<<< HEAD
           if (this.user.profileImageUrl) {
             this.user.profileImageUrl = `http://localhost:8082/api/utilisateurs/uploads/${data.profileImageUrl}`;
          }
-=======
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
         },
         error: (error) => {
           console.error("Error fetching user:", error);
@@ -81,11 +74,7 @@ export class NavbarComponent implements OnInit {
     ).subscribe(filteredNotifications => {
       this.notifications = filteredNotifications;
     });
-<<<<<<< HEAD
   } 
-=======
-  } */
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 
     openNotifdialog(event: MouseEvent) {
       const target = event.currentTarget as HTMLElement;
@@ -117,16 +106,7 @@ export class NavbarComponent implements OnInit {
       });
     }
     
-<<<<<<< HEAD
      getUnreadNotificationCount(): number {
     return this.notifications.length;
   }*/
-=======
-    
-    
-
-  getUnreadNotificationCount(): number {
-    return this.notifications.length;
-  }
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 }

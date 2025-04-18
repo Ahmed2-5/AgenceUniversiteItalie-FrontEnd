@@ -1,7 +1,7 @@
 import { Clients } from "./Clients.model";
 import { Utilisateur } from "./Utilisateur.model";
 
-export class Document {
+export class ClientDocument {
 
   idDocument!: number;
   nom!: string;

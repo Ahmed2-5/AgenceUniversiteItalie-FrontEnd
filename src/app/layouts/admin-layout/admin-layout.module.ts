@@ -16,7 +16,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AdduserComponent } from 'src/app/dialogs/adduser/adduser.component';
 import { UpdateuserComponent } from 'src/app/dialogs/updateuser/updateuser.component';
 import { NotificationsComponent } from 'src/app/dialogs/notifications/notifications.component';
-<<<<<<< HEAD
 import { UserslistforaddtaskComponent } from 'src/app/dialogs/userslistforaddtask/userslistforaddtask.component';
 import { AddtaskComponent } from 'src/app/dialogs/addtask/addtask.component';
 import { TaskdetailsComponent } from 'src/app/dialogs/taskdetails/taskdetails.component';
@@ -28,8 +27,8 @@ import { ClientByIdComponent } from 'src/app/dialogs/client-by-id/client-by-id.c
 import { AddCondidatComponent } from 'src/app/dialogs/add-condidat/add-condidat.component';
 import { ListClientsAdvancedComponent } from 'src/app/pages/list-clients-advanced/list-clients-advanced.component';
 import { UpdateCondidatComponent } from 'src/app/dialogs/update-condidat/update-condidat.component';
-=======
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
+import { AddPayementToCLientComponent } from 'src/app/dialogs/add-payement-to-client/add-payement-to-client.component';
+import { ArchiveComponent } from 'src/app/pages/archive/archive.component';
 
 @NgModule({
   imports: [
@@ -50,7 +49,6 @@ import { UpdateCondidatComponent } from 'src/app/dialogs/update-condidat/update-
     MapsComponent,
     AdduserComponent,
     UpdateuserComponent,
-<<<<<<< HEAD
     NotificationsComponent,
     UserslistforaddtaskComponent,
     AddtaskComponent,
@@ -62,10 +60,9 @@ import { UpdateCondidatComponent } from 'src/app/dialogs/update-condidat/update-
     ClientByIdComponent,
     AddCondidatComponent,
     ListClientsAdvancedComponent,
-    UpdateCondidatComponent
-=======
-    NotificationsComponent
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
-  ]
+    UpdateCondidatComponent,
+    AddPayementToCLientComponent,
+    ArchiveComponent
+    ]
 })
 export class AdminLayoutModule {}

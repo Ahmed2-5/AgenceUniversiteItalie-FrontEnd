@@ -16,10 +16,7 @@ export class AdduserComponent implements OnInit {
 
   forminput!: FormGroup;
   submitted: boolean = false; // Track form submission
-<<<<<<< HEAD
   selectedImage: File | null = null; // Store selected image file
-=======
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 
   constructor(
     private fb: FormBuilder,
@@ -49,7 +46,6 @@ export class AdduserComponent implements OnInit {
   }
 
   Add() {
-<<<<<<< HEAD
     let usr = new Utilisateur();
     usr.adresseMail = this.forminput.controls['email'].value;
 
@@ -94,41 +90,14 @@ export class AdduserComponent implements OnInit {
     this.userserv.uploadProfileImage(file, userId).subscribe(
       (response) => {
         console.log('Image uploaded successfully:', response);
-=======
-    
-    let usr = new Utilisateur()
-
-    usr.adresseMail= this.forminput.controls['email'].value
-    this.userserv.getRoleByLibelleRole(this.forminput.controls['role'].value).subscribe((d)=>{
-          usr.role=d;
-    })
-    usr.nom= this.forminput.controls['lname'].value
-    usr.prenom= this.forminput.controls['fname'].value 
-    usr.motDePasse=this.generatePassword(8)
-    this.userserv.createAdmin(
-      usr,
-      sessionStorage.getItem('email') || '' 
-    ).subscribe(
-      (response: any) => {
-        console.log(response);
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
         this.closeDialog();
         this.alertWithSuccess();
       },
       (error) => {
-<<<<<<< HEAD
         console.error('Error uploading image:', error);
         this.alertWithError('Failed to upload image.');
       }
     );
-=======
-        console.log(error);
-        
-        this.alertWithError("Email is already in use !!!");
-      }
-    );
-    
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
   }
 
   closeDialog(): void {

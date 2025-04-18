@@ -1,0 +1,29 @@
+<div class="page-layout center-screen">
+    <div class="form-and-table">
+      <div class="add-form-container">
+        <h3>Ajouter un Paiement</h3>
+  
+        <form [formGroup]="payementForm" (ngSubmit)="submitForm()">
+          <div class="form-group">
+            <label for="montant">Montant total à payer:</label>
+            <input type="number" formControlName="montant" required placeholder="ex: 500" />
+          </div>
+  
+          <div class="form-group">
+            <label for="nombreTranches">Nombre de tranches:</label>
+            <select formControlName="nombreTranches">
+              <option *ngFor="let tranche of [1,2,3,4,5]" [value]="tranche">{{ tranche }}</option>
+            </select>
+          </div>
+  
+          <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+            <button type="button" class="submit-btn" (click)="closeDialog()">Annuler</button>
+            <button type="submit" class="submit-btn" [disabled]="payementForm.invalid || isSubmitting">
+              {{ isSubmitting ? 'En cours...' : 'Ajouter' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

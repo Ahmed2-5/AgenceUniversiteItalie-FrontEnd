@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,36 +5,23 @@ import { AddtaskComponent } from '../dialogs/addtask/addtask.component';
 import { Observable } from 'rxjs';
 import { Tache } from '../models/Tache.model';
 import { Utilisateur } from '../models/Utilisateur.model';
-=======
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { AddtaskComponent } from '../dialogs/addtask/addtask.component';
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-<<<<<<< HEAD
   private baseUrl = 'http://localhost:8082/api/Taches';
 
   constructor(private httpclt: HttpClient,private dialog: MatDialog) {}
 
   openAddtaskDialog(): void {
-=======
-  constructor(private httpclt: HttpClient,private dialog: MatDialog) {}
-
-openAddtaskDialog(): void {
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 
     const dialogRef = this.dialog.open(AddtaskComponent, {});
     dialogRef.afterClosed().subscribe(result => {
       console.log('Dialog closed with result:', result);
     });
   }
-<<<<<<< HEAD
 
   // Create Tache
   createTache(tache: Tache, superAdminEmail: string, adminIds: number[]): Observable<Tache> {
@@ -121,6 +107,4 @@ openAddtaskDialog(): void {
   countTasksDoneByUser(userId: number): Observable<number> {
     return this.httpclt.get<number>(`${this.baseUrl}/countTasksDoneByUser/${userId}`);
   }
-=======
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 }

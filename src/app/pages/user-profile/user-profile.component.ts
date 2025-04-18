@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-=======
-import { Component, OnInit } from '@angular/core';
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 import { Router } from '@angular/router';
 import { Utilisateur } from 'src/app/models/Utilisateur.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -16,10 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class UserProfileComponent implements OnInit {
 
   user: Utilisateur = new Utilisateur();
-<<<<<<< HEAD
   @ViewChild('fileInput') fileInput!: ElementRef;
-=======
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 
   constructor(private route: Router, private userserv: UserService,private authserv:AuthService) { }
 
@@ -30,13 +23,10 @@ export class UserProfileComponent implements OnInit {
       this.authserv.getUtilisateurByEmail(email).subscribe({
         next: (data) => {
           this.user = data;
-<<<<<<< HEAD
           console.log(data.profileImageUrl)
           if (this.user.profileImageUrl) {
              this.user.profileImageUrl = `http://localhost:8082/api/utilisateurs/uploads/${data.profileImageUrl}`;
           }
-=======
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
         },
         error: (error) => {
           console.error("Error fetching user:", error);
@@ -59,7 +49,6 @@ export class UserProfileComponent implements OnInit {
       }
     });
   }
-<<<<<<< HEAD
 
   triggerFileInput(): void {
     this.fileInput.nativeElement.click();
@@ -88,6 +77,4 @@ export class UserProfileComponent implements OnInit {
   }
 
  
-=======
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 }

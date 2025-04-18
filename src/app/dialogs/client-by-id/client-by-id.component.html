@@ -1,68 +1,81 @@
-<div class="app-container">
+<div class="app-container center-screen">
+  <div class="header">
+    <div class="title">Profil du Client</div> <!-- Optional title -->
+    <button class="close-button" (click)="closeDialog()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>  
     <div class="main-grid">
-      <section class="profile-info">
-        <div class="profile-header">
-          <div class="profile-image">
-            <a href="javascript:void(0)">
-              <img
-                [src]="'assets/img/theme/team-2-800x800.jpg'"
-                class="rounded-circle"
-                (click)="triggerFileInput()"
-                style="cursor: pointer;"
-              >
-            </a>
-          </div>
-          <input 
-            type="file" 
-            #fileInput 
-            (change)="onFileSelected($event)" 
-            style="display: none;" 
-            accept="image/*"
-          >
-        </div>
-      
+      <section class="profile-info"> 
         <div class="profile-details">
-          <p><strong>Nom et Prénom:</strong> Ahmed Bougacha</p>
-          <p><strong>Date naissance:</strong> 05/02/1998</p>
-          <p><strong>Adresse e-mail:</strong> Bougacha.ahmed98gmail.com</p>
-          <p><strong>numéro téléphone:</strong> +21656735416</p>
-          <p><strong>Langue:</strong> Italie</p>
-          <p><strong>Code postal:</strong> 2000</p>
-          <p><strong>Adresse:</strong> 6 rue ahla wasahla</p>
-          <p><strong>ville:</strong> Tunis</p>
-          <p><strong>Gérer par:</strong> Nour</p>
+          <p><strong>Nom et Prénom:</strong>  {{client.prenomClient}} {{client.nomClient}}</p>
+          <p><strong>Date naissance:</strong> {{client.dateNaissanceClient}} </p>
+          <p><strong>Adresse e-mail:</strong> {{client.emailClient}} </p>
+          <p><strong>numéro téléphone:</strong> {{client.telephoneClient}} </p>
+          <p><strong>Langue:</strong> {{client.langue}}</p>
+          <p><strong>ville:</strong> {{client.villeClient}}</p>
+          <p><strong>Adresse:</strong> {{client.adresseClient}} </p>
+          <p><strong>Code postal:</strong> {{client.codePostale}} </p>
+          <p><strong>Service:</strong> {{client.service}} </p>
+          <p><strong>Gérer par:</strong> {{client.assignedTo.prenom}} {{client.assignedTo.nom}}</p>
         </div>
-      
-        <button class="see-more">
-          Voir plus
-        </button>
       </section>
-      
-          
-  
       <section class="documents">
         <div class="doc-card" *ngFor="let doc of documents">
-            <div class="doc-img">
-                <img [src]="doc.isEmpty ? 'assets/icons/vide.png' : 'assets/icons/file.png'" alt="document icon" />
-            </div>
-            <p>{{ doc.name }}</p>
-          <div class="doc-actions">
-            <button class="btn green">Modifier</button>
+          <div class="doc-img">
+            <img src="assets/icons/file.png" alt="document icon" />
           </div>
+          <p class="doc-name" (click)="openDocument(doc)" style="cursor: pointer; text-decoration: underline;">
+            <!-- When not in edit mode, show the document name; when in edit mode, show an input box -->
+            <span *ngIf="!editMode[doc.idDocument]">{{ doc.nom }}</span>
+            <input *ngIf="editMode[doc.idDocument]"
+                   [(ngModel)]="editedName[doc.idDocument]"
+                   (blur)="saveDocumentName(doc.idDocument)"
+                   (keydown.enter)="saveDocumentName(doc.idDocument)"
+                   autofocus />
+          </p>
+          <div class="doc-actions">
+            <!-- Rename icon -->
+            <button class="icon-btn" (click)="toggleEditMode(doc.idDocument, doc.nom, $event)" title="Renommer">
+              🖊️
+            </button>
+          
+            <!-- Delete icon -->
+            <button class="icon-btn" (click)="deleteDocument(doc)" title="Supprimer">
+              🗑️
+            </button>
+          </div>
+          
         </div>
-      </section>
   
-      <section class="payment-summary">
-        <div class="summary-details">
-          <p><strong>Montant à payer:</strong> 5900 DT</p>
-          <p class="remaining"><strong>Reste:</strong> 3500 DT</p>
-          <p><strong>Tranches:</strong> 5</p>
+        <!-- Upload Card -->
+        <div class="doc-card upload-card" (click)="triggerFileInput()">
+          <div class="doc-img">
+            <img src="assets/icons/vide.png" alt="upload icon" />
+          </div>
+          <div class="doc-actions">
+            <button class="btn green">Ajouter un fichier</button>
+          </div>
+          <input id="fileInput" type="file" (change)="onFileSelected($event)" hidden />
         </div>
-        <button class="see-more" (click)="openPaymenetDialog(1)">
-          Voir plus
-        </button>
       </section>
       
+      <section class="payment-summary">
+        <div class="summary-details">
+          <p *ngIf="!payement"><em>Aucun paiement enregistré.</em></p>
+
+          <p *ngIf="payement"><strong>Montant à payer:</strong> {{ montantTotal }} DT</p>
+          <p *ngIf="payement" class="remaining"><strong>Reste:</strong> {{ reste }} DT</p>
+          <p *ngIf="payement"><strong>Tranches:</strong> {{ nombreTranches }}</p>
+        </div>
+        <button class="see-more" (click)="openPaymenetDialog(data.clientID)">
+          Voir plus
+        </button>
+      </section>    
     </div>
   
     <footer class="actions">

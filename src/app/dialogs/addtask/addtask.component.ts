@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskRequest } from 'src/app/models/TaskRequest.model';
@@ -8,8 +7,6 @@ import { TaskService } from 'src/app/services/task.service';
 import { Tache } from './../../models/Tache.model';
 import { UserslistforaddtaskComponent } from '../userslistforaddtask/userslistforaddtask.component';
 import { UserService } from 'src/app/services/user.service';
-=======
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 
 @Component({
   selector: 'app-addtask',
@@ -18,7 +15,6 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AddtaskComponent implements OnInit {
 
-<<<<<<< HEAD
   taskForm!: FormGroup;
   taskrequest: TaskRequest = new TaskRequest();
   selectedUsersIDs: number[] = [];
@@ -142,11 +138,3 @@ formatDateForServer(dateStr: string): string {
   }
   
 }
-=======
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f

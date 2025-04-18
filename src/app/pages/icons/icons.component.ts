@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import { MatDialog } from '@angular/material/dialog';
 import { CommentsComponent } from 'src/app/dialogs/comments/comments.component';
 import { TaskdetailsComponent } from 'src/app/dialogs/taskdetails/taskdetails.component';
 import { Tache } from 'src/app/models/Tache.model';
-=======
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 import { TaskService } from 'src/app/services/task.service';
 
 @Component({
@@ -16,7 +13,6 @@ import { TaskService } from 'src/app/services/task.service';
 export class IconsComponent implements OnInit {
 
   searchTerm: string = '';
-<<<<<<< HEAD
   listoftasks: Tache[] = [];
   email: string = '';
   editingTaskId: number | null = null;
@@ -120,39 +116,10 @@ export class IconsComponent implements OnInit {
       case 'PAS_ENCORE': return 'bg-light-blue';
       case 'DONE': return 'bg-green';
       case 'EN_COURS': return 'bg-light-red';
-=======
-  listoftasks = [
-    { taskTitle: 'Task 1', taskDescription: 'Description for Task 1', timeAgo: '2 hours ago', deadline: '3 days left', taskstatus: 'In Progress' },
-    { taskTitle: 'Task 2', taskDescription: 'Description for Task 2', timeAgo: '5 hours ago', deadline: '1 day left', taskstatus: 'Completed' },
-    { taskTitle: 'Task 3', taskDescription: 'Description for Task 3', timeAgo: '1 day ago', deadline: 'Expired', taskstatus: 'Expired' }
-  ];
-
-  constructor(
-    private taskserv : TaskService
-  ) {}
-
-  ngOnInit() {}
-
-  filterTasks() {
-    if (!this.searchTerm.trim()) {
-      return this.listoftasks;
-    }
-    return this.listoftasks.filter(task =>
-      task.taskTitle.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-  }
-
-  getTaskStatusClass(status: string) {
-    switch (status) {
-      case 'In Progress': return 'bg-light-blue';
-      case 'Completed': return 'bg-green';
-      case 'Expired': return 'bg-light-red';
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
       default: return 'bg-secondary';
     }
   }
 
-<<<<<<< HEAD
   getPriorityBadge(priority: string): string {
     switch (priority) {
       case 'Aucun': return 'A';
@@ -281,9 +248,4 @@ export class IconsComponent implements OnInit {
     });
   }
   
-=======
-  openDialog(): void {
-    this.taskserv.openAddtaskDialog();
-  }
->>>>>>> 135e5dce99dd08a31355f1be752cf88c1d5af37f
 }
