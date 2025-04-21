@@ -6,6 +6,7 @@ import { Clients } from 'src/app/models/Clients.model';
 import { ClientsService } from 'src/app/services/clients.service';
 import { Utilisateur } from './../../models/Utilisateur.model';
 import { UserService } from './../../services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-clients-advanced',
@@ -100,11 +101,29 @@ export class ListClientsAdvancedComponent implements OnInit {
       this.clientsService.archiveClient(clientID).subscribe({
         next: (updatedClient) => {
           console.log('Client archived successfully:');
-          this.loadClients()
         },
         error: (err) => {
           console.error('Error!!', err);
         }
       });
    }
+
+   confirmArchiveBox(clientID: number) {
+       Swal.fire({
+         title: 'Are you sure you want to archive this client?',
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonText: 'Yes, archive it',
+         cancelButtonText: 'No, keep it'
+       }).then((result) => {
+         if (result.value) {
+           this.Archiver(clientID); // Activate user
+           Swal.fire("client archived", "This client has been archived", "success").then(() => {
+            this.loadClients()
+            // Reload the page after activation
+           });
+         }
+       });
+     }
+     
 }

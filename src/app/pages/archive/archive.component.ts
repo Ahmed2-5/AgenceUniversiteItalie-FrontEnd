@@ -5,6 +5,7 @@ import { ClientByIdComponent } from 'src/app/dialogs/client-by-id/client-by-id.c
 import { Clients } from 'src/app/models/Clients.model';
 import { ClientsService } from 'src/app/services/clients.service';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-archive',
@@ -106,5 +107,25 @@ export class ArchiveComponent implements OnInit {
           }
         });
      }
+
+     confirmUnarchiveBox(clientID: number) {
+            Swal.fire({
+              title: 'Are you sure you want to unarchive this client?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, unarchive it',
+              cancelButtonText: 'No, keep it'
+            }).then((result) => {
+              if (result.value) {
+                this.Unarchiver(clientID); // Activate user
+                Swal.fire("client unarchived", "This client has been unarchived", "success").then(() => {
+                 this.loadClients()
+                 // Reload the page after activation
+                });
+              }
+            });
+          }
+
+     
   }
   

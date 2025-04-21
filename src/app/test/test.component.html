@@ -1,0 +1,42 @@
+<div class="credentials-container">
+  <div class="credential-card" *ngFor="let item of credentials">
+    <div class="logo-section">
+      <img [src]="item.logo" alt="Logo" />
+    </div>
+    <div class="info-section">
+      <div>
+        <strong>E-mail</strong><br />
+        <ng-container *ngIf="!item.editMode; else editEmail">
+          {{ item.email }}
+        </ng-container>
+        <ng-template #editEmail>
+          <input [(ngModel)]="item.email" class="edit-input" />
+        </ng-template>
+      </div>
+      <div>
+        <strong>Mot de passe</strong><br />
+        <ng-container *ngIf="!item.editMode; else editPass">
+          {{ item.password }}
+        </ng-container>
+        <ng-template #editPass>
+          <input [(ngModel)]="item.password" class="edit-input" />
+        </ng-template>
+      </div>
+    </div>
+    
+    <div class="edit-section">
+      <span class="edit-icon" (click)="toggleEdit(item)">📝</span>
+    </div>    
+  </div>
+  <div class="add-btn-wrapper">
+    <button class="seeUniversity-btn" (click)="openUniversityDialog()">University List</button>
+  </div>
+  <div class="action-bar">
+    <p>Rendez-vous : {{ rdvDate | date: 'dd/MM/yyyy' }}</p>
+    <div class="buttons">
+      <button class="circle-btn success">✔</button>
+      <button class="circle-btn danger">✖</button>
+    </div>
+    <button class="plus-btn">+</button>
+  </div>
+</div>

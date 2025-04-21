@@ -9,6 +9,7 @@ import { TestComponent } from 'src/app/test/test.component';
 import { ClientsComponent } from 'src/app/pages/clients/clients.component';
 import { ListClientsAdvancedComponent } from 'src/app/pages/list-clients-advanced/list-clients-advanced.component';
 import { ArchiveComponent } from 'src/app/pages/archive/archive.component';
+import { ClientByIdComponent } from 'src/app/dialogs/client-by-id/client-by-id.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -19,5 +20,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'clients',           component: ClientsComponent },
     { path: 'clientsAV',           component: ListClientsAdvancedComponent },
     { path: 'archive',           component: ArchiveComponent },
-    { path: 'test',           component: TestComponent }
+    { path: 'clientID',           component: ClientByIdComponent }
+    
 ];

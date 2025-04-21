@@ -20,7 +20,6 @@ import { UserslistforaddtaskComponent } from 'src/app/dialogs/userslistforaddtas
 import { AddtaskComponent } from 'src/app/dialogs/addtask/addtask.component';
 import { TaskdetailsComponent } from 'src/app/dialogs/taskdetails/taskdetails.component';
 import { CommentsComponent } from 'src/app/dialogs/comments/comments.component';
-import { TestComponent } from 'src/app/test/test.component';
 import { ClientsComponent } from 'src/app/pages/clients/clients.component';
 import { PayementByClientComponent } from 'src/app/dialogs/payement-by-client/payement-by-client.component';
 import { ClientByIdComponent } from 'src/app/dialogs/client-by-id/client-by-id.component';
@@ -29,10 +28,11 @@ import { ListClientsAdvancedComponent } from 'src/app/pages/list-clients-advance
 import { UpdateCondidatComponent } from 'src/app/dialogs/update-condidat/update-condidat.component';
 import { AddPayementToCLientComponent } from 'src/app/dialogs/add-payement-to-client/add-payement-to-client.component';
 import { ArchiveComponent } from 'src/app/pages/archive/archive.component';
+import { UniversityComponent } from 'src/app/dialogs/university/university.component';
 
 @NgModule({
   imports: [
-    CommonModule,
+  CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     HttpClientModule,
@@ -54,7 +54,6 @@ import { ArchiveComponent } from 'src/app/pages/archive/archive.component';
     AddtaskComponent,
     TaskdetailsComponent,
     CommentsComponent,
-    TestComponent,
     ClientsComponent,
     PayementByClientComponent,
     ClientByIdComponent,
@@ -62,7 +61,8 @@ import { ArchiveComponent } from 'src/app/pages/archive/archive.component';
     ListClientsAdvancedComponent,
     UpdateCondidatComponent,
     AddPayementToCLientComponent,
-    ArchiveComponent
+    ArchiveComponent,
+    UniversityComponent
     ]
 })
 export class AdminLayoutModule {}

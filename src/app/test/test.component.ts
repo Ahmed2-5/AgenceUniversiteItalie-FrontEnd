@@ -1,5 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { UniversityComponent } from '../dialogs/university/university.component';
 
 @Component({
   selector: 'app-test',
@@ -18,10 +20,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TestComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
+  credentials = [
+    {
+      logo: '/assets/img/outlook.png',
+      email: 'Bougachaahmed98@gmail.com',
+      password: 'Ahlawasahla!',
+      editMode: false
+    },
+    {
+      logo: '/assets/img/brand/red.png',
+      email: 'Bougachaahmed98@gmail.com',
+      password: 'Ahlawasahla!',
+      editMode: false
+    },
+    {
+      logo: '/assets/img/prenomtami.png',
+      email: 'Bougachaahmed98@gmail.com',
+      password: 'Ahlawasahla!',
+      editMode: false
+    }
+  ];
+  
+  toggleEdit(item: any) {
+    item.editMode = !item.editMode;
+  }
+  
+  rdvDate = new Date('2025-05-02');
+  
 
-    
+openUniversityDialog() {
+  this.dialog.open(UniversityComponent, {
+    width: '500px'
+  });
+}
 }
