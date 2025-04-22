@@ -15,7 +15,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/clients', title: 'List of candidates',      icon: 'fa fa-users text-purple',      class: '' },
     { path: '/clientsAV', title: 'List of clients',  icon: 'fa fa-briefcase text-orange', class: '' },
     { path: '/archive', title: 'Archive', icon: 'fa fa-archive text-muted', class: '' },
-    { path: '/login', title: 'Login',  icon:'ni-key-25 text-info', class: '' },
+ //   { path: '/login', title: 'Login',  icon:'ni-key-25 text-info', class: '' },
 ];
 
 @Component({

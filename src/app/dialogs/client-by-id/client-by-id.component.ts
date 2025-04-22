@@ -7,6 +7,8 @@ import { ClientsService } from 'src/app/services/clients.service';
 import { Clients } from 'src/app/models/Clients.model';
 import { ClientDocument } from 'src/app/models/ClientDocument.model';
 import { Payement } from 'src/app/models/Payement.model';
+import { CredentialByClientComponent } from '../credential-by-client/credential-by-client.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-client-by-id',
@@ -175,45 +177,26 @@ export class ClientByIdComponent implements OnInit {
       });
     }
 
-  /*  triggerReplaceInput(doc: ClientDocument): void {
-      const input = document.getElementById('replaceInput_' + doc.idDocument) as HTMLInputElement;
-      input?.click();
-    }
-
-    replaceDocument(event: Event, doc: ClientDocument, newFileName: string): void {
-      const input = event.target as HTMLInputElement;
-      if (!input.files?.length) return;
-
-      const file = input.files[0];
-      const formData = new FormData();
-
-      // Append the file to the FormData
-      formData.append("file", file);
-
-      // Append the new file name to the FormData
-      formData.append("newFileName", newFileName);
-
-      // Call the service to replace the document
-      this.clientserv.replaceDocument(doc.idDocument, formData).subscribe({
-        next: (updatedDoc) => {
-          // Update the documents array with the new document details
-          const docIndex = this.documents.findIndex(d => d.idDocument === doc.idDocument);
-          if (docIndex !== -1) {
-            this.documents[docIndex] = updatedDoc; // Update the document in the array
-          }
-          console.log('Document updated successfully:', updatedDoc);
-        },
-        error: (err) => {
-          console.error("Error replacing document:", err);
-        }
-      });
-
-      // Clear the file input after uploading
-      input.value = '';
-    }*/
-
     openPaymenetDialog(clientID: number) {
       const dialogRef = this.dialog.open(PayementByClientComponent, {
+        data: { clientID: clientID },
+        disableClose: true, // This ensures the dialog closes when clicking outside
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.loadPaiements(this.data.clientID);
+          console.log('Dialog closed with result:', result);
+        }
+      });
+    }
+
+    closeDialog(): void {
+      this.dialogRef.close();
+    }
+
+    toggleCredential(clientID: number) {
+      const dialogRef = this.dialog.open(CredentialByClientComponent, {
         data: { clientID: clientID },
         disableClose: true, // This ensures the dialog closes when clicking outside
       });
@@ -225,7 +208,31 @@ export class ClientByIdComponent implements OnInit {
       });
     }
 
-    closeDialog(): void {
-      this.dialogRef.close();
-    }
+    Archiver(clientID: number) {
+          this.clientserv.archiveClient(clientID).subscribe({
+            next: (updatedClient) => {
+              console.log('Client archived successfully:');
+            },
+            error: (err) => {
+              console.error('Error!!', err);
+            }
+          });
+       }
+    
+       confirmArchiveBox() {
+           Swal.fire({
+             title: 'Are you sure you want to archive this client?',
+             icon: 'warning',
+             showCancelButton: true,
+             confirmButtonText: 'Yes, archive it',
+             cancelButtonText: 'No, keep it'
+           }).then((result) => {
+             if (result.value) {
+               this.Archiver(this.data.clientID); // Activate user
+               Swal.fire("client archived", "This client has been archived", "success").then(() => {
+                this.closeDialog()
+               });
+             }
+           });
+         }
 }

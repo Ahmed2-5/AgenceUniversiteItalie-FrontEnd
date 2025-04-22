@@ -230,7 +230,7 @@
     }
 
     .delete {
-      background-color: #b1777d;
+      background-color: #eba3c2;
       color: #fff;
       &:hover {
         background-color: #332224;
@@ -249,4 +249,16 @@
     width: 20px;
     height: 20px;
   }
+}
+
+.payment-and-credentials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.credential-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }

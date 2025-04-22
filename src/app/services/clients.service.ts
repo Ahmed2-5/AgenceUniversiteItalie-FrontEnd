@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { ClientDocument } from '../models/ClientDocument.model';
 import { Payement } from '../models/Payement.model';
 import { Tranche } from '../models/Tranche.model';
+import { Credential } from '../models/Credential.model';
+import { UniversiteCredential } from '../models/UniversiteCredential.model';
 
 @Injectable({
   providedIn: 'root'
@@ -131,4 +133,65 @@ export class ClientsService {
   getResteAPayer(paiementId: number): Observable<number> {
     return this.http.get<number>(`${this.apiUrl1}/${paiementId}/reste`);
   }
+
+  private apiUrl2 = 'http://localhost:8082/api/Credential';
+
+  // 🔹 Get all credentials
+  getAllCredentials(): Observable<Credential[]> {
+    return this.http.get<Credential[]>(`${this.apiUrl2}/GetAllCredentials`);
+  }
+
+  // 🔹 Get a credential by ID
+  getCredentialById(credentialId: number): Observable<Credential> {
+    return this.http.get<Credential>(`${this.apiUrl2}/${credentialId}`);
+  }
+
+  // 🔹 Get credential by client ID
+  getCredentialByClientId(clientId: number): Observable<Credential> {
+    return this.http.get<Credential>(`${this.apiUrl2}/Clients/${clientId}`);
+  }
+
+  // 🔹 Create a new credential
+  createCredential(clientId: number, credential: Credential): Observable<Credential> {
+    return this.http.post<Credential>(`${this.apiUrl2}/createCredential/${clientId}`, credential);
+  }
+
+  // 🔹 Update credential
+  updateCredential(credentialId: number, credential: Credential): Observable<Credential> {
+    return this.http.put<Credential>(`${this.apiUrl2}/${credentialId}`, credential);
+  }
+
+  // 🔹 Delete credential
+  deleteCredential(credentialId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl2}/deleteCredential/${credentialId}`);
+  }
+
+
+  private apiUrl3 = 'http://localhost:8082/api/Universite-Credential';
+
+  // 🔹 1. Add UniversiteCredential to Credential
+  addUniversiteCredentialToCredential(credentialId: number, data: UniversiteCredential): Observable<UniversiteCredential> {
+    return this.http.post<UniversiteCredential>(`${this.apiUrl3}/credential/${credentialId}`, data);
+  }
+
+  // 🔹 2. Delete UniversiteCredential by ID
+  deleteUniversiteCredential(universiteCredentialId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl3}/deleteUniversiteCredential/${universiteCredentialId}`);
+  }
+
+  // 🔹 3. Get UniversiteCredential by ID
+  getUniversiteCredentialById(id: number): Observable<UniversiteCredential> {
+    return this.http.get<UniversiteCredential>(`${this.apiUrl3}/getUniversiteCredentialById/${id}`);
+  }
+
+  // 🔹 4. Update UniversiteCredential
+  updateUniversiteCredential(id: number, data: UniversiteCredential): Observable<UniversiteCredential> {
+    return this.http.put<UniversiteCredential>(`${this.apiUrl3}/UpdateUniversiteCredential/${id}`, data);
+  }
+
+  // 🔹 5. Get all UniversiteCredentials by Credential ID
+  getUniversiteCredentialsByCredentialId(credentialId: number): Observable<UniversiteCredential[]> {
+    return this.http.get<UniversiteCredential[]>(`${this.apiUrl3}/credential/${credentialId}`);
+  }
+
 }

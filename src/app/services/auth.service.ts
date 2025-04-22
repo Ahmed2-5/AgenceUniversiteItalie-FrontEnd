@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -74,5 +74,12 @@ export class AuthService {
     return this.httpclt.get(`${this.baseUrl}/email`, { params: { email } });
   }
 
+
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  loading$ = this.loadingSubject.asObservable();
+
+  setLoading(isLoading: boolean) {
+    this.loadingSubject.next(isLoading);
+  }
   
 }

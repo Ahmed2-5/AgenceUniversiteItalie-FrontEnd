@@ -95,6 +95,10 @@ export class AddCondidatComponent implements OnInit {
     this.selectedAdmin = null;
     this.newClient.assignedTo = {} as any; // or set to null if needed
   }
+
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
 }
   
 

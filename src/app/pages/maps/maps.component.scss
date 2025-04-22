@@ -1,17 +1,16 @@
-* {
-  border: 0;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  background-color: #2c4763;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-body {
-  background: #2c4763;
-  display: flex;
-  height: 100vh;
-  line-height: 1.5;
-  font-family: Arial, Helvetica, sans-serif;
-}
 
 .loading-text{
   position: absolute;

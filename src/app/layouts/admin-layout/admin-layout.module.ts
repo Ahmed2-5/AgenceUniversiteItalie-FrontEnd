@@ -28,7 +28,7 @@ import { ListClientsAdvancedComponent } from 'src/app/pages/list-clients-advance
 import { UpdateCondidatComponent } from 'src/app/dialogs/update-condidat/update-condidat.component';
 import { AddPayementToCLientComponent } from 'src/app/dialogs/add-payement-to-client/add-payement-to-client.component';
 import { ArchiveComponent } from 'src/app/pages/archive/archive.component';
-import { UniversityComponent } from 'src/app/dialogs/university/university.component';
+import { CredentialByClientComponent } from 'src/app/dialogs/credential-by-client/credential-by-client.component';
 
 @NgModule({
   imports: [
@@ -62,7 +62,7 @@ import { UniversityComponent } from 'src/app/dialogs/university/university.compo
     UpdateCondidatComponent,
     AddPayementToCLientComponent,
     ArchiveComponent,
-    UniversityComponent
+    CredentialByClientComponent
     ]
 })
 export class AdminLayoutModule {}
