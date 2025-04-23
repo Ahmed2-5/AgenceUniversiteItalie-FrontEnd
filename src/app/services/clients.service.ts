@@ -1,7 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Clients } from '../models/Clients.model';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { ClientDocument } from '../models/ClientDocument.model';
 import { Payement } from '../models/Payement.model';
 import { Tranche } from '../models/Tranche.model';
@@ -57,6 +57,24 @@ export class ClientsService {
     return this.http.put<Clients>(`${this.baseUrl}/${idClient}/Unarchive`, {});
   }
 
+  uploadProfileImage( file: File,clientId: number): Observable<string> {
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      return this.http.post(`${this.baseUrl}/upload-profile-image/${clientId}`, formData, { responseType: 'text' }).pipe(
+        map(response => response as string),
+        catchError(this.handleError)
+      );
+    }
+  
+    private handleError(error: HttpErrorResponse) {
+      console.error('Upload error:', error);
+      return throwError(() => new Error('File upload failed. Please try again.'));
+    }
+  
+    getProfileImage(filename: string): Observable<Blob> {
+      return this.http.get(`${this.baseUrl}/uploads/${filename}`, { responseType: 'blob' });
+    }
   private apiUrl = 'http://localhost:8082/api/documents';
 
   // ✅ Upload Document
@@ -102,6 +120,9 @@ export class ClientsService {
     return this.http.patch<ClientDocument>(`${this.apiUrl}/replace/${idDocument}`, formData);
   }
   
+  archiveDoc(idDOc: number): Observable<ClientDocument> {
+    return this.http.put<ClientDocument>(`${this.apiUrl}/${idDOc}/archive`, {});
+  }
 
   private apiUrl1 = 'http://localhost:8082/api/paiements';
 

@@ -93,15 +93,20 @@ export class ClientsComponent implements OnInit {
           this.clientsService.deleteClient(client.idClients, this.email).subscribe({
             next: () => {
               this.loadClients();
+              Swal.fire('Supprimé!', 'Le client a été supprimé.', 'success');
             },
             error: err => {
               this.loadClients();
-              console.error('Erreur lors de la suppression du client :', err);
-            }
+    
+              if (err.status === 403) {
+                Swal.fire('Accès refusé', "Vous n'avez pas le droit de supprimer ce client.", 'error');
+              }
+              }
           });
         }
       });
     }
+    
     
   
 

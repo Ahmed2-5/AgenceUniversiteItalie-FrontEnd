@@ -48,6 +48,7 @@ export class AddCondidatComponent implements OnInit {
       service: '',
       reference: '',
       archive: 'NON_ARCHIVER',
+      clientImageUrl: '',
       clientCreatedby: {} as Utilisateur,
       assignedTo: {} as Utilisateur,
       payementClient: [],

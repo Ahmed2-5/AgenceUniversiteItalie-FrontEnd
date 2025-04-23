@@ -23,6 +23,21 @@
           <p><strong>Service:</strong> {{client.service}} </p>
           <p><strong>Gérer par:</strong> {{client.assignedTo.prenom}} {{client.assignedTo.nom}}</p>
         </div>
+        <div class="profile-image">
+          <img 
+          [src]="client.clientImageUrl ? client.clientImageUrl : 'assets/img/new profile image.png'"
+          (click)="triggerImageFileInput()"
+          style="cursor: pointer;"
+           >  
+        </div>
+        <!-- Hidden file input -->
+        <input 
+          type="file" 
+          #fileInput 
+          (change)="onImageFileSelected($event)" 
+          style="display: none;"
+          accept="image/*"
+        >
       </section>
       <section class="documents">
         <div class="doc-card" *ngFor="let doc of documents">
@@ -45,8 +60,8 @@
             </button>
           
             <!-- Delete icon -->
-            <button class="icon-btn" (click)="deleteDocument(doc)" title="Supprimer">
-              🗑️
+            <button class="icon-btn" (click)="confirmArchiverDocument(doc)" title="archiver">
+              📂
             </button>
           </div>
           

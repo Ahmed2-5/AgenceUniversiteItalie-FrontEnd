@@ -19,7 +19,7 @@ export class IconsComponent implements OnInit {
   isSuperAdmin: boolean = false; 
   TaskDates: Set<Date> = new Set<Date>();
   deadlinelist: Set<Date> = new Set<Date>();
-  selectedStatus: string = 'ALL';  // Default status filter
+  selectedStatus: string = 'PAS_ENCORE';  // Default status filter
 
 
   constructor(

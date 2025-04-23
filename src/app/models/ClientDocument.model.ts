@@ -7,6 +7,7 @@ export class ClientDocument {
   nom!: string;
   cheminFichier!: string;
   dateAjout!: Date; 
+  archiveDoc!: string;
   clientDocument!: Clients;
   ajouterPar!: Utilisateur;
   

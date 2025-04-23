@@ -16,6 +16,7 @@ export class Clients {
     service!: string;
     reference!: string;
     archive!: string; 
+    clientImageUrl!: string;
     clientCreatedby!: Utilisateur;
     assignedTo!: Utilisateur;
     payementClient!: Payement[];

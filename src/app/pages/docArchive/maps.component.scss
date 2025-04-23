@@ -1,0 +1,46 @@
+.archive-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .archive-card {
+    background-color: #f9f9f9;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 15px;
+    min-width: 250px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+    h3 {
+      margin-top: 0;
+      color: #333;
+    }
+  
+    ul {
+      list-style: none;
+      padding: 0;
+  
+      li {
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+  
+        button {
+          margin-left: 10px;
+          padding: 4px 8px;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          background-color: #ddd;
+  
+          &:hover {
+            background-color: #bbb;
+          }
+        }
+      }
+    }
+  }
+  

@@ -40,6 +40,9 @@ export class ClientByIdComponent implements OnInit {
         this.clientserv.getClientById(this.data.clientID).subscribe({
           next: (data) => {
             this.client = data;
+            if (this.client.clientImageUrl) {
+              this.client.clientImageUrl = `http://localhost:8082/api/Clients/uploads/${data.clientImageUrl}`;
+           }
             this.loadDocuments(this.data.clientID);
             this.loadPaiements(this.data.clientID);
           },
@@ -87,7 +90,7 @@ export class ClientByIdComponent implements OnInit {
     loadDocuments(idClient: number): void {
       this.clientserv.getDocumentsByClient(idClient).subscribe({
         next: (docs) => {
-          this.documents = docs;
+          this.documents = docs.filter(doc => doc.archiveDoc === 'NON_ARCHIVER');
         },
         error: (err) => {
           console.error('Error fetching documents:', err);
@@ -168,15 +171,30 @@ export class ClientByIdComponent implements OnInit {
       });
     }
 
-    deleteDocument(doc: ClientDocument): void {
-      this.clientserv.deleteDocument(doc.idDocument).subscribe({
+    archiverDocument(doc: ClientDocument): void {
+      this.clientserv.archiveDoc(doc.idDocument).subscribe({
         next: () => {
-          this.documents = this.documents.filter(d => d.idDocument !== doc.idDocument);
         },
-        error: err => console.error('Error deleting document:', err)
+        error: err => console.error('Error:', err)
       });
     }
 
+    confirmArchiverDocument(doc: ClientDocument) {
+      Swal.fire({
+        title: 'Are you sure you want to archive this document?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, archive it',
+        cancelButtonText: 'No, keep it'
+      }).then((result) => {
+        if (result.value) {
+          this.archiverDocument(doc); 
+          Swal.fire("document archived", "This document has been archived", "success").then(() => {
+            this.loadDocuments(this.data.clientID)
+          });
+        }
+      });
+    }
     openPaymenetDialog(clientID: number) {
       const dialogRef = this.dialog.open(PayementByClientComponent, {
         data: { clientID: clientID },
@@ -235,4 +253,30 @@ export class ClientByIdComponent implements OnInit {
              }
            });
          }
+
+         triggerImageFileInput(): void {
+          this.fileInput.nativeElement.click();
+        }
+      
+        onImageFileSelected(event: Event): void {
+          const file = (event.target as HTMLInputElement).files?.[0];
+          if (file) {
+            this.uploadImage(file);
+          }
+        }
+      
+        uploadImage(file: File): void {
+          if (!this.data.clientID) return;
+      
+          this.clientserv.uploadProfileImage(file, this.data.clientID).subscribe({
+            next: (imageUrl: string) => {
+              console.log("Image uploaded successfully:", imageUrl);
+              this.client.clientImageUrl = imageUrl; 
+              location.reload()
+            },
+            error: (error) => {
+              console.error("Error uploading image:", error);
+            }
+          });
+        }
 }

@@ -14,7 +14,6 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ComponentsModule } from './components/components.module';
 
 import { MatDialogModule } from '@angular/material/dialog';
-import { TestComponent } from './test/test.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -30,8 +29,7 @@ import { TestComponent } from './test/test.component';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent,
-    TestComponent
+    AuthLayoutComponent
         ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
