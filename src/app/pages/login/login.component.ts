@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
               this.router.navigate(["/"]);
               this.authService.setLoading(false); 
             }
-          }, 5000); 
+          }, 4000); 
         },
         (error) => {
           this.authService.setLoading(false); 

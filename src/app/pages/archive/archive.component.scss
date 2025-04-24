@@ -195,10 +195,22 @@ tbody td:nth-child(14) {
     table-layout: fixed;
     word-wrap: break-word;
   }
+  .action-buttons {
+    display: flex;
+    gap: 10px; // space between buttons
+    align-items: center;
   
-  .icon-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 36px;
+    .icon-button {
+      font-size: 24px; // reduce a bit for better alignment
+      padding: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+  
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
   }
+  

@@ -44,9 +44,9 @@
           <div class="doc-img">
             <img src="assets/icons/file.png" alt="document icon" />
           </div>
-          <p class="doc-name" (click)="openDocument(doc)" style="cursor: pointer; text-decoration: underline;">
+          <p class="doc-name"  style="cursor: pointer; text-decoration: underline;">
             <!-- When not in edit mode, show the document name; when in edit mode, show an input box -->
-            <span *ngIf="!editMode[doc.idDocument]">{{ doc.nom }}</span>
+            <span (click)="openDocument(doc)" *ngIf="!editMode[doc.idDocument]">{{ doc.nom }}</span>
             <input *ngIf="editMode[doc.idDocument]"
                    [(ngModel)]="editedName[doc.idDocument]"
                    (blur)="saveDocumentName(doc.idDocument)"

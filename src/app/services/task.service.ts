@@ -46,6 +46,10 @@ export class TaskService {
     return this.httpclt.get<Tache[]>(`${this.baseUrl}/getAllTachesCreatedBySuperAdmin?superAdminEmail=${superAdminEmail}`, { headers });
   }
 
+  getAllTaches(): Observable<Tache[]> {
+    return this.httpclt.get<Tache[]>(`${this.baseUrl}/GetAllTaches`);
+  }
+
   // Get all Taches assigned to Admin
   getTachesAssignedToAdmin(adminEmail: string): Observable<Tache[]> {
     return this.httpclt.get<Tache[]>(`${this.baseUrl}/getAllTachesOfAdmin?adminEmail=${adminEmail}`);

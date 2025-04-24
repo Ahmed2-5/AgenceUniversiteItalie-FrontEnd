@@ -2,13 +2,14 @@ import { Routes } from '@angular/router';
 
 import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
 import { IconsComponent } from '../../pages/icons/icons.component';
-import { MapsComponent } from '../../pages/docArchive/maps.component';
+import { MapsComponent } from '../../pages/maps/maps.component';
 import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
 import { TablesComponent } from '../../pages/tables/tables.component';
 import { ClientsComponent } from 'src/app/pages/clients/clients.component';
 import { ListClientsAdvancedComponent } from 'src/app/pages/list-clients-advanced/list-clients-advanced.component';
 import { ArchiveComponent } from 'src/app/pages/archive/archive.component';
 import { ClientByIdComponent } from 'src/app/dialogs/client-by-id/client-by-id.component';
+import { DocArchiveComponent } from 'src/app/pages/doc-archive/doc-archive.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -19,6 +20,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'clients',           component: ClientsComponent },
     { path: 'clientsAV',           component: ListClientsAdvancedComponent },
     { path: 'archive',           component: ArchiveComponent },
-    { path: 'clientID',           component: ClientByIdComponent }
+    { path: 'clientID',           component: ClientByIdComponent },
+    { path: 'docArchive',           component: DocArchiveComponent },
+
     
 ];

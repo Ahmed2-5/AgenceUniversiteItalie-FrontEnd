@@ -82,14 +82,20 @@
         <td [ngClass]="getTrancheClass(client, 3)">{{ getTrancheMontant(client, 3) }}</td>
         <td [ngClass]="getTrancheClass(client, 4)">{{ getTrancheMontant(client, 4) }}</td>
         <!-- Actions -->
-       <td>
-        <button 
-         *ngIf="client.payementClient[0]"
-         class="icon-button"
-         (click)="confirmUnarchiveBox(client.idClients)">
-         🔄
-        </button>
-      </td>
+        <td>
+          <div class="action-buttons">
+            <button 
+              class="icon-button"
+              (click)="confirmUnarchiveBox(client.idClients)">
+              🔄
+            </button>
+        
+            <button *ngIf="isSuperAdmin" class="icon-button" (click)="confirmDeleteBox(client.idClients)" title="delete">
+              🗑️
+            </button>
+          </div>
+        </td>
+        
 
        </tr>
     </tbody>

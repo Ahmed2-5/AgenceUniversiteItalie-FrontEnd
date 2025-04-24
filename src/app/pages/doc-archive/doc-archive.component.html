@@ -1,0 +1,70 @@
+<app-dashboard></app-dashboard>
+
+<div class="archive-container">
+  <div *ngFor="let client of clients" class="archive-card">
+    <div class="card-header">
+      <h3>{{ client.prenomClient }} {{ client.nomClient }}</h3>
+    </div>
+    <div class="card-body">
+      <p><strong>Téléphone:</strong> {{ client.telephoneClient }}</p>
+      <p><strong>Email:</strong> {{ client.emailClient }}</p>
+    </div>
+    <div class="card-footer">
+      <button class="voir-btn" (click)="loadDocuments(client.idClients)">Voir documents</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div  *ngIf="selectedClientId && documents.length > 0" class="app-container center-screen">
+  <div class="header">
+    <h2 class="title">Documents archivés</h2>
+    <button class="close-button" (click)="closeDialog()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  
+    <div class="main-grid">
+      
+      <section class="documents">
+        <div class="doc-card" *ngFor="let doc of documents">
+          <div class="doc-img">
+            <img src="assets/icons/file.png" alt="document icon" />
+          </div>
+      
+          <p class="doc-name" (click)="openDocument(doc)" style="cursor: pointer; text-decoration: underline;">
+            <span *ngIf="!editMode[doc.idDocument]">{{ doc.nom }}</span>
+            <input *ngIf="editMode[doc.idDocument]"
+                   [(ngModel)]="editedName[doc.idDocument]"
+                   (blur)="saveDocumentName(doc.idDocument)"
+                   (keydown.enter)="saveDocumentName(doc.idDocument)"
+                   autofocus />
+          </p>
+      
+          <div class="doc-actions">
+            <button class="icon-btn" (click)="toggleEditMode(doc.idDocument, doc.nom, $event)" title="Renommer">
+              🖊️
+            </button>
+            <button class="icon-btn" (click)="confirmunArchiverDocument(doc)" title="unarchive">
+              🔄
+            </button>
+            <button class="icon-btn" (click)="confirmDeleteDocument(doc)" title="delete">
+              🗑️
+            </button>
+          </div>
+        </div>
+      </section>
+      
+      
+    </div>
+  </div>
+  

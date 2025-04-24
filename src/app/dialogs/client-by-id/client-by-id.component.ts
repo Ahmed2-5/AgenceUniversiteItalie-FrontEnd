@@ -126,19 +126,19 @@ export class ClientByIdComponent implements OnInit {
     }
 
     openDocument(doc: ClientDocument): void {
-      this.clientserv.downloadFile(doc.idDocument).subscribe(
-        (response: Blob) => {
-          const blob = response;
-          const link = document.createElement('a');
-          link.href = URL.createObjectURL(blob);
-          link.download = doc.nom; // The file name will be the document's name
-          link.click();
-        },
-        (error) => {
-          console.error('Error downloading file:', error);
-        }
-      );
+      // Make sure the URL is correct (backend API serving the file)
+    
+      // Open the file in a new tab
+      const newTab = window.open(`http://localhost:8082/api/documents/${doc.idDocument}/download`, '_blank');
+    
+      // Check if the new tab was blocked by the browser (e.g., pop-up blocker)
+      if (!newTab) {
+        alert('Pop-up blocked! Please allow pop-ups for this website.');
+      }
     }
+    
+    
+    
 
     toggleEditMode(docId: number, docName: string, event: MouseEvent): void {
       // Prevent toggling if the input itself is clicked

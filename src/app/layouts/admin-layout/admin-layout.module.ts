@@ -8,7 +8,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../pages/dashboard/dashboard.component';
 import { IconsComponent } from '../../pages/icons/icons.component';
-import { MapsComponent } from '../../pages/docArchive/maps.component';
+import { MapsComponent } from '../../pages/maps/maps.component';
 import { UserProfileComponent } from '../../pages/user-profile/user-profile.component';
 import { TablesComponent } from '../../pages/tables/tables.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -29,6 +29,7 @@ import { UpdateCondidatComponent } from 'src/app/dialogs/update-condidat/update-
 import { AddPayementToCLientComponent } from 'src/app/dialogs/add-payement-to-client/add-payement-to-client.component';
 import { ArchiveComponent } from 'src/app/pages/archive/archive.component';
 import { CredentialByClientComponent } from 'src/app/dialogs/credential-by-client/credential-by-client.component';
+import { DocArchiveComponent } from 'src/app/pages/doc-archive/doc-archive.component';
 
 @NgModule({
   imports: [
@@ -62,7 +63,8 @@ import { CredentialByClientComponent } from 'src/app/dialogs/credential-by-clien
     UpdateCondidatComponent,
     AddPayementToCLientComponent,
     ArchiveComponent,
-    CredentialByClientComponent
+    CredentialByClientComponent,
+    DocArchiveComponent
     ]
 })
 export class AdminLayoutModule {}

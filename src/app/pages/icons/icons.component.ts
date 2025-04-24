@@ -33,7 +33,7 @@ export class IconsComponent implements OnInit {
 
     if (role === "SUPER_ADMIN") {
       this.isSuperAdmin = true;
-      this.loadSuperAdminTasks(this.email);
+      this.loadTasks();
     } else if (role === "ADMIN") {
       this.loadAdminTasks(this.email);
     }
@@ -43,6 +43,19 @@ export class IconsComponent implements OnInit {
   // Fetch tasks created by SuperAdmin
   loadSuperAdminTasks(superAdminEmail: string) {
     this.taskserv.getAllTachesCreatedBySuperAdmin(superAdminEmail).subscribe(
+      (tasks: Tache[]) => {
+        this.listoftasks = tasks;
+        this.TaskDates = new Set<Date>(tasks.map(task => new Date(task.dateCreation)));
+        this.deadlinelist = new Set<Date>(tasks.map(task => new Date(task.dueDate)));
+      },
+      (error) => {
+        console.error('Error fetching tasks for Super Admin:', error);
+      }
+    );
+  }
+
+  loadTasks() {
+    this.taskserv.getAllTaches().subscribe(
       (tasks: Tache[]) => {
         this.listoftasks = tasks;
         this.TaskDates = new Set<Date>(tasks.map(task => new Date(task.dateCreation)));
@@ -144,8 +157,13 @@ export class IconsComponent implements OnInit {
   getDeadlineTimeDifference(idtask: number): string {
     const currentDate = new Date(); 
     const Deadline = this.getDeadline(idtask); 
-
+  
     let timeDifference = Math.round(Math.abs(currentDate.getTime() - Deadline.getTime()) / 1000);
+  
+    // Check if the task is already finished (negative time difference)
+    if (currentDate.getTime() > Deadline.getTime()) {
+      return "Finished";
+    }
   
     const years = Math.floor(timeDifference / (3600 * 24 * 365.25));
     if (years > 0) {
@@ -179,6 +197,7 @@ export class IconsComponent implements OnInit {
     const seconds = Math.floor(timeDifference % 60);
     return `${seconds} s`;
   }
+  
 
   getTimeDifference(idtask: number): string {
     const currentDate = new Date(); 

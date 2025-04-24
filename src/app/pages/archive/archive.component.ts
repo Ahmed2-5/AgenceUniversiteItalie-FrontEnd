@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddPayementToCLientComponent } from 'src/app/dialogs/add-payement-to-client/add-payement-to-client.component';
 import { ClientByIdComponent } from 'src/app/dialogs/client-by-id/client-by-id.component';
 import { Clients } from 'src/app/models/Clients.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { ClientsService } from 'src/app/services/clients.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
@@ -16,14 +17,21 @@ export class ArchiveComponent implements OnInit {
 
     packOptions = ['GOLD', 'SILVER', 'BRONZE'];
     clients: Clients[] = [];
-  
+    email: string = '';
+    isSuperAdmin: boolean = false; 
     constructor(private clientsService:ClientsService,
                 private dialog: MatDialog,
-                private UserService :UserService
+                private UserService :UserService,
+                private authserv : AuthService
       
     ) { }
   
     ngOnInit(): void {
+      this.email = sessionStorage.getItem('email');
+      const role = sessionStorage.getItem('role') || '{}';
+      if (role === "SUPER_ADMIN") {
+        this.isSuperAdmin = true;
+      } 
       this.loadClients();
     }
   
@@ -126,6 +134,34 @@ export class ArchiveComponent implements OnInit {
             });
           }
 
+          delete(clientID: number) {
+            this.clientsService.deleteClient(clientID,this.email).subscribe({
+              next: (d) => {
+                console.log('Client deleted successfully:');
+                this.loadClients()
+              },
+              error: (err) => {
+                console.error('Error!!', err);
+              }
+            });
+         }
+    
+         confirmDeleteBox(clientID: number) {
+                Swal.fire({
+                  title: 'Are you sure you want to delete this client?',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Yes, delete it',
+                  cancelButtonText: 'No, keep it'
+                }).then((result) => {
+                  if (result.value) {
+                    this.delete(clientID); // Activate user
+                    Swal.fire("client deleted", "This client has been deleted", "success").then(() => {
+                     this.loadClients()
+                    });
+                  }
+                });
+              }
      
   }
   

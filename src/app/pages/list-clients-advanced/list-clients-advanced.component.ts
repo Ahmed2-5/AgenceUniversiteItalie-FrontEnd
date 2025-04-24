@@ -4,7 +4,6 @@ import { AddPayementToCLientComponent } from 'src/app/dialogs/add-payement-to-cl
 import { ClientByIdComponent } from 'src/app/dialogs/client-by-id/client-by-id.component';
 import { Clients } from 'src/app/models/Clients.model';
 import { ClientsService } from 'src/app/services/clients.service';
-import { Utilisateur } from './../../models/Utilisateur.model';
 import { UserService } from './../../services/user.service';
 import Swal from 'sweetalert2';
 
@@ -17,7 +16,7 @@ export class ListClientsAdvancedComponent implements OnInit {
 
   packOptions = ['GOLD', 'SILVER', 'BRONZE'];
   clients: Clients[] = [];
-
+  email: string = '';
   constructor(private clientsService:ClientsService,
               private dialog: MatDialog,
               private UserService :UserService
@@ -25,7 +24,14 @@ export class ListClientsAdvancedComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadClients();
+    this.email = sessionStorage.getItem('email');
+    const role = sessionStorage.getItem('role') || '{}'; // Ensure role is properly parsed
+
+    if (role === "SUPER_ADMIN") {
+      this.loadClients();
+    } else if (role === "ADMIN") {
+      this.loadClientsByAssignedTo(this.email);
+    }
   }
 
   loadClients() {
@@ -37,6 +43,14 @@ export class ListClientsAdvancedComponent implements OnInit {
     });
   }
 
+  loadClientsByAssignedTo(email : string) {
+    this.clientsService.getClientsByAssignedTo(email).subscribe({
+      next: (data) => {
+        this.clients = data.filter(client => client.archive === 'NON_ARCHIVER');
+      },
+      error: (err) => console.error('Error loading clients', err)
+    });
+  }
 
   getTrancheMontant(client: Clients, index: number): string | number {
     const paiement = client.payementClient[0];

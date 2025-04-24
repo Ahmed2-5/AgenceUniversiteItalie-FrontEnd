@@ -35,7 +35,16 @@ export class CredentialByClientComponent implements OnInit {
     credential: {} as Credential  // temporary placeholder
   };
   
-
+  isEditingDate = false;
+  showDialog = false;
+  
+  newRdv = {
+    title: '',
+    date: '',
+    status: 'NON_VALIDER'
+  };
+  
+ 
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { clientID: number },
@@ -51,6 +60,15 @@ export class CredentialByClientComponent implements OnInit {
       // Now fetch universities by credentialId
       this.loadUniversities(this.credential.idCredential);
     });
+  }
+  addRdv() {
+    // Add your RDV save logic here
+    console.log('New RDV:', this.newRdv);
+    this.showDialog = false;
+  }
+
+  openRdvDialog() {
+    this.showDialog = true;
   }
   
   loadUniversities(credentialId: number): void {

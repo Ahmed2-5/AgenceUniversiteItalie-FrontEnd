@@ -48,6 +48,11 @@ export class ClientsService {
     return this.http.get<Clients>(`${this.baseUrl}/getclientById/${idClient}`);
   }
 
+  getClientsByAssignedTo(mail: string): Observable<Clients[]> {
+    const params = new HttpParams().set('mail', mail);
+    return this.http.get<Clients[]>(`${this.baseUrl}/assignedTo`, { params });
+  }
+  
   archiveClient(idClient: number): Observable<Clients> {
     return this.http.put<Clients>(`${this.baseUrl}/${idClient}/archive`, {});
   }
@@ -122,6 +127,10 @@ export class ClientsService {
   
   archiveDoc(idDOc: number): Observable<ClientDocument> {
     return this.http.put<ClientDocument>(`${this.apiUrl}/${idDOc}/archive`, {});
+  }
+
+  unarchiveDoc(idDOc: number): Observable<ClientDocument> {
+    return this.http.put<ClientDocument>(`${this.apiUrl}/${idDOc}/unarchive`, {});
   }
 
   private apiUrl1 = 'http://localhost:8082/api/paiements';
