@@ -28,7 +28,11 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-               "node_modules/@fortawesome/fontawesome-free/webfonts"
+              {
+                "glob": "**/*",
+                "input": "node_modules/@fortawesome/fontawesome-free/webfonts",
+                "output": "/assets/webfonts"
+              }
             ],
             "styles": [
               "src/styles.scss",

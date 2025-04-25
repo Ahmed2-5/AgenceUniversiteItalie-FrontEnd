@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { ClientsService } from 'src/app/services/clients.service';
 import { Credential } from 'src/app/models/Credential.model';
 import { UniversiteCredential } from 'src/app/models/UniversiteCredential.model';
+import { RDV } from 'src/app/models/RDV.model';
 
 @Component({
   selector: 'app-credential-by-client',
@@ -24,9 +25,7 @@ export class CredentialByClientComponent implements OnInit {
   showUniversityList = false;
   universities: UniversiteCredential[] = [];
   editUniversityIndexMap: { [key: number]: { [field: string]: boolean } } = {};
-
   showAddUniversityForm = false;
-
   newUniversity: UniversiteCredential = {
     univeriste: '',
     nomUniversite: '',
@@ -35,15 +34,19 @@ export class CredentialByClientComponent implements OnInit {
     credential: {} as Credential  // temporary placeholder
   };
   
-  isEditingDate = false;
-  showDialog = false;
-  
+  RDVs: RDV[] = [];
+  showAdRDVDialog = false;
   newRdv = {
-    title: '',
-    date: '',
-    status: 'NON_VALIDER'
+    titreRDV: '',
+    dateRendezVous: '',
+    enumRendezVous: 'NON_VALIDER',
+    credential: {} as Credential
   };
-  
+
+  showEditRDVDialog = false;
+  selectedRdv: any = {};
+
+
  
 
   constructor(
@@ -59,22 +62,27 @@ export class CredentialByClientComponent implements OnInit {
   
       // Now fetch universities by credentialId
       this.loadUniversities(this.credential.idCredential);
+      this.loadRDVs(this.credential.idCredential);
+
     });
   }
-  addRdv() {
-    // Add your RDV save logic here
-    console.log('New RDV:', this.newRdv);
-    this.showDialog = false;
-  }
-
-  openRdvDialog() {
-    this.showDialog = true;
-  }
+  
   
   loadUniversities(credentialId: number): void {
     this.credentialService.getUniversiteCredentialsByCredentialId(credentialId).subscribe({
       next: (data) => {
         this.universities = data;
+      },
+      error: (err) => {
+        console.error('Failed to load universities:', err);
+      }
+    });
+  }
+
+  loadRDVs(credentialId: number): void {
+    this.credentialService.getRDVsByCredentialId(credentialId).subscribe({
+      next: (data) => {
+        this.RDVs = data;
       },
       error: (err) => {
         console.error('Failed to load universities:', err);
@@ -100,42 +108,8 @@ export class CredentialByClientComponent implements OnInit {
       }
     });
   }
-  
 
-  validateRendezVous(): void {
-    if (!this.credential) return;
   
-    // Update the local state
-    this.credential.enumRendezVous = 'VALIDER';
-  
-    // Send the updated credential to the backend
-    this.credentialService.updateCredential(this.credential.idCredential, this.credential).subscribe({
-      next: (updatedCredential) => {
-        this.credential = updatedCredential;
-        console.log('Rendez-vous validated and saved.');
-      },
-      error: (err) => {
-        console.error('Error validating rendez-vous:', err);
-        // Optional: show a toast/alert
-      }
-    });
-  }
-  
-  saveFieldUpdate(): void {
-    if (!this.credential) return;
-  
-    this.credentialService.updateCredential(this.credential.idCredential, this.credential).subscribe({
-      next: (updated) => {
-        this.credential = updated;
-        console.log('Fields updated successfully.');
-      },
-      error: (err) => {
-        console.error('Error updating fields:', err);
-        // Optional: add user feedback
-      }
-    });
-  }  
-
   toggleEditUniversityField(index: number, field: string): void {
     if (!this.editUniversityIndexMap[index]) {
       this.editUniversityIndexMap[index] = {};
@@ -205,4 +179,80 @@ export class CredentialByClientComponent implements OnInit {
   closeDialog(): void {
     this.dialogRef.close();
   }
+
+
+  addRdv() {
+    const credentialId = this.credential.idCredential;
+  
+    this.credentialService.addRDVToCredential(credentialId, this.newRdv).subscribe({
+      next: (response) => {
+        this.RDVs.push(response);
+        this.showAdRDVDialog = false;
+        this.resetNewRDV();
+      },
+      error: (err) => {
+        console.error('Erreur lors de l’ajout de RDV', err);
+      }
+    });
+    
+  }
+  cancelAddRDV() {
+    this.showAdRDVDialog = false;
+    this.resetNewRDV();
+  }
+  
+  resetNewRDV() {
+    this.newRdv = {
+      titreRDV: '',
+      dateRendezVous: '',
+      enumRendezVous: 'NON_VALIDER',
+      credential: {} as Credential
+    };
+  }
+
+  openRdvDialog() {
+    this.showAdRDVDialog = true;
+  }
+
+  
+  
+  validateRendezVous(rdv :RDV): void {
+    rdv.enumRendezVous='VALIDER'
+    this.credentialService.updateRDV(rdv.idRDV, rdv).subscribe({
+      next: (response) => {
+        this.loadRDVs(this.credential.idCredential)  
+      },
+      error: (err) => {
+        console.error('Erreur !!!', err);
+      }
+    });
+
+  }
+
+  openEditRDVDialog(rdv: any) {
+    this.selectedRdv = { ...rdv }; // Clone to avoid live binding
+    this.showEditRDVDialog = true;
+  }
+  
+  cancelEditRDV() {
+    this.showEditRDVDialog = false;
+    this.selectedRdv = {};
+  }
+  
+  updateRdv() {
+    this.credentialService.updateRDV(this.selectedRdv.idRDV, this.selectedRdv).subscribe({
+      next: (updatedRdv) => {
+        const index = this.RDVs.findIndex(r => r.idRDV === updatedRdv.idRDV);
+        if (index !== -1) {
+          this.RDVs[index] = updatedRdv;
+        }
+        this.showEditRDVDialog = false;
+      },
+      error: (err) => {
+        console.error('Error updating RDV:', err);
+        // Optional: show error message to user
+      }
+    });
+  }
+  
 }

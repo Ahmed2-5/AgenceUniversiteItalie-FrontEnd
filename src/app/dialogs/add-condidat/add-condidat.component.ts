@@ -4,6 +4,7 @@ import { Clients } from 'src/app/models/Clients.model';
 import { ClientsService } from 'src/app/services/clients.service';
 import { UserslistforaddtaskComponent } from '../userslistforaddtask/userslistforaddtask.component';
 import { Utilisateur } from 'src/app/models/Utilisateur.model';
+import { Credential } from 'src/app/models/Credential.model';
 
 @Component({
   selector: 'app-add-condidat',
@@ -52,7 +53,8 @@ export class AddCondidatComponent implements OnInit {
       clientCreatedby: {} as Utilisateur,
       assignedTo: {} as Utilisateur,
       payementClient: [],
-      documents: []
+      documents: [],
+      credential:{} as Credential
     };
   }
   

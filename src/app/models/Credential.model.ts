@@ -1,3 +1,5 @@
+import { Clients } from "./Clients.model";
+import { RDV } from "./RDV.model";
 import { UniversiteCredential } from "./UniversiteCredential.model";
 
   export class Credential {
@@ -8,11 +10,10 @@ import { UniversiteCredential } from "./UniversiteCredential.model";
     passwrodGmail!: string;
     prenotami!: string;
     passwordPrenotami!: string;
-    dateRendezVous!: string;
-    enumRendezVous!: string;
     programmeEtude!: string;
     preInscrit!: string;
-    dateTestItalien!: string;
-    montantPayerItalie!: number;
+   // montantPayerItalie!: number;
+    clients!:Clients
+    RDVs!:RDV[]
     universiteCredentials!: UniversiteCredential[];
   }

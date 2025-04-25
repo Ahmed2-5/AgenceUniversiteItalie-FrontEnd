@@ -7,6 +7,7 @@ import { Payement } from '../models/Payement.model';
 import { Tranche } from '../models/Tranche.model';
 import { Credential } from '../models/Credential.model';
 import { UniversiteCredential } from '../models/UniversiteCredential.model';
+import { RDV } from '../models/RDV.model';
 
 @Injectable({
   providedIn: 'root'
@@ -224,4 +225,30 @@ export class ClientsService {
     return this.http.get<UniversiteCredential[]>(`${this.apiUrl3}/credential/${credentialId}`);
   }
 
+  private apiUrl4 = 'http://localhost:8082/api/RDV'; // Adjust if backend port differs
+
+  // Add RDV to a credential
+  addRDVToCredential(credentialId: number, rdv: RDV): Observable<RDV> {
+    return this.http.post<RDV>(`${this.apiUrl4}/credential/${credentialId}`, rdv);
+  }
+
+  // Delete RDV from a credential
+  removeRDVFromCredential(rdvId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl4}/deleteRdvCredential/${rdvId}`);
+  }
+
+  // Get RDV by ID
+  getRDVById(id: number): Observable<RDV> {
+    return this.http.get<RDV>(`${this.apiUrl4}/getRDVById/${id}`);
+  }
+
+  // Update RDV
+  updateRDV(id: number, rdvDetails: RDV): Observable<RDV> {
+    return this.http.put<RDV>(`${this.apiUrl4}/updateRDV/${id}`, rdvDetails);
+  }
+
+  // Get all RDVs for a credential
+  getRDVsByCredentialId(credentialId: number): Observable<RDV[]> {
+    return this.http.get<RDV[]>(`${this.apiUrl4}/RDVs/${credentialId}`);
+  }
 }

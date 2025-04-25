@@ -1,4 +1,5 @@
 import { ClientDocument } from "./ClientDocument.model";
+import { Credential } from "./Credential.model";
 import { Payement } from "./Payement.model";
 import { Utilisateur } from "./Utilisateur.model";
 
@@ -21,4 +22,5 @@ export class Clients {
     assignedTo!: Utilisateur;
     payementClient!: Payement[];
     documents!: ClientDocument[];
+    credential!:Credential
   }
