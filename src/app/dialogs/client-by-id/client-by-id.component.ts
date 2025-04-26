@@ -129,16 +129,53 @@ export class ClientByIdComponent implements OnInit {
     }
 
     openDocument(doc: ClientDocument): void {
-      // Make sure the URL is correct (backend API serving the file)
-    
-      // Open the file in a new tab
-      const newTab = window.open(`http://localhost:8082/api/documents/${doc.idDocument}/download`, '_blank');
-    
-      // Check if the new tab was blocked by the browser (e.g., pop-up blocker)
-      if (!newTab) {
-        alert('Pop-up blocked! Please allow pop-ups for this website.');
+  if (!doc || !doc.idDocument) {
+    console.error("Document ou ID de document invalide.");
+    return;
+  }
+
+  // Utiliser la méthode du service qui retourne un Blob
+  this.clientserv.downloadFile(doc.idDocument).subscribe({
+    next: (blob: Blob) => {
+      // Vérifier si le blob a un type que le navigateur peut afficher
+      // Les types courants sont 'application/pdf', 'image/jpeg', 'image/png', 'image/gif', 'text/plain'
+      // Si le type est 'application/octet-stream', l'affichage direct est peu probable
+      if (blob.type && blob.type !== 'application/octet-stream') {
+        // Créer une URL objet pour le Blob
+        const fileURL = URL.createObjectURL(blob);
+
+        // Ouvrir cette URL dans un nouvel onglet
+        const newTab = window.open(fileURL, '_blank');
+
+        // Libérer l'URL objet après un court instant (optionnel mais bonne pratique)
+        // Cela permet au navigateur de libérer la mémoire associée au blob
+        // Le délai est parfois nécessaire pour s'assurer que le navigateur a chargé l'URL
+        setTimeout(() => URL.revokeObjectURL(fileURL), 100);
+
+
+        if (!newTab) {
+          alert('Bloqueur de pop-up activé ! Veuillez autoriser les pop-ups pour ce site.');
+        }
+      } else {
+        // Si le type n'est pas affichable ou inconnu, revenir au téléchargement classique
+        console.warn(`Le type de fichier '${blob.type}' pourrait ne pas être affichable directement. Tentative de téléchargement...`);
+        // Vous pouvez recréer un lien et simuler un clic pour télécharger si nécessaire
+        const downloadUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = doc.nom; // Utiliser le nom original du document
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(downloadUrl); // Nettoyer
       }
+    },
+    error: (err) => {
+      console.error('Erreur lors du téléchargement du document pour affichage:', err);
+      alert('Impossible de charger le document.'); // Message utilisateur
     }
+  });
+}
     
     
     
