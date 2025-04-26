@@ -34,7 +34,7 @@ export class IconsComponent implements OnInit {
     if (role === "SUPER_ADMIN") {
       this.isSuperAdmin = true;
       this.loadTasks();
-    } else if (role === "ADMIN") {
+    } else if (role === "ADMIN_TUNISIE") {
       this.loadAdminTasks(this.email);
     }
     
@@ -138,7 +138,7 @@ export class IconsComponent implements OnInit {
       case 'Aucun': return 'A';
       case 'Faible': return 'F';
       case 'Moyenne': return 'M';
-      case 'Élevée': return 'E';
+      case 'Elevée': return 'E';
       default: return '-';
     }
   }

@@ -21,7 +21,11 @@
           <p><strong>Adresse:</strong> {{client.adresseClient}} </p>
           <p><strong>Code postal:</strong> {{client.codePostale}} </p>
           <p><strong>Service:</strong> {{client.service}} </p>
-          <p><strong>Gérer par:</strong> {{client.assignedTo.prenom}} {{client.assignedTo.nom}}</p>
+          <p><strong>Gérer par :</strong> 
+            {{ client.assignedToTunisie?.prenom }} {{ client.assignedToTunisie?.nom }} (en Tunisie) & {{ client.assignedToItalie?.prenom }} {{ client.assignedToItalie?.nom }} (en Italie)
+          </p>
+          
+
         </div>
         <div class="profile-image">
           <img 

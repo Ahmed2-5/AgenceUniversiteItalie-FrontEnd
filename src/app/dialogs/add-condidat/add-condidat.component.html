@@ -80,11 +80,18 @@
         <div class="form-group form-inline">
           <label for="attached"><strong>Assigned to :</strong></label>
           <button class="add-btn" (click)="openUsersDialog()">+</button>
-          <div class="selected-users" *ngIf="selectedAdmin">
+          <div class="selected-users" *ngIf="selectedTunisieAdmin">
             <div class="user-bubble">
-              <button class="delete-button" (click)="resetAssignedAdmin()">x</button>
-              <img [src]="selectedAdmin.profileImageUrl" alt="User Image">
-              <div>{{ selectedAdmin.prenom }} {{ selectedAdmin.nom }}</div>
+              <button class="delete-button" (click)="resetAssignedTunisieAdmins()">x</button>
+              <img [src]="selectedTunisieAdmin.profileImageUrl" alt="User Image">
+              <div>{{ selectedTunisieAdmin.prenom }} {{ selectedTunisieAdmin.nom }}</div>
+            </div>
+          </div>
+          <div class="selected-users" *ngIf="selectedItalieAdmin">
+            <div class="user-bubble">
+              <button class="delete-button" (click)="resetAssignedItalieAdmins()">x</button>
+              <img [src]="selectedItalieAdmin.profileImageUrl" alt="User Image">
+              <div>{{ selectedItalieAdmin.prenom }} {{ selectedItalieAdmin.nom }}</div>
             </div>
           </div>
           

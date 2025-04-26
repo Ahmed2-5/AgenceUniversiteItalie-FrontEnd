@@ -29,8 +29,10 @@ export class ListClientsAdvancedComponent implements OnInit {
 
     if (role === "SUPER_ADMIN") {
       this.loadClients();
-    } else if (role === "ADMIN") {
-      this.loadClientsByAssignedTo(this.email);
+    } else if (role === "ADMIN_TUNISIE" ) {
+      this.loadClientsByAssignedToTUNISIE(this.email);
+    } else if (role === "ADMIN_ITALIE") {
+      this.loadClientsByAssignedToITALIE(this.email);
     }
   }
 
@@ -43,8 +45,17 @@ export class ListClientsAdvancedComponent implements OnInit {
     });
   }
 
-  loadClientsByAssignedTo(email : string) {
-    this.clientsService.getClientsByAssignedTo(email).subscribe({
+  loadClientsByAssignedToTUNISIE(email : string) {
+    this.clientsService.getClientsByAssignedToTunisie(email).subscribe({
+      next: (data) => {
+        this.clients = data.filter(client => client.archive === 'NON_ARCHIVER');
+      },
+      error: (err) => console.error('Error loading clients', err)
+    });
+  }
+
+  loadClientsByAssignedToITALIE(email : string) {
+    this.clientsService.getClientsByAssignedToItalie(email).subscribe({
       next: (data) => {
         this.clients = data.filter(client => client.archive === 'NON_ARCHIVER');
       },

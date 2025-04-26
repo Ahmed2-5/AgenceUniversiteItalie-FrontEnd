@@ -39,11 +39,10 @@ export class LoginComponent implements OnInit {
   
           // Wait before navigating
           setTimeout(() => {
-            if (authResult.role === "SUPER_ADMIN" || authResult.role === "ADMIN") {
               
               this.router.navigate(["/"]);
               this.authService.setLoading(false); 
-            }
+            
           }, 4000); 
         },
         (error) => {

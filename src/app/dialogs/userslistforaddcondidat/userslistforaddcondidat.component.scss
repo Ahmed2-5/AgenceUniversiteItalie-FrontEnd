@@ -1,0 +1,111 @@
+.center-screen {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 800px;
+    z-index: 1050;
+    border-radius: 8px;
+  }
+  
+  .container {
+    background-color: #ffffff;
+    width: 600px;
+    max-height: 80vh; /* Set a max height */
+    overflow-y: auto; 
+  }
+  
+  .user-card {
+    box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.15);
+    background-color: #eee4e4;
+    padding: 15px;
+    width: 150px; /* Adjusted width */
+    height: 180px; /* Adjusted height */
+    margin-bottom: 20px;
+    text-align: center;
+    cursor: pointer; /* Add cursor pointer */
+  }
+  
+  .user-card.selected {
+    border: 2px solid #9D1953; /* Highlight selected card */
+    background-color: #e5dada; /* Slightly different background for selected card */
+  }
+  
+  .user-image {
+    display: block;
+    margin: 0 auto 10px;
+    width: 70px; /* Adjust the size as needed */
+    height: 70px; /* Adjust the size as needed */
+    border-radius: 100%;
+  }
+  
+  .user-name {
+    font-size: 14px; /* Decreased font size */
+    font-weight: 600;
+    margin-bottom: 5px; /* Decreased margin */
+    color: #000;
+  }
+  
+  .user-role {
+    font-size: 12px; /* Decreased font size */
+    color: #555;
+  }
+  
+  .text-color {
+    --tw-text-opacity: 1;
+    color: #9D1953;
+  }
+  
+  .lg\:text-color {
+    --tw-text-opacity: 1;
+    color: #9D1953;
+  }
+  
+  .text-sm {
+    font-size: 1.275rem;
+    line-height: 1.25rem;
+  }
+  
+  .uppercase {
+    text-transform: uppercase;
+  }
+  
+  .font-semibold {
+    font-weight: 600;
+  }
+  
+  .filtered {
+    display: none !important;
+  }
+  .button-container {
+    display: flex;
+    justify-content: space-around; 
+    padding-bottom: 20px;
+  }
+  .btn-cancel {
+    background-color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 14px;
+    color: #851345;
+    cursor: pointer;
+    border: 2px solid #851345; 
+    width: 20%;
+    font-weight: bold; 
+  }
+  .btn-primary {
+    background-color: #851345;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 14px;
+    cursor: pointer;
+    width: 20%;
+  }
+  
+  .btn-primary:hover {
+    background-color: #943c62;
+  }
+  
+  .btn-cancel:hover{
+    background-color: #ddcad4;
+  }

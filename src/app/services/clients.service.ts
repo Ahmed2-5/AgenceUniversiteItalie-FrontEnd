@@ -19,12 +19,12 @@ export class ClientsService {
   constructor(private http: HttpClient) { }
 
   // ➕ Create a client
-  createClient(client: Clients, adminEmail: string, assignedAdminEmail: string): Observable<Clients> {
+  createClient(client: Clients, adminEmail: string, assignedAdminTunisie: string,assignedAdminItalie: string): Observable<Clients> {
     
     const params = new HttpParams()
       .set('adminEmail', adminEmail)
-      .set('AssignedAdminEmail', assignedAdminEmail);
-
+      .set('assignedAdminTunisie', assignedAdminTunisie)
+      .set('assignedAdminItalie', assignedAdminItalie);
     return this.http.post<Clients>(`${this.baseUrl}/CreateClient`, client, { params });
   }
 
@@ -49,9 +49,14 @@ export class ClientsService {
     return this.http.get<Clients>(`${this.baseUrl}/getclientById/${idClient}`);
   }
 
-  getClientsByAssignedTo(mail: string): Observable<Clients[]> {
+  getClientsByAssignedToTunisie(mail: string): Observable<Clients[]> {
     const params = new HttpParams().set('mail', mail);
-    return this.http.get<Clients[]>(`${this.baseUrl}/assignedTo`, { params });
+    return this.http.get<Clients[]>(`${this.baseUrl}/assignedToTunisie`, { params });
+  }
+
+  getClientsByAssignedToItalie(mail: string): Observable<Clients[]> {
+    const params = new HttpParams().set('mail', mail);
+    return this.http.get<Clients[]>(`${this.baseUrl}/assignedToItalie`, { params });
   }
   
   archiveClient(idClient: number): Observable<Clients> {

@@ -272,7 +272,7 @@ export class ClientByIdComponent implements OnInit {
             next: (imageUrl: string) => {
               console.log("Image uploaded successfully:", imageUrl);
               this.client.clientImageUrl = imageUrl; 
-              location.reload()
+             
             },
             error: (error) => {
               console.error("Error uploading image:", error);

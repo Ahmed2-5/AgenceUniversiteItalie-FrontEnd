@@ -19,8 +19,12 @@ export class Clients {
     archive!: string; 
     clientImageUrl!: string;
     clientCreatedby!: Utilisateur;
-    assignedTo!: Utilisateur;
+    assignedToTunisie!: Utilisateur;
     payementClient!: Payement[];
     documents!: ClientDocument[];
     credential!:Credential
+    assignedToItalie!: Utilisateur;
   }
+
+
+

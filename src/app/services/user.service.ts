@@ -16,16 +16,16 @@ export class UserService {
   
   constructor(private httpclt: HttpClient,private dialog: MatDialog) {}
 
-  createAdmin(admin: Utilisateur, superAdminEmail: string): Observable<Utilisateur> {
-    const token = sessionStorage.getItem('jwt'); 
+  createAdmin(admin: Utilisateur, superAdminEmail: string, roleToAssign: string): Observable<Utilisateur> {
+    const token = sessionStorage.getItem('jwt');
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
-    
+  
     return this.httpclt.post<Utilisateur>(
-      `${this.baseUrl}/create-Admin?superAdminEmail=${superAdminEmail}`,
-      admin, 
+      `${this.baseUrl}/create-Admin?superAdminEmail=${superAdminEmail}&roleToAssign=${roleToAssign}`,
+      admin,
       { headers }
     );
-  }
+  }  
   
   
   

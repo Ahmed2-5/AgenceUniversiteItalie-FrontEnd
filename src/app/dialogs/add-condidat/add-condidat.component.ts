@@ -5,6 +5,7 @@ import { ClientsService } from 'src/app/services/clients.service';
 import { UserslistforaddtaskComponent } from '../userslistforaddtask/userslistforaddtask.component';
 import { Utilisateur } from 'src/app/models/Utilisateur.model';
 import { Credential } from 'src/app/models/Credential.model';
+import { UserslistforaddcondidatComponent } from '../userslistforaddcondidat/userslistforaddcondidat.component';
 
 @Component({
   selector: 'app-add-condidat',
@@ -22,8 +23,8 @@ export class AddCondidatComponent implements OnInit {
 
   newClient!: Clients;
   email: string = '';
-  selectedAdmin: Utilisateur | null = null;
-
+  selectedTunisieAdmin: Utilisateur | null = null;
+  selectedItalieAdmin: Utilisateur | null = null;
   
   
   constructor(
@@ -51,53 +52,64 @@ export class AddCondidatComponent implements OnInit {
       archive: 'NON_ARCHIVER',
       clientImageUrl: '',
       clientCreatedby: {} as Utilisateur,
-      assignedTo: {} as Utilisateur,
+      assignedToTunisie: {} as Utilisateur,
       payementClient: [],
       documents: [],
-      credential:{} as Credential
+      credential:{} as Credential,
+      assignedToItalie: {} as Utilisateur
     };
   }
   
-  submitForm() {
-    this.newClient.assignedTo = this.selectedAdmin;
-    const assignedAdminEmail = this.selectedAdmin?.adresseMail || '';
-    
-    console.log('Admin Email:', this.email);
-    console.log('Assigned Admin Email:', assignedAdminEmail);
-  
-    this.clientsService.createClient(this.newClient, this.email, assignedAdminEmail)
-      .subscribe({
-        next: (created) => {
-          console.log('Client created:', created);
-          this.dialogRef.close(created);
-        },
-        error: (err) => {
-          console.error('Error creating client:', err);
-        }
-      });
-  }
-  
-
-  openUsersDialog(): void {
-    const dialogRef = this.dialog.open(UserslistforaddtaskComponent, {
-      width: '800px',
-      data: { selectedSetUsers: new Set<Utilisateur>(this.selectedAdmin ? [this.selectedAdmin] : []) }
-    });
-  
-    dialogRef.afterClosed().subscribe((selectedAdmins: Set<Utilisateur>) => {
-      const selectedArray = Array.from(selectedAdmins);
-      if (selectedArray.length > 0) {
-        this.selectedAdmin = selectedArray[0]; // only one allowed
-        this.newClient.assignedTo = this.selectedAdmin;
+  submitForm(): void {
+    this.clientsService.createClient(
+      this.newClient,
+      this.email,
+      this.selectedTunisieAdmin?.adresseMail || '',
+      this.selectedItalieAdmin?.adresseMail || '',
+    ).subscribe({
+      next: (created) => {
+        console.log('Client created:', created);
+        this.dialogRef.close(created);
+      },
+      error: (err) => {
+        console.error('Error creating client:', err);
       }
     });
   }
   
-  
-  resetAssignedAdmin() {
-    this.selectedAdmin = null;
-    this.newClient.assignedTo = {} as any; // or set to null if needed
+
+  openUsersDialog(): void {
+    const dialogRef = this.dialog.open(UserslistforaddcondidatComponent, {
+      width: '800px',
+      data: {
+        selectedADMINTUNISIE: this.selectedTunisieAdmin,
+        selectedADMINITALIE: this.selectedItalieAdmin
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: {
+      selectedADMINTUNISIE: Utilisateur,
+      selectedADMINITALIE: Utilisateur
+    }) => {
+      if (result) {
+        this.selectedTunisieAdmin = result.selectedADMINTUNISIE;
+        this.selectedItalieAdmin = result.selectedADMINITALIE;
+        this.newClient.assignedToTunisie = this.selectedTunisieAdmin;
+        this.newClient.assignedToItalie = this.selectedItalieAdmin;
+      }
+    });
   }
+
+  resetAssignedItalieAdmins(): void {
+    this.selectedItalieAdmin = null;
+    this.newClient.assignedToItalie = {} as Utilisateur;
+  }
+
+  resetAssignedTunisieAdmins(): void {
+    this.selectedTunisieAdmin = null;
+    this.newClient.assignedToTunisie = {} as Utilisateur;
+  }
+ 
 
   closeDialog(): void {
     this.dialogRef.close();

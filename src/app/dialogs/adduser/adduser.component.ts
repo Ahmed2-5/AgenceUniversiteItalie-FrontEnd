@@ -58,7 +58,7 @@ export class AdduserComponent implements OnInit {
     usr.motDePasse = this.generatePassword(8);
 
     // Create user first
-    this.userserv.createAdmin(usr, sessionStorage.getItem('email') || '').subscribe(
+    this.userserv.createAdmin(usr, sessionStorage.getItem('email') || '',this.forminput.controls['role'].value).subscribe(
       (response: any) => {
         console.log(response);
         // After user creation, upload the profile image if selected

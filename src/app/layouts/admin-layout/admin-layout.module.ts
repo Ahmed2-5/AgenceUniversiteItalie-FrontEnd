@@ -30,6 +30,7 @@ import { AddPayementToCLientComponent } from 'src/app/dialogs/add-payement-to-cl
 import { ArchiveComponent } from 'src/app/pages/archive/archive.component';
 import { CredentialByClientComponent } from 'src/app/dialogs/credential-by-client/credential-by-client.component';
 import { DocArchiveComponent } from 'src/app/pages/doc-archive/doc-archive.component';
+import { UserslistforaddcondidatComponent } from 'src/app/dialogs/userslistforaddcondidat/userslistforaddcondidat.component';
 
 @NgModule({
   imports: [
@@ -64,7 +65,8 @@ import { DocArchiveComponent } from 'src/app/pages/doc-archive/doc-archive.compo
     AddPayementToCLientComponent,
     ArchiveComponent,
     CredentialByClientComponent,
-    DocArchiveComponent
+    DocArchiveComponent,
+    UserslistforaddcondidatComponent
     ]
 })
 export class AdminLayoutModule {}
