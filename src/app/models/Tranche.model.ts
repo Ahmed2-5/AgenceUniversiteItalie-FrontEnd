@@ -10,6 +10,7 @@ export class Tranche {
     statusTranche!:string;
     notificationEnvoyee!:boolean;
     notificationRetardEnvoyee!:boolean;
+    montantFixe!:boolean;
     payement!:Payement;
     
 

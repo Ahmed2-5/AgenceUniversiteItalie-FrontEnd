@@ -32,15 +32,15 @@
             <span class="card-title">{{ task.titre }}</span>
           </ng-container>
           <ng-template #editMode>
-            <input class="form-control" type="text" [(ngModel)]="task.titre">
+            <textarea class="form-control" type="text" [(ngModel)]="task.titre"></textarea>
           </ng-template>
         </h5>
         <p class="card-text">
           <ng-container *ngIf="editingTaskId !== task.idTache; else editModeDescription">
-            {{ task.description }}
+            <span [innerHTML]="task.description"></span>
           </ng-container>
           <ng-template #editModeDescription>
-            <input class="form-control" type="text" [(ngModel)]="task.description">
+            <textarea class="form-control" rows="5" [(ngModel)]="task.description"></textarea>
           </ng-template>
           <br>
           <span class="deadline">Deadline in: {{ getDeadlineTimeDifference(i) }}</span>

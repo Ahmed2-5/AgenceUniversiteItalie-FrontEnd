@@ -83,7 +83,7 @@
         </div>
       </section>
       
-      <section class="payment-summary">
+      <section class="payment-summary" *ngIf="role !== 'ADMIN_ITALIE' ">
         <div class="summary-details">
           <p *ngIf="!payement"><em>Aucun paiement enregistré.</em></p>
 

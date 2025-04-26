@@ -31,12 +31,23 @@ export class ArchiveComponent implements OnInit {
       const role = sessionStorage.getItem('role') || '{}';
       if (role === "SUPER_ADMIN") {
         this.isSuperAdmin = true;
-      } 
-      this.loadClients();
+        this.loadClients();
+      } else if(role === "ADMIN_TUNISIE") {
+        this.loadClientsByAssignedToTUNISIE(this.email);
+      }
     }
   
     loadClients() {
       this.clientsService.getAllClients().subscribe({
+        next: (data) => {
+          this.clients = data.filter(client => client.archive === 'ARCHIVER');
+        },
+        error: (err) => console.error('Error loading clients', err)
+      });
+    }
+
+    loadClientsByAssignedToTUNISIE(email : string) {
+      this.clientsService.getClientsByAssignedToTunisie(email).subscribe({
         next: (data) => {
           this.clients = data.filter(client => client.archive === 'ARCHIVER');
         },

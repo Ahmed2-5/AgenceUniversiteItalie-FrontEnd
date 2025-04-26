@@ -51,4 +51,7 @@ export class UpdateCondidatComponent implements OnInit {
       });
   }
 
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
 }

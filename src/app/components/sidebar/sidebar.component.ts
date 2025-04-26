@@ -29,12 +29,23 @@ export class SidebarComponent implements OnInit {
 
   public menuItems: any[];
   public isCollapsed = true;
+  role: string = '';
 
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
-    this.router.events.subscribe((event) => {
+    this.role = sessionStorage.getItem('role') || '{}'; // Ensure role is properly parsed
+
+    this.menuItems = ROUTES.filter(menuItem => {
+      if (menuItem.path === '/clients') {
+        return this.role === 'SUPER_ADMIN' || this.role === 'ADMIN_TUNISIE';
+      } else if (menuItem.path === '/archive') {
+        return this.role === 'SUPER_ADMIN' || this.role === 'ADMIN_TUNISIE';
+      } else if (menuItem.path === '/docArchive') {
+        return this.role === 'SUPER_ADMIN' || this.role === 'ADMIN_TUNISIE';
+      }
+      return true; // Other routes always shown
+    });    this.router.events.subscribe((event) => {
       this.isCollapsed = true;
    });
   }

@@ -1,10 +1,19 @@
 <div class="center-screen">
     <div style="height: 100%;" class=" relative flex flex-col min-w-0 break-words w-full shadow-lg rounded-lg bg-blueGray-200 border-0">
         <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-          <div class="text-center mb-3 font-bold">
-            <h1 style="color: #5e72e4; padding-top: 20px; font-size: 2em; font-weight: bold;">UPDATE USER</h1>
-            <hr class="mt-6 border-b-1 border-blueGray-300" />
-          </div>
+          <div class="header">
+            <div class="text-center mb-3 font-bold">
+              <h1 style="color: #5e72e4; padding-top: 15px; font-size: 2em; font-weight: bold;">ADD USER</h1>
+              <hr class="mt-1 border-b-1 border-blueGray-300" />
+            </div>
+            <button class="close-button" (click)="closeDialog()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div> 
       
           <form (ngSubmit)="onSubmit()">
             <div class="flex flex-wrap">

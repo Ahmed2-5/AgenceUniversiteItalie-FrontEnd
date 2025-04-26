@@ -28,6 +28,7 @@ export class ClientByIdComponent implements OnInit {
     montantTotal: number = 0;
     reste: number = 0;
     nombreTranches: number = 0;
+    role: string = '';
 
     constructor(
       @Inject(MAT_DIALOG_DATA) public data: { clientID: number },
@@ -37,6 +38,8 @@ export class ClientByIdComponent implements OnInit {
     ) { }
   
     ngOnInit(): void {
+        this.role = sessionStorage.getItem('role') || '{}'; // Ensure role is properly parsed
+
         this.clientserv.getClientById(this.data.clientID).subscribe({
           next: (data) => {
             this.client = data;

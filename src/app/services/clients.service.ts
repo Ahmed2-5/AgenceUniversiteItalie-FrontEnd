@@ -170,6 +170,15 @@ export class ClientsService {
     return this.http.get<number>(`${this.apiUrl1}/${paiementId}/reste`);
   }
 
+  updateTrancheAndRedistribute(idTranche: number, montant: number, userEmail: string): Observable<any> {
+    const url = `${this.apiUrl1}/tranche/update-montant/${idTranche}`;
+    
+    const params = new HttpParams()
+      .set('montant', montant.toString())
+      .set('userEmail', userEmail);
+
+    return this.http.put(url, null, { params: params });
+  }
   private apiUrl2 = 'http://localhost:8082/api/Credential';
 
   // 🔹 Get all credentials

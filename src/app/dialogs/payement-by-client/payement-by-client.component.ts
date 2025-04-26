@@ -22,6 +22,8 @@ export class PayementByClientComponent implements OnInit {
   numberOfInstallments: number;
   installments: Tranche[] = [];
   payement: Payement;
+  email: string = '';
+  editTrancheIndexMap: { [key: number]: boolean } = {};
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { clientID: number },
@@ -30,6 +32,7 @@ export class PayementByClientComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.email = sessionStorage.getItem('email');
     this.loadPaiements();
   }
 
@@ -78,7 +81,32 @@ export class PayementByClientComponent implements OnInit {
       this.remainingAmountDue = `${this.calculateRemainingAmount(this.installments)} DT`;
     });
   }
+  toggleEditTrancheField(index: number) {
+    this.editTrancheIndexMap[index] = true;
+  }
+  closeEditTrancheField(index: number) {
+    this.editTrancheIndexMap[index] = false;
+    this.loadPaiements() 
 
+  }
+  editMontant(i: number, newMontant: number) {
+    const tranche = this.installments[i];
+  
+    this.payementService.updateTrancheAndRedistribute(tranche.idTranche, newMontant, this.email)
+      .subscribe({
+        next: () => {
+          console.log('✅ Montant updated');
+          tranche.montant = newMontant;
+          this.remainingAmountDue = `${this.calculateRemainingAmount(this.installments)} DT`;
+          this.editTrancheIndexMap[i] = false; // Exit edit mode
+          this.loadPaiements() 
+        },
+        error: (err) => {
+          console.error('❌ Error updating montant:', err);
+        }
+      });
+  }
+  
   closeDialog(): void {
     this.dialogRef.close();
   }

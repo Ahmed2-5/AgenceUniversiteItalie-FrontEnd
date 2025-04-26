@@ -120,6 +120,9 @@ formatDateForServer(dateStr: string): string {
     location.reload()
   }
 
+  close(): void {
+    this.userserv.closeDialog();
+  }
   getUserImage(user: Utilisateur): string {
     return `${user.profileImageUrl}`;
   }

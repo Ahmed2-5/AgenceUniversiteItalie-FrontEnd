@@ -23,78 +23,91 @@
     </thead>
     <tbody>
       <tr *ngFor="let client of clients">
+        <!-- Client Name -->
         <td>
           <a (click)="openClientDialog(client.idClients)">
             {{ client.prenomClient }} {{ client.nomClient }}
           </a>
         </td>
-
-        <!-- Pack -->
+      
+        <!-- Pack Selection -->
         <td>
           <select
             class="select-btn"
-            [ngClass]="client.service.toLowerCase()"
+            [ngClass]="client.service?.toLowerCase()"
             [(ngModel)]="client.service"
             (change)="changePack(client)">
             <option *ngFor="let option of packOptions" [value]="option">{{ option }}</option>
           </select>
         </td>
-
+      
         <!-- Communication -->
-        <td>
-          {{ client.payementClient?.length ? 'OUI' : 'NON' }}
-        </td>
-
-        <!-- Date début -->
-        <td>{{ client.payementClient?.length ? client.payementClient[0]?.dateCreation : '-' }}</td>
-
+        <td>{{ client.payementClient?.length ? 'OUI' : 'NON' }}</td>
+      
+        <!-- Date de début -->
+        <td>{{ client.payementClient?.[0]?.dateCreation || '-' }}</td>
+      
         <!-- Agent -->
         <td>
-          {{client.assignedToTunisie.prenom}}  {{client.assignedToTunisie.nom}} 
+          {{ client.assignedToTunisie?.prenom || '' }} {{ client.assignedToTunisie?.nom || '' }}
         </td>
-
-        <!-- Montant -->
-        <td class="green-text">
-          {{ client.payementClient?.length ? client.payementClient[0]?.montantaTotal : '-' }}
+      
+        <!-- Montant à payer -->
+        <td *ngIf="role === 'ADMIN_TUNISIE' || role === 'SUPER_ADMIN'" class="green-text">
+          {{ client.payementClient?.[0]?.montantaTotal || '-' }}
         </td>
-
-        <!-- Reste -->
-        <td [ngClass]="{'light-red': client.payementClient?.[0]?.leReste > 0}">
-          <span>
-            {{ client.payementClient?.length ? client.payementClient[0]?.leReste : '-' }}
-          </span>
+      
+        <!-- Reste à payer -->
+        <td *ngIf="role === 'ADMIN_TUNISIE' || role === 'SUPER_ADMIN'" [ngClass]="{'light-red': client.payementClient?.[0]?.leReste > 0}">
+          {{ client.payementClient?.[0]?.leReste || '-' }}
         </td>
-        
-
-        <td>
-          <span>
-            {{ client.payementClient?.length ? client.payementClient[0]?.montantaTotal - client.payementClient[0]?.leReste : '-' }}
-          </span>
+      
+        <!-- Payé -->
+        <td *ngIf="role === 'ADMIN_TUNISIE' || role === 'SUPER_ADMIN'">
+          {{ client.payementClient?.[0] ? (client.payementClient[0].montantaTotal - client.payementClient[0].leReste) : '-' }}
         </td>
-
+      
         <!-- Tranches -->
-        <td [ngClass]="getTrancheClass(client, 0)">{{ getTrancheMontant(client, 0) }}</td>
-        <td [ngClass]="getTrancheClass(client, 1)">{{ getTrancheMontant(client, 1) }}</td>
-        <td [ngClass]="getTrancheClass(client, 2)">{{ getTrancheMontant(client, 2) }}</td>
-        <td [ngClass]="getTrancheClass(client, 3)">{{ getTrancheMontant(client, 3) }}</td>
-        <td [ngClass]="getTrancheClass(client, 4)">{{ getTrancheMontant(client, 4) }}</td>
+        <td *ngIf="role === 'ADMIN_TUNISIE' || role === 'SUPER_ADMIN'" [ngClass]="getTrancheClass(client, 0)">
+          {{ getTrancheMontant(client, 0) }}
+        </td>
+        <td *ngIf="role === 'ADMIN_TUNISIE' || role === 'SUPER_ADMIN'" [ngClass]="getTrancheClass(client, 1)">
+          {{ getTrancheMontant(client, 1) }}
+        </td>
+        <td *ngIf="role === 'ADMIN_TUNISIE' || role === 'SUPER_ADMIN'" [ngClass]="getTrancheClass(client, 2)">
+          {{ getTrancheMontant(client, 2) }}
+        </td>
+        <td *ngIf="role === 'ADMIN_TUNISIE' || role === 'SUPER_ADMIN'" [ngClass]="getTrancheClass(client, 3)">
+          {{ getTrancheMontant(client, 3) }}
+        </td>
+        <td *ngIf="role === 'ADMIN_TUNISIE' || role === 'SUPER_ADMIN'" [ngClass]="getTrancheClass(client, 4)">
+          {{ getTrancheMontant(client, 4) }}
+        </td>
+      
         <!-- Actions -->
-       <td>
-        <button 
-         *ngIf="!client.payementClient[0]"
-         class="btn btn-sm btn-primary" 
-        (click)="openADDPaymenetDialog(client.idClients)">
-        + Ajouter Paiement
-        </button>
-        <button 
-         *ngIf="client.payementClient[0]"
-         class="icon-button"
-         (click)="confirmArchiveBox(client.idClients)">
-         📂
-        </button>
-      </td>
-
-       </tr>
+        <td *ngIf="role === 'ADMIN_TUNISIE' || role === 'SUPER_ADMIN'">
+          <button *ngIf="!client.payementClient?.length" class="btn btn-sm btn-primary" (click)="openADDPaymenetDialog(client.idClients)">
+            + Ajouter Paiement
+          </button>
+          <button *ngIf="client.payementClient?.length" class="icon-button" (click)="confirmArchiveBox(client.idClients)">
+            📂
+          </button>
+        </td>
+      
+        <!-- For ADMIN_ITALIE role -->
+        <ng-container *ngIf="role === 'ADMIN_ITALIE'">
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+        </ng-container>
+      </tr>
+      
     </tbody>
   </table>
 </div>

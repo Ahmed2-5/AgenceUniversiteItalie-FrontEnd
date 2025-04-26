@@ -35,7 +35,25 @@
 
       <div class="installment-info">
         <div class="name">{{ installment.numero }}</div>
-        <div class="amount">{{ installment.montant }} DT</div>
+        <div class="amount" *ngIf="installment.montantFixe === true">{{ installment.montant }}</div>
+        <div class="amount" *ngIf="installment.montantFixe === false && installment.statusTranche !== 'PAYEE'">
+          <ng-container *ngIf="!editTrancheIndexMap[i]; else editMontantTemplate">
+            {{ installment.montant }} DT
+            <span class="edit-icon" (click)="toggleEditTrancheField(i)">✏️</span>
+          </ng-container>
+        
+          <ng-template #editMontantTemplate>
+            <input 
+              [(ngModel)]="installment.montant" 
+              class="edit-input" 
+              (blur)="editMontant(i, installment.montant)" 
+              (keydown.enter)="editMontant(i, installment.montant)" 
+              style="width: 80px;"
+            />
+            <span class="save-icon" (click)="closeEditTrancheField(i)">✅</span>
+          </ng-template>
+        </div>
+        
         <div class="due-date">{{ installment.dateLimite | date }}</div>
       </div>
 

@@ -17,6 +17,8 @@ export class ListClientsAdvancedComponent implements OnInit {
   packOptions = ['GOLD', 'SILVER', 'BRONZE'];
   clients: Clients[] = [];
   email: string = '';
+  role: string = '';
+
   constructor(private clientsService:ClientsService,
               private dialog: MatDialog,
               private UserService :UserService
@@ -25,13 +27,13 @@ export class ListClientsAdvancedComponent implements OnInit {
 
   ngOnInit(): void {
     this.email = sessionStorage.getItem('email');
-    const role = sessionStorage.getItem('role') || '{}'; // Ensure role is properly parsed
+    this.role = sessionStorage.getItem('role') || '{}'; // Ensure role is properly parsed
 
-    if (role === "SUPER_ADMIN") {
+    if (this.role === "SUPER_ADMIN") {
       this.loadClients();
-    } else if (role === "ADMIN_TUNISIE" ) {
+    } else if (this.role === "ADMIN_TUNISIE" ) {
       this.loadClientsByAssignedToTUNISIE(this.email);
-    } else if (role === "ADMIN_ITALIE") {
+    } else if (this.role === "ADMIN_ITALIE") {
       this.loadClientsByAssignedToITALIE(this.email);
     }
   }

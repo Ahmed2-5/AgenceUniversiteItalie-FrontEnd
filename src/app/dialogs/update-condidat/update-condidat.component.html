@@ -1,7 +1,16 @@
 <div class="page-layout center-screen">
     <div class="form-and-table">
       <div class="add-form-container">
-        <h3>Modifier le Candidat</h3>
+        <div class="header">
+          <div class="h3">Modifier le Candidat</div> <!-- Optional title -->
+          <button class="close-button" (click)="closeDialog()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div> 
         <form (ngSubmit)="submitForm()" #editForm="ngForm">
             <div class="form-group">
                 <label>Nom:</label>

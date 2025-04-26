@@ -127,3 +127,35 @@
   cursor: pointer;
   z-index: 1;
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+
+  h3 {
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    color: #777;
+    transition: color 0.3s ease;
+
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    &:hover {
+      color: #222020;
+    }
+  }
+}
