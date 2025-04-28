@@ -1,7 +1,16 @@
 <app-dashboard></app-dashboard>
-
+<div class="container-fluid">
+  <header class="text-center text-light my-4">
+    <h1 class="text-uppercase">Docs Archived</h1>
+    <div class="d-flex justify-content-center align-items-center mb-3">
+      <form class="search" (submit)="$event.preventDefault()">
+        <input class="form-control m-auto" type="text" placeholder="Search client" [(ngModel)]="searchTerm" name="search" />
+      </form>
+    </div>
+  </header>
+</div>
 <div class="archive-container">
-  <div *ngFor="let client of clients" class="archive-card">
+  <div *ngFor="let client of filterClients()" class="archive-card">
     <div class="card-header">
       <h3>{{ client.prenomClient }} {{ client.nomClient }}</h3>
     </div>

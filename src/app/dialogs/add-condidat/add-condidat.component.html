@@ -49,6 +49,14 @@
         </div>
 
         <div class="form-group">
+          <label>Ville:</label>
+          <select name="villeClient" [(ngModel)]="newClient.villeClient" required>
+            <option value="">-- Choisir une ville --</option>
+            <option *ngFor="let ville of villesTunisie" [value]="ville">{{ ville }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <label>Langue:</label>
           <select name="langue" [(ngModel)]="newClient.langue" required>
             <option value="">-- Choisir --</option>
@@ -70,11 +78,16 @@
         </div>
 
         <div class="form-group">
-          <label>Ville:</label>
-          <select name="villeClient" [(ngModel)]="newClient.villeClient" required>
-            <option value="">-- Choisir une ville --</option>
-            <option *ngFor="let ville of villes" [value]="ville">{{ ville }}</option>
+          <label>Ville en Italie:</label>
+          <select name="villeItalie" [(ngModel)]="newClient.villeItalie" required>
+            <option value="">-- Quelle ville en Italie ?	--</option>
+            <option *ngFor="let ville of villesItalie" [value]="ville">{{ ville }}</option>
           </select>
+        </div>
+
+        <div class="form-group">
+          <label>Programme d'étude:</label>
+          <input type="text" name="programmedEtude" [(ngModel)]="newClient.programmedEtude" />
         </div>
 
         <div class="form-group form-inline">

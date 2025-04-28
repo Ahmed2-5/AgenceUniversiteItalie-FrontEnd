@@ -16,6 +16,9 @@ export class Clients {
     langue!: string;
     service!: string;
     reference!: string;
+    programmedEtude!: string;
+    villeItalie!: string;
+    communication!: string;
     archive!: string; 
     clientImageUrl!: string;
     clientCreatedby!: Utilisateur;

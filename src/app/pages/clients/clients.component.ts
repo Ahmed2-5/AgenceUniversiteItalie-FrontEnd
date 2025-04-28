@@ -19,6 +19,7 @@ export class ClientsComponent implements OnInit {
   currentPage = 0;
   pageSize = 5;
   email: string = '';
+  searchTerm: string = '';
 
   constructor(private dialog: MatDialog, private clientsService: ClientsService) {}  
 
@@ -107,7 +108,17 @@ export class ClientsComponent implements OnInit {
       });
     }
     
+    filterClients() {
+      const search = this.searchTerm.trim().toLowerCase();
     
+      return this.pagedClients.filter(client => {
+        const matchesSearch = !search || 
+          (client.prenomClient.toLowerCase().startsWith(search) || 
+           client.nomClient.toLowerCase().startsWith(search));
+    
+        return matchesSearch;
+      });
+    }
   
 
 }

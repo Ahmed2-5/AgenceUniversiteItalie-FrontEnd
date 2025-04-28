@@ -19,6 +19,8 @@ export class ArchiveComponent implements OnInit {
     clients: Clients[] = [];
     email: string = '';
     isSuperAdmin: boolean = false; 
+    searchTerm: string = '';
+
     constructor(private clientsService:ClientsService,
                 private dialog: MatDialog,
                 private UserService :UserService,
@@ -74,19 +76,6 @@ export class ArchiveComponent implements OnInit {
         default: return '';
       }
     }
-    
-  /*  changePack(client: Clients) {
-      if (client.idClients) {
-        this.clientsService.updateClient(client, client.idClients).subscribe({
-          next: (updatedClient) => {
-            console.log('Pack updated successfully:', updatedClient.service);
-          },
-          error: (err) => {
-            console.error('Error updating pack', err);
-          }
-        });
-      }
-    }*/
   
     openClientDialog(clientId: number) {
       const dialogRef = this.dialog.open(ClientByIdComponent, {
@@ -100,21 +89,7 @@ export class ArchiveComponent implements OnInit {
         }
       });
     }
-  
-  /*  openADDPaymenetDialog(clientID: number) {
-          const dialogRef = this.dialog.open(AddPayementToCLientComponent, {
-            data: { clientID: clientID },
-            disableClose: true, // This ensures the dialog closes when clicking outside
-          });
-    
-          dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-              this.loadClients()
-              console.log('Dialog closed with result:', result);
-            }
-          });
-     }*/
-  
+
      Unarchiver(clientID: number) {
         this.clientsService.unarchiveClient(clientID).subscribe({
           next: (updatedClient) => {
@@ -174,5 +149,17 @@ export class ArchiveComponent implements OnInit {
                 });
               }
      
+              filterClients() {
+                const search = this.searchTerm.trim().toLowerCase();
+              
+                return this.clients.filter(client => {
+                  const matchesSearch = !search || 
+                    (client.prenomClient.toLowerCase().startsWith(search) || 
+                     client.nomClient.toLowerCase().startsWith(search));
+              
+              
+                  return matchesSearch;
+                });
+              }
   }
   

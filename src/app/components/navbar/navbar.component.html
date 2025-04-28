@@ -4,6 +4,44 @@
     <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" routerLinkActive="active" [routerLink]="['/dashboard']">{{getTitle()}}</a>
     <!-- User -->
     <ul class="navbar-nav align-items-center d-none d-md-flex">
+      <li class="nav-item notification-container">
+        <div class="notification-bell" (click)="toggleNotifDialog($event)">
+          <i class="fa fa-regular fa-bell text-size text-gray"></i>
+          <span  *ngIf="getUnreadNotificationCount() > 0 && showNotifDialog === false" class="notification-badge">{{ getUnreadNotificationCount() }}</span>
+        </div>
+
+        <div class="notification-dropdown" *ngIf="showNotifDialog">
+          <div class="notification-header">
+            <h2>Notifications</h2>
+            <button class="mark-all-read" (click)="markAllAsRead()">Mark all as read</button>
+          </div>
+          <div class="notification-content">
+            <div class="notification-list" [ngStyle]="{'max-height': notifications.length > 4 ? '440px' : 'auto'}">
+              <div *ngFor="let notification of notifications.slice(0, visibleNotifications); let i = index"
+                   [ngClass]="{'notification-item': true, 'unread': !notification.readed}">
+                <div class="notification-item-content">
+                  <div class="notification-avatar">
+                    <img src="/assets/img/agencephoto.png" alt="Notification">
+                  </div>
+                  <div class="notification-text">
+                    <div class="notification-header-text">
+                      <h4>{{notification.notifLib}}</h4>
+                      <span class="notification-time">{{ getTimeDifference(i) }}</span>
+                    </div>
+                    <p>{{ notification.message }}</p>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="notifications.length === 0" class="no-notifications">
+                <p>No notifications</p>
+              </div>
+            </div>
+            <button *ngIf="notifications.length > visibleNotifications" class="show-more" (click)="showMore()">
+              Show More
+            </button>
+          </div>
+        </div>
+      </li>
 
       <li class="nav-item" ngbDropdown placement="bottom-right">
         <a class="nav-link pr-0" role="button" ngbDropdownToggle>

@@ -18,6 +18,8 @@ export class ListClientsAdvancedComponent implements OnInit {
   clients: Clients[] = [];
   email: string = '';
   role: string = '';
+  searchTerm: string = '';
+  selectedStatus: string = 'ALL';
 
   constructor(private clientsService:ClientsService,
               private dialog: MatDialog,
@@ -29,12 +31,10 @@ export class ListClientsAdvancedComponent implements OnInit {
     this.email = sessionStorage.getItem('email');
     this.role = sessionStorage.getItem('role') || '{}'; // Ensure role is properly parsed
 
-    if (this.role === "SUPER_ADMIN") {
+    if (this.role !== "ADMIN_ITALIE") {
       this.loadClients();
-    } else if (this.role === "ADMIN_TUNISIE" ) {
-      this.loadClientsByAssignedToTUNISIE(this.email);
     } else if (this.role === "ADMIN_ITALIE") {
-      this.loadClientsByAssignedToITALIE(this.email);
+      this.loadClientsToAdminITALIE();
     }
   }
 
@@ -47,24 +47,18 @@ export class ListClientsAdvancedComponent implements OnInit {
     });
   }
 
-  loadClientsByAssignedToTUNISIE(email : string) {
-    this.clientsService.getClientsByAssignedToTunisie(email).subscribe({
+
+  loadClientsToAdminITALIE() {
+    this.clientsService.getAllClients().subscribe({
       next: (data) => {
-        this.clients = data.filter(client => client.archive === 'NON_ARCHIVER');
+        this.clients = data.filter(client => 
+          client.archive === 'NON_ARCHIVER' && client.communication === 'OUI'
+        );
       },
       error: (err) => console.error('Error loading clients', err)
     });
   }
-
-  loadClientsByAssignedToITALIE(email : string) {
-    this.clientsService.getClientsByAssignedToItalie(email).subscribe({
-      next: (data) => {
-        this.clients = data.filter(client => client.archive === 'NON_ARCHIVER');
-      },
-      error: (err) => console.error('Error loading clients', err)
-    });
-  }
-
+  
   getTrancheMontant(client: Clients, index: number): string | number {
     const paiement = client.payementClient[0];
     if (paiement && paiement.tranches?.[index]) {
@@ -152,4 +146,22 @@ export class ListClientsAdvancedComponent implements OnInit {
        });
      }
      
+     filterClients() {
+      const search = this.searchTerm.trim().toLowerCase();
+    
+      return this.clients.filter(client => {
+        const matchesSearch = !search || 
+          (client.prenomClient.toLowerCase().startsWith(search) || 
+           client.nomClient.toLowerCase().startsWith(search));
+    
+        const matchesStatus = this.selectedStatus === 'ALL' || client.payementClient?.[0]?.statusPaiment === this.selectedStatus;
+    
+        return matchesSearch && matchesStatus;
+      });
+    }
+    
+  
+    setStatusFilter(status: string) {
+      this.selectedStatus = status;
+    }
 }

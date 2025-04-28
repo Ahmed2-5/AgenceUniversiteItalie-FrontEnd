@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { filter, map } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NotificationsComponent } from 'src/app/dialogs/notifications/notifications.component';
+import { Notification } from 'src/app/models/Notification.model';
 
 @Component({
   selector: 'app-navbar',
@@ -21,92 +22,170 @@ export class NavbarComponent implements OnInit {
   user:Utilisateur=new Utilisateur()
   notifications: Notification[] = [];
 
-  
+  userId!: number; 
+  listofcreatedNotifusers : Utilisateur[] = [];
+  visibleNotifications: number = 4;
+  visibleAdminNotifications: number = 4;
+  NotifDates: Set<Date> = new Set<Date>();
+
+  showNotifDialog = false;
+
   constructor(location: Location,  private element: ElementRef, private router: Router,
     private authserv:AuthService,
-  //  private notificationService: NotificationService,
+    private notificationService: NotificationService,
     private dialog: MatDialog
   ) {
     this.location = location;
+  } 
+
+  @HostListener("document:click", ["$event"])
+  clickOutside(event: Event) {
+    // Close notification dropdown when clicking outside
+    const notificationContainer = this.element.nativeElement.querySelector(".notification-container")
+    if (this.showNotifDialog && notificationContainer && !notificationContainer.contains(event.target)) {
+      this.showNotifDialog = false
+    }
+    this.loadNotificationsCount()
+
   }
 
   ngOnInit() {
-    const email = sessionStorage.getItem('email');
+    const email = sessionStorage.getItem("email")
 
     if (email) {
       this.authserv.getUtilisateurByEmail(email).subscribe({
         next: (data) => {
-          this.user = data;
+          this.user = data
+          this.userId = data.idUtilisateur
           if (this.user.profileImageUrl) {
-            this.user.profileImageUrl = `http://localhost:8082/api/utilisateurs/uploads/${data.profileImageUrl}`;
-         }
+            this.user.profileImageUrl = `http://localhost:8082/api/utilisateurs/uploads/${data.profileImageUrl}`
+          }
+          // Load notifications after getting user data
+
+          this.loadNotificationsCount()
         },
         error: (error) => {
-          console.error("Error fetching user:", error);
-        }
-      });
+          console.error("Error fetching user:", error)
+        },
+      })
     }
-    this.listTitles = ROUTES.filter(listTitle => listTitle);
-
-  //  this.loadNotificationsCount()
-  }
-  getTitle(){
-    var titlee = this.location.prepareExternalUrl(this.location.path());
-    if(titlee.charAt(0) === '#'){
-        titlee = titlee.slice( 1 );
-    }
-
-    for(var item = 0; item < this.listTitles.length; item++){
-        if(this.listTitles[item].path === titlee){
-            return this.listTitles[item].title;
-        }
-    }
-    return 'Dashboard';
+    this.listTitles = ROUTES.filter((listTitle) => listTitle)
   }
 
-  logout(){
+  getTitle() {
+    var titlee = this.location.prepareExternalUrl(this.location.path())
+    if (titlee.charAt(0) === "#") {
+      titlee = titlee.slice(1)
+    }
+
+    for (var item = 0; item < this.listTitles.length; item++) {
+      if (this.listTitles[item].path === titlee) {
+        return this.listTitles[item].title
+      }
+    }
+    return "Dashboard"
+  }
+
+  logout() {
     this.authserv.logout()
   }
 
- /* loadNotificationsCount(){
-    this.notificationService.getNotifications(this.user.idUtilisateur).pipe(
+  loadNotificationsCount(){
+    this.notificationService.getNotifications(this.userId).pipe(
       map(notifications => notifications.filter(notification => !notification.readed))
     ).subscribe(filteredNotifications => {
       this.notifications = filteredNotifications;
     });
-  } 
+  }
 
-    openNotifdialog(event: MouseEvent) {
-      const target = event.currentTarget as HTMLElement;
-      const rect = target.getBoundingClientRect();  // Get the bell icon's position
-    
-      const dialogConfig = new MatDialogConfig();
-      
-      // Set the dialog position relative to the bell icon
-      dialogConfig.position = {
-        top: `${rect.bottom - 600}px`,  // Position the dialog slightly below the bell
-        left: `${rect.left - 220}px`,        // Align the dialog horizontally with the bell
-      };
-    
-      dialogConfig.data = { idUtilisateur: this.user.idUtilisateur };
-      dialogConfig.panelClass = 'custom-dialog-container';  // Custom CSS class for styling
-      
-      // Open the dialog with configuration
-      const dialogRef = this.dialog.open(NotificationsComponent, dialogConfig);
-    
-      // Close the dialog if clicked outside
-      dialogRef.backdropClick().subscribe(() => {
-        dialogRef.close();
-      });
-    
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          console.log('Dialog closed with result:', result);
-        }
-      });
+  toggleNotifDialog(event: Event) {
+    // Prevent the click from propagating to the document
+    event.stopPropagation()
+    this.showNotifDialog = !this.showNotifDialog
+    this.loadNotificationsCount()
+    if (this.showNotifDialog) {
+      this.loadNotifications()
     }
-    
-     getUnreadNotificationCount(): number {
-    return this.notifications.length;
-  }*/
+  }
+
+  getUnreadNotificationCount(): number {
+    return this.notifications.length
+  }
+
+  loadNotifications(): void {
+    this.notificationService.getNotifications(this.userId).subscribe((notifications) => {
+      this.notifications = notifications.sort(
+        (a, b) => new Date(b.notificationDate).getTime() - new Date(a.notificationDate).getTime(),
+      )
+      this.NotifDates = new Set<Date>(this.notifications.map((notif) => new Date(notif.notificationDate)))
+    })
+
+    this.notificationService.getcreatedusers(this.userId).subscribe((data) => {
+      this.listofcreatedNotifusers = data.reverse()
+    })
+  }
+
+  getcreatedUser(index: number): Utilisateur {
+    return this.listofcreatedNotifusers[index]
+  }
+
+  markAllAsRead() {
+    return this.notificationService.MarkAllAsReaded(this.userId).subscribe((d) => {
+      console.log(d)
+      this.loadNotifications()
+    })
+  }
+
+  showMore(): void {
+    this.visibleNotifications = this.notifications.length
+  }
+
+  getNotifDate(index: number): Date {
+    const NotifArray = Array.from(this.NotifDates)
+    return NotifArray[index]
+  }
+
+  getTimeDifference(index: number): string {
+    const currentDate = new Date()
+    const NotifDate = this.getNotifDate(index)
+
+    if (!NotifDate) {
+      return ""
+    }
+
+    // Round the time difference to the nearest integer
+    let timeDifference = Math.round(Math.abs(currentDate.getTime() - NotifDate.getTime()) / 1000)
+
+    const years = Math.floor(timeDifference / (3600 * 24 * 365.25))
+    if (years > 0) {
+      return `${years}y`
+    }
+    timeDifference -= years * 3600 * 24 * 365.25
+
+    const months = Math.floor(timeDifference / (3600 * 24 * 30.44))
+    if (months > 0) {
+      return `${months}mo`
+    }
+    timeDifference -= months * 3600 * 24 * 30.44
+
+    const days = Math.floor(timeDifference / (3600 * 24))
+    if (days > 0) {
+      return `${days}d`
+    }
+    timeDifference -= days * 3600 * 24
+
+    const hours = Math.floor(timeDifference / 3600)
+    if (hours > 0) {
+      return `${hours}h`
+    }
+    timeDifference -= hours * 3600
+
+    const minutes = Math.floor(timeDifference / 60)
+    if (minutes > 0) {
+      return `${minutes}min`
+    }
+
+    const seconds = Math.floor(timeDifference % 60)
+    return `${seconds}s`
+  }
 }

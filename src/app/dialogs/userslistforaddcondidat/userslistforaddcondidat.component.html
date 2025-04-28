@@ -27,30 +27,6 @@
     </div>
   </section>
 
-  <!-- ITALIE -->
-  <section class="mt-4">
-    <h3 class="text-color">Italie Admins</h3>
-    <input class="form-control my-2" type="text" placeholder="Search Italie" [(ngModel)]="searchItalie" />
-    <div class="row" style="padding-left: 20px;">
-      <div class="col-md-4" *ngFor="let usr of filterList(listItalie, searchItalie)">
-        <article 
-          class="user-card"
-          [class.selected]="isSelectedItalie(usr)"
-          (click)="selectItalie(usr)">
-          <img class="user-image" [src]="usr.profileImageUrl" alt="User Image">
-          <h4 class="user-name">{{usr.prenom}} {{usr.nom}}</h4>
-          <span class="badge badge-dot mr-4">
-            <i [ngClass]="{
-              'bg-success': usr.statusCompte.idStatusCompte === 1,
-              'bg-warning': usr.statusCompte.idStatusCompte === 2
-            }"></i>
-            {{usr.statusCompte.libelleStatusCompte}}
-          </span>
-        </article>
-      </div>
-    </div>
-  </section>
-
   <hr />
   <div class="button-container">
     <button class="btn btn-cancel" (click)="closeDialog()">Cancel</button>

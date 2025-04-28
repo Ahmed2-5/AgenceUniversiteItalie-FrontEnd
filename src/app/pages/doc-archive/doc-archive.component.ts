@@ -14,6 +14,7 @@ export class DocArchiveComponent implements OnInit {
   clients: Clients[] = [];
   selectedClientId: number | null = null;
   documents: ClientDocument[] = [];
+  searchTerm: string = '';
 
   editMode: { [key: number]: boolean } = {}; // Object with document id as key and edit mode status as value
     editedName: { [key: number]: string } = {};
@@ -142,6 +143,19 @@ export class DocArchiveComponent implements OnInit {
             Swal.fire("document unarchived", "This document has been unarchived", "success").then(() => {
             });
           }
+        });
+      }
+
+      filterClients() {
+        const search = this.searchTerm.trim().toLowerCase();
+      
+        return this.clients.filter(client => {
+          const matchesSearch = !search || 
+            (client.prenomClient.toLowerCase().startsWith(search) || 
+             client.nomClient.toLowerCase().startsWith(search));
+      
+      
+          return matchesSearch;
         });
       }
 }

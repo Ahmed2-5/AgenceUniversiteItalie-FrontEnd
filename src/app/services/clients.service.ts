@@ -19,12 +19,11 @@ export class ClientsService {
   constructor(private http: HttpClient) { }
 
   // ➕ Create a client
-  createClient(client: Clients, adminEmail: string, assignedAdminTunisie: string,assignedAdminItalie: string): Observable<Clients> {
+  createClient(client: Clients, adminEmail: string, assignedAdminTunisie: string): Observable<Clients> {
     
     const params = new HttpParams()
       .set('adminEmail', adminEmail)
       .set('assignedAdminTunisie', assignedAdminTunisie)
-      .set('assignedAdminItalie', assignedAdminItalie);
     return this.http.post<Clients>(`${this.baseUrl}/CreateClient`, client, { params });
   }
 

@@ -12,8 +12,9 @@ export const ROUTES: RouteInfo[] = [
     { path: '/icons', title: 'Tasks',  icon:'fa fa-tasks text-blue', class: '' },
     { path: '/user-profile', title: 'User profile',  icon:'ni-single-02 text-yellow', class: '' },
     { path: '/tables', title: 'Table of Users',  icon:'ni-bullet-list-67 text-red', class: '' },
-    { path: '/clients', title: 'List of candidates',      icon: 'fa fa-users text-purple',      class: '' },
-    { path: '/clientsAV', title: 'List of clients',  icon: 'fa fa-briefcase text-orange', class: '' },
+    { path: '/clients', title: 'candidates List',      icon: 'fa fa-users text-purple',      class: '' },
+    { path: '/myclients', title: 'My clients ', icon: 'fa fa-briefcase text-green', class: '' },
+    { path: '/clientsAV', title: 'client List',  icon: 'fa fa-briefcase text-orange', class: '' },
     { path: '/archive', title: 'Clients Archived ', icon: 'fa fa-archive text-muted', class: '' },
     { path: '/docArchive', title: 'docs Archived ', icon: 'fa fa-archive text-yellow', class: '' },
 
@@ -43,6 +44,8 @@ export class SidebarComponent implements OnInit {
         return this.role === 'SUPER_ADMIN' || this.role === 'ADMIN_TUNISIE';
       } else if (menuItem.path === '/docArchive') {
         return this.role === 'SUPER_ADMIN' || this.role === 'ADMIN_TUNISIE';
+      } else if (menuItem.path === '/myclients') {
+        return this.role === 'ADMIN_ITALIE' || this.role === 'ADMIN_TUNISIE';
       }
       return true; // Other routes always shown
     });    this.router.events.subscribe((event) => {

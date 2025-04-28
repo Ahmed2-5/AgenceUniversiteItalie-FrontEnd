@@ -13,10 +13,20 @@ import { UserslistforaddcondidatComponent } from '../userslistforaddcondidat/use
   styleUrls: ['./add-condidat.component.scss']
 })
 export class AddCondidatComponent implements OnInit {
-  villes: string[] = [
+  villesTunisie: string[] = [
     'Tunis', 'Sfax', 'Sousse', 'Gabès', 'Bizerte', 'Ariana', 'Gafsa', 'Kairouan',
-    'Kasserine', 'Ben Arous', 'Nabeul', 'Monastir', 'Mahdia', 'Zaghouan'
+    'Kasserine', 'Ben Arous', 'Nabeul', 'Monastir', 'Mahdia', 'Zaghouan',
+    'Tozeur', 'Kebili', 'Médenine', 'Tataouine', 'Manouba', 'Jendouba', 
+    'Le Kef', 'Siliana', 'Beja', 'Sidi Bouzid'
   ];
+  
+  villesItalie: string[] = [
+    'Rome', 'Milan', 'Naples', 'Turin', 'Palermo', 'Gênes', 'Bologne', 'Florence',
+    'Bari', 'Catane', 'Venise', 'Vérone', 'Messine', 'Padoue', 'Trieste',
+    'Brescia', 'Parme', 'Modène', 'Reggio de Calabre', 'Livourne', 
+    'Cagliari', 'Foggia', 'Salerne', 'Pescara', 'Palerme'
+  ];
+  
 
   langues: string[] = ['ITALIEN', 'FRANCAIS', 'ANGLAIS', 'ALLEMAND', 'AUTRE'];
   services: string[] = ['GOLD', 'SILVER', 'BRONZE'];
@@ -49,6 +59,9 @@ export class AddCondidatComponent implements OnInit {
       langue: '',
       service: '',
       reference: '',
+      programmedEtude: '',
+      villeItalie: '',
+      communication: 'NON',
       archive: 'NON_ARCHIVER',
       clientImageUrl: '',
       clientCreatedby: {} as Utilisateur,
@@ -65,7 +78,6 @@ export class AddCondidatComponent implements OnInit {
       this.newClient,
       this.email,
       this.selectedTunisieAdmin?.adresseMail || '',
-      this.selectedItalieAdmin?.adresseMail || '',
     ).subscribe({
       next: (created) => {
         console.log('Client created:', created);

@@ -2,6 +2,7 @@
 export class Notification {
     
   idnotif!: number;
+  typeNotif!:string
   notifLib!:string
   userId!:number
   createdby!:number

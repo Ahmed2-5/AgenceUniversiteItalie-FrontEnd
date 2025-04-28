@@ -31,6 +31,9 @@ import { ArchiveComponent } from 'src/app/pages/archive/archive.component';
 import { CredentialByClientComponent } from 'src/app/dialogs/credential-by-client/credential-by-client.component';
 import { DocArchiveComponent } from 'src/app/pages/doc-archive/doc-archive.component';
 import { UserslistforaddcondidatComponent } from 'src/app/dialogs/userslistforaddcondidat/userslistforaddcondidat.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MyClientsComponent } from 'src/app/pages/my-clients/my-clients.component';
 
 @NgModule({
   imports: [
@@ -41,8 +44,10 @@ import { UserslistforaddcondidatComponent } from 'src/app/dialogs/userslistforad
     NgbModule,
     ClipboardModule,
     MatDialogModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    MatMenuModule,
+    MatButtonModule,
+    ],
   declarations: [
     DashboardComponent,
     UserProfileComponent,
@@ -66,7 +71,8 @@ import { UserslistforaddcondidatComponent } from 'src/app/dialogs/userslistforad
     ArchiveComponent,
     CredentialByClientComponent,
     DocArchiveComponent,
-    UserslistforaddcondidatComponent
+    UserslistforaddcondidatComponent,
+    MyClientsComponent
     ]
 })
 export class AdminLayoutModule {}

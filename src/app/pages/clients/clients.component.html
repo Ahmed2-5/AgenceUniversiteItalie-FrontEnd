@@ -1,5 +1,14 @@
 
 <app-dashboard></app-dashboard>
+<div class="container-fluid">
+  <header class="text-center text-light my-4">
+    <div class="d-flex justify-content-center align-items-center mb-3">
+      <form class="search" (submit)="$event.preventDefault()">
+        <input class="form-control m-auto" type="text" placeholder="Search candidate" [(ngModel)]="searchTerm" name="search" />
+      </form>
+    </div>
+  </header>
+</div>
 <div class="table-wrapper">
     <div style="margin-bottom: 10px;">
      <div class="row align-items-center">
@@ -29,7 +38,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let c of pagedClients">
+        <tr *ngFor="let c of filterClients()">
           <td>{{ c.nomClient }} {{ c.prenomClient }}</td>
           <td>{{ c.dateNaissanceClient | date: 'dd/MM/yyyy' }}</td>
           <td>{{ c.emailClient }}</td>

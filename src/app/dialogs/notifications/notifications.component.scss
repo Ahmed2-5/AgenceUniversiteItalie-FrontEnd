@@ -1,22 +1,44 @@
 .notifications {
   width: 350px;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 5px 0px 5px 5px;
   background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-/* Adjust for the header of notifications */
 .notifications-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 10px;
 }
 
-/* Ensure the notifications items have some spacing and are properly aligned */
-.notifications-item, .notifications-itemNotReaded {
+.mark-all-read {
+  color: #af2f64;
+  border: none;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  background: none;
+  font-weight: 600;
+}
+
+.mark-all-read:hover {
+  color: #ca84a1;
+}
+
+h2 {
+  font-size: 14px;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  color: #999;
+  margin: 0;
+}
+
+.slider-container {
+  overflow-y: auto;
+}
+
+.notifications-item {
   display: flex;
   align-items: center;
   border-bottom: 1px solid #eee;
@@ -26,11 +48,21 @@
   cursor: pointer;
 }
 
-.notifications-item:hover, .notifications-itemNotReaded:hover {
+.notifications-item:hover {
   background-color: #eee;
 }
 
-/* Icon styling and image styles */
+.notifications-itemNotReaded {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding: 6px 9px;
+  margin-bottom: 2px;
+  height: 100px;
+  cursor: pointer;
+  background-color: #eee;
+}
+
 img {
   display: block;
   width: 60px;
@@ -39,7 +71,48 @@ img {
   border-radius: 50%;
 }
 
-/* Show more button styles */
+.icon-text-container {
+  display: flex;
+  align-items: center;
+}
+
+.icon-text-container i {
+  font-size: 35px;
+  margin-right: 19px;
+  color: #af2f64;
+}
+
+.text {
+  flex-grow: 1;
+  position: relative;
+}
+
+.text-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.text h4 {
+  color: #777;
+  font-size: 16px;
+  margin: 0;
+  margin-top: 15px;
+}
+
+.text p {
+  color: #aaa;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.notification-date {
+  color: #aaa;
+  font-size: 12px;
+  margin-left: 95px;
+}
+
 .show-more {
   display: block;
   width: 100%;

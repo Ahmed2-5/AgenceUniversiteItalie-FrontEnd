@@ -4,6 +4,9 @@ import { ClientsService } from 'src/app/services/clients.service';
 import { Credential } from 'src/app/models/Credential.model';
 import { UniversiteCredential } from 'src/app/models/UniversiteCredential.model';
 import { RDV } from 'src/app/models/RDV.model';
+import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/services/auth.service';
+import { Utilisateur } from 'src/app/models/Utilisateur.model';
 
 @Component({
   selector: 'app-credential-by-client',
@@ -11,7 +14,7 @@ import { RDV } from 'src/app/models/RDV.model';
   styleUrls: ['./credential-by-client.component.scss']
 })
 export class CredentialByClientComponent implements OnInit {
-
+   user!: Utilisateur
   credential!: Credential;
   editMode = {
     emailOutlook: false,
@@ -46,6 +49,7 @@ export class CredentialByClientComponent implements OnInit {
   showEditRDVDialog = false;
   selectedRdv: any = {};
 
+  role!:string
 
  
 
@@ -53,9 +57,23 @@ export class CredentialByClientComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { clientID: number },
     private dialogRef: MatDialogRef<CredentialByClientComponent>, 
     private dialog: MatDialog,
-    private credentialService: ClientsService
+    private credentialService: ClientsService,
+    private authserv:AuthService
+    
   ) {}
   ngOnInit(): void {
+    const email = sessionStorage.getItem("email")
+    this.role = sessionStorage.getItem("role")
+    if (email) {
+      this.authserv.getUtilisateurByEmail(email).subscribe({
+        next: (data) => {
+          this.user = data
+        },
+        error: (error) => {
+          console.error("Error fetching user:", error)
+        },
+      })
+    }
     const clientId = this.data.clientID;
     this.credentialService.getCredentialByClientId(clientId).subscribe((data) => {
       this.credential = data;
@@ -109,7 +127,32 @@ export class CredentialByClientComponent implements OnInit {
     });
   }
 
+  saveFieldUpdate(): void {
+    if (!this.credential) return;
   
+    this.credentialService.updateCredential(this.credential.idCredential, this.credential).subscribe({
+      next: (updatedCredential) => {
+        this.credential = updatedCredential;
+        console.log('Credential updated successfully.');
+      },
+      error: (err) => {
+        console.error('Error updating credential:', err);
+      }
+    });
+  }
+  
+
+  shouldDisableFields(): boolean {
+  
+    return this.role === 'ADMIN_TUNISIE' && ( this.credential.preInscrit === 'DONE' || this.credential.preInscrit === 'EN_COURS');
+  }
+  
+  shouldDisablePresInscritFieldForAdminTunisie(): boolean {
+  
+    return this.role === 'ADMIN_TUNISIE' ;
+  }
+
+
   toggleEditUniversityField(index: number, field: string): void {
     if (!this.editUniversityIndexMap[index]) {
       this.editUniversityIndexMap[index] = {};
@@ -254,5 +297,30 @@ export class CredentialByClientComponent implements OnInit {
       }
     });
   }
+
+  deleteRDV(rdv :RDV): void {
+    this.credentialService.removeRDVFromCredential(rdv.idRDV).subscribe({
+      next: (response) => {
+        this.loadRDVs(this.credential.idCredential)  
+      },
+      error: (err) => {
+        console.error('Erreur !!!', err);
+      }
+    });
+  }
+
+  confirmDeleteRDV(rdv :RDV) {
+                  Swal.fire({
+                    title: 'Are you sure you want to delete this RDV?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it',
+                    cancelButtonText: 'No, keep it'
+                  }).then((result) => {
+                    if (result.value) {
+                      this.deleteRDV(rdv);
+                    }
+                  });
+                }
   
 }

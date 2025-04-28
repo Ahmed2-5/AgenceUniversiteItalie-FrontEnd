@@ -224,3 +224,16 @@
   }
 }
 
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  max-width: 500px;
+  margin-right: 10px;
+}
+
+// Utility Classes
+.filtered {
+  display: none !important;
+}
