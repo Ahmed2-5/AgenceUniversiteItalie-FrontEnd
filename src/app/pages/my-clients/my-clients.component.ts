@@ -65,16 +65,16 @@ export class MyClientsComponent implements OnInit {
       });
     }
   
-    getTrancheMontant(client: Clients, index: number): string | number {
-      const paiement = client.payementClient[0];
+    getTrancheMontant(client: Clients, index: number,i: number): string | number {
+      const paiement = client.payementClient[i];
       if (paiement && paiement.tranches?.[index]) {
         return paiement.tranches?.[index]?.montant;
       }
       return '-';
     }
   
-    getTrancheClass(client: Clients, index: number): string {
-      const tranche = client.payementClient[0]?.tranches?.[index];
+    getTrancheClass(client: Clients, index: number,i: number): string {
+      const tranche = client.payementClient[i]?.tranches?.[index];
       if (!tranche) return '';
       switch (tranche.statusTranche) {
         case 'PAYEE': return 'status-paid';
@@ -89,11 +89,23 @@ export class MyClientsComponent implements OnInit {
         this.clientsService.updateClient(client, client.idClients).subscribe({
           next: (updatedClient) => {
             console.log('Pack updated successfully:', updatedClient.service);
+            this.openADDPaymenetDialog(client.idClients);
+  
           },
           error: (err) => {
             console.error('Error updating pack', err);
           }
         });
+      }
+    }
+  
+    getAvailablePackOptions(currentPack: string): string[] {
+      if (currentPack === 'GOLD') {
+        return ['GOLD']; // Only GOLD
+      } else if (currentPack === 'SILVER') {
+        return ['GOLD', 'SILVER']; // GOLD and SILVER
+      } else {
+        return this.packOptions; // All (GOLD, SILVER, BRONZE)
       }
     }
   
@@ -157,10 +169,21 @@ export class MyClientsComponent implements OnInit {
       
         return this.clients.filter(client => {
           const matchesSearch = !search || 
-            (client.prenomClient.toLowerCase().startsWith(search) || 
-             client.nomClient.toLowerCase().startsWith(search));
+            (client.prenomClient?.toLowerCase().startsWith(search) || 
+             client.nomClient?.toLowerCase().startsWith(search));
+          
+          const paiement0Status = client.payementClient && client.payementClient.length > 0 ? client.payementClient[0]?.statusPaiment : 'COMPLETE';
+          const paiement1Status = client.payementClient && client.payementClient.length > 1 ? client.payementClient[1]?.statusPaiment : 'COMPLETE';
       
-          const matchesStatus = this.selectedStatus === 'ALL' || client.payementClient?.[0]?.statusPaiment === this.selectedStatus;
+          let globalStatus: string = 'UNKNOWN';
+          
+          if (paiement0Status === 'EN_COURS' || paiement1Status === 'EN_COURS') {
+            globalStatus = 'EN_COURS';
+          } else if (paiement0Status === 'COMPLETE' && paiement1Status === 'COMPLETE') {
+            globalStatus = 'COMPLETE';
+          }
+      
+          const matchesStatus = this.selectedStatus === 'ALL' || globalStatus === this.selectedStatus;
       
           return matchesSearch && matchesStatus;
         });

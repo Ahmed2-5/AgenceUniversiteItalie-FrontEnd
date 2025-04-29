@@ -7,7 +7,6 @@ import { Utilisateur } from 'src/app/models/Utilisateur.model';
 import { NotificationService } from 'src/app/services/notification.service';
 import { filter, map } from 'rxjs/operators';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { NotificationsComponent } from 'src/app/dialogs/notifications/notifications.component';
 import { Notification } from 'src/app/models/Notification.model';
 
 @Component({

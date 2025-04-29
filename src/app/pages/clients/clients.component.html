@@ -28,12 +28,13 @@
           <th>Date de naissance</th>
           <th>Email</th>
           <th>Téléphone</th>
-          <th>Code postal</th>
           <th>Adresse</th>
+          <th>Ville</th>
           <th>Langue</th>
           <th>Service</th>
           <th>Référence</th>
-          <th>Ville</th>
+          <th>Programme d'étude</th>
+          <th>Ville en italie</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -43,12 +44,13 @@
           <td>{{ c.dateNaissanceClient | date: 'dd/MM/yyyy' }}</td>
           <td>{{ c.emailClient }}</td>
           <td>{{ c.telephoneClient }}</td>
-          <td>{{ c.codePostale }}</td>
           <td>{{ c.adresseClient }}</td>
+          <td>{{ c.villeClient }}</td>
           <td>{{ c.langue }}</td>
           <td>{{c.service}}</td>
           <td>{{c.reference}}</td>
-          <td>{{ c.villeClient }}</td>
+          <td>{{ c.programmedEtude }}</td>
+          <td>{{ c.villeItalie }}</td>
           <td>
             <button class="icon-button edit" (click)="openUpdateDialog(c.idClients)">
               ✏️

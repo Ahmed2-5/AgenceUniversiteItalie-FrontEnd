@@ -58,16 +58,16 @@ export class ArchiveComponent implements OnInit {
     }
   
   
-    getTrancheMontant(client: Clients, index: number): string | number {
-      const paiement = client.payementClient[0];
+    getTrancheMontant(client: Clients, index: number,i: number): string | number {
+      const paiement = client.payementClient[i];
       if (paiement && paiement.tranches?.[index]) {
         return paiement.tranches?.[index]?.montant;
       }
       return '-';
     }
   
-    getTrancheClass(client: Clients, index: number): string {
-      const tranche = client.payementClient[0]?.tranches?.[index];
+    getTrancheClass(client: Clients, index: number,i: number): string {
+      const tranche = client.payementClient[i]?.tranches?.[index];
       if (!tranche) return '';
       switch (tranche.statusTranche) {
         case 'PAYEE': return 'status-paid';

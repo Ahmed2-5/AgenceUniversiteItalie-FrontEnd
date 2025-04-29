@@ -1,0 +1,62 @@
+.clients-container {
+    padding: 20px;
+    
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      padding: 30px;
+    }
+    
+    .table {
+      box-shadow: 1px 4px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      
+      th {
+        background-color: #bec5ce;
+        font-weight: 600;
+      }
+      
+      .actions-column {
+        white-space: nowrap;
+      }
+    }
+    
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      
+      &:hover {
+        background-color: #0069d9;
+        border-color: #0062cc;
+      }
+    }
+    
+    .btn-danger {
+      background-color: #dc3545;
+      border-color: #dc3545;
+      
+      &:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+      }
+    }
+  }
+  
+  .search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    max-width: 500px;
+    margin-right: 10px;
+  }
+  
+  // Utility Classes
+  .filtered {
+    display: none !important;
+  }

@@ -1,68 +1,68 @@
 .scrollable-table-container {
-    max-height: 80vh;
-    overflow-y: auto;
-    overflow-x: auto;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #fff;
-  
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 16px;
-  
-      th,
-      td {
-         padding: 16px 24px; // +4px de chaque côté
-        min-width: 140px;   // Augmente la largeur minimale
-        font-size: 17px;    // Optionnel : un texte un peu plus gros
-        text-align: left;
-       }
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow-x: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
 
-  
-      thead {
-        background-color: #dce6ef;
-        font-weight: bold;
-      }
-  
-      thead th:nth-child(1),
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+
+    th,
+    td {
+       padding: 16px 24px; // +4px de chaque côté
+      min-width: 140px;   // Augmente la largeur minimale
+      font-size: 17px;    // Optionnel : un texte un peu plus gros
+      text-align: left;
+     }
+
+
+    thead {
+      background-color: #dce6ef;
+      font-weight: bold;
+    }
+
+    thead th:nth-child(1),
 tbody td:nth-child(1) {
-  width: 160px; // Nom et prénom
+width: 160px; // Nom et prénom
 }
 
 thead th:nth-child(2),
 tbody td:nth-child(2) {
-  width: 160px; // Pack
+width: 160px; // Pack
 }
 
 thead th:nth-child(3),
 tbody td:nth-child(3) {
-  width: 190px; // Communication
+width: 190px; // Communication
 }
 
 thead th:nth-child(4),
 tbody td:nth-child(4) {
-  width: 180px; // Date de début
+width: 180px; // Date de début
 }
 
 thead th:nth-child(5),
 tbody td:nth-child(5) {
-  width: 190px; // Agent
+width: 190px; // Agent
 }
 
 thead th:nth-child(6),
 tbody td:nth-child(6) {
-  width: 150px; // Montant
+width: 150px; // Montant
 }
 
 thead th:nth-child(7),
 tbody td:nth-child(7) {
-  width: 120px; // Reste
+width: 120px; // Reste
 }
 
 thead th:nth-child(8),
 tbody td:nth-child(8) {
-  width: 140px; // Payement
+width: 140px; // Payement
 }
 
 // Tranches
@@ -77,181 +77,195 @@ tbody td:nth-child(12),
 thead th:nth-child(13),
 tbody td:nth-child(13),
 thead th:nth-child(14),
-tbody td:nth-child(14) {
-  width: 140px; // Tranches plus larges
+tbody td:nth-child(14),
+thead th:nth-child(15),
+tbody td:nth-child(15),
+thead th:nth-child(16),
+tbody td:nth-child(16),
+thead th:nth-child(17),
+tbody td:nth-child(17),
+thead th:nth-child(18),
+tbody td:nth-child(18),
+thead th:nth-child(19),
+tbody td:nth-child(19),
+thead th:nth-child(20),
+tbody td:nth-child(20),
+thead th:nth-child(21),
+tbody td:nth-child(21) {
+width: 140px; // Tranches plus larges
 }
 
-  
-      a {
-        color: #0077cc;
-        text-decoration: underline;
-        cursor: pointer;
-      }
-  
-      .red-text {
-        color: red;
-      }
-  
-      .green-text {
-        color: green;
-      }
-  
-  
-  
-      .select-btn {
-        position: relative;
-        padding: 6px 28px 6px 10px;
-        border-radius: 6px;
-        border: none;
-        font-weight: 500;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100px;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        background-repeat: no-repeat;
-        background-position: right 8px center;
-        background-size: 10px;
-        background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='12' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5H7z'/></svg>");
-        padding-right: 24px;
-  
-        .dropdown-icon {
-          position: absolute;
-          right: 8px;
-          width: 10px;
-          height: 10px;
-          pointer-events: none;
-        }
-  
-        &.gold {
-          background-color: gold;
-          color: black;
-        }
-  
-        &.silver {
-          background-color: silver;
-          color: black;
-        }
-  
-        &.bronze {
-          background-color: peru;
-          color: white;
-        }
-  
-        &.agent-btn {
-          background-color: #3498db;
-          color: white;
-        }
-      }
-    }
-  }
-  
-  .arrow-down::after {
-    content: "▼";
-    font-size: 16px;
-    right: 2px;
-  }
-  
-  tbody tr {
-    transition: background 0.3s;
-    &:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-    &:hover {
-      background-color: #e9f2ff;
-    }
-  }
-  
-  // Tranche status colors
-  .status-paid {
-    background-color: #d4edda;
-    color: #155724;
-    font-weight: bold;
-  }
-  
-  .status-pending {
-    background-color: #fff3cd;
-    color: #856404;
-    font-weight: bold;
-  }
-  
-  .status-unpaid {
-    background-color: #f8d7da;
-    color: #721c24;
-    font-weight: bold;
-  }
-  
-  // Reste > 0
-  .light-red {
-    background-color: #ffe6e6;
-    color: #b30000;
-    font-weight: bold;
-  }
-  
-  table {
-    table-layout: fixed;
-    word-wrap: break-word;
-  }
-  
-  .icon-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 36px;
-  }
 
- // Search Bar
+    a {
+      color: #0077cc;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .red-text {
+      color: red;
+    }
+
+    .green-text {
+      color: green;
+    }
+
+
+
+    .select-btn {
+      position: relative;
+      padding: 6px 28px 6px 10px;
+      border-radius: 6px;
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100px;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      background-size: 10px;
+      background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='12' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5H7z'/></svg>");
+      padding-right: 24px;
+
+      .dropdown-icon {
+        position: absolute;
+        right: 8px;
+        width: 10px;
+        height: 10px;
+        pointer-events: none;
+      }
+
+      &.gold {
+        background-color: gold;
+        color: black;
+      }
+
+      &.silver {
+        background-color: silver;
+        color: black;
+      }
+
+      &.bronze {
+        background-color: peru;
+        color: white;
+      }
+
+      &.agent-btn {
+        background-color: #3498db;
+        color: white;
+      }
+    }
+  }
+}
+
+.arrow-down::after {
+  content: "▼";
+  font-size: 16px;
+  right: 2px;
+}
+
+tbody tr {
+  transition: background 0.3s;
+  &:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  &:hover {
+    background-color: #e9f2ff;
+  }
+}
+
+// Tranche status colors
+.status-paid {
+  background-color: #d4edda;
+  color: #155724;
+  font-weight: bold;
+}
+
+.status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+  font-weight: bold;
+}
+
+.status-unpaid {
+  background-color: #f8d7da;
+  color: #721c24;
+  font-weight: bold;
+}
+
+// Reste > 0
+.light-red {
+  background-color: #ffe6e6;
+  color: #b30000;
+  font-weight: bold;
+}
+
+table {
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 36px;
+}
+
+// Search Bar
 .search {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  max-width: 500px;
-  margin-right: 10px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-grow: 1;
+max-width: 500px;
+margin-right: 10px;
 }
 
 // Utility Classes
 .filtered {
-  display: none !important;
+display: none !important;
 }
 
 .text-color {
-  color: #9D1953;
+color: #9D1953;
 }
 
 .text-sm {
-  font-size: 1.675rem;
-  line-height: 1.25rem;
+font-size: 1.675rem;
+line-height: 1.25rem;
 }
 
 .uppercase {
-  text-transform: uppercase;
+text-transform: uppercase;
 }
 
 .font-semibold {
-  font-weight: 600;
+font-weight: 600;
 }
 
 // Background Colors
 .bg-light-blue {
-  background-color: #8dcde2;
+background-color: #8dcde2;
 }
 
 .bg-light-green {
-  background-color: #121ba3;
+background-color: #121ba3;
 }
 
 .bg-light-gray {
-  background-color: #000000;
+background-color: #000000;
 }
 
 .bg-light-red {
-  background-color: #e2475e;
+background-color: #e2475e;
 }
 
 .bg-green {
-  background-color: #185a26;
+background-color: #185a26;
 }

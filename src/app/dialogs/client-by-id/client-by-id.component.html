@@ -89,18 +89,34 @@
         </div>
       </section>
       
-      <section class="payment-summary" *ngIf="role !== 'ADMIN_ITALIE' ">
-        <div class="summary-details">
-          <p *ngIf="!payement"><em>Aucun paiement enregistré.</em></p>
-
-          <p *ngIf="payement"><strong>Montant à payer:</strong> {{ montantTotal }} DT</p>
-          <p *ngIf="payement" class="remaining"><strong>Reste:</strong> {{ reste }} DT</p>
-          <p *ngIf="payement"><strong>Tranches:</strong> {{ nombreTranches }}</p>
-        </div>
-        <button class="see-more" (click)="openPaymenetDialog(data.clientID)">
-          Voir plus
-        </button>
-      </section>    
+      <div *ngIf="role !== 'ADMIN_ITALIE'">
+        <!-- First Payment Summary -->
+        <section class="payment-summary">
+          <div class="summary-details">
+            <p *ngIf="!payement1"><em>Aucun paiement enregistré.</em></p>
+      
+            <p *ngIf="payement1"><strong>Montant à payer:</strong> {{ montantTotal1 }} DT</p>
+            <p *ngIf="payement1" class="remaining"><strong>Reste:</strong> {{ reste1 }} DT</p>
+            <p *ngIf="payement1"><strong>Tranches:</strong> {{ nombreTranches1 }}</p>
+          </div>
+          <button class="see-more" (click)="openPaymenetDialog(data.clientID,0)">
+            Voir plus
+          </button>
+        </section>
+      
+        <!-- Second Payment Summary -->
+        <section class="payment-summary" *ngIf="payement2">
+          <div class="summary-details">
+            <p><strong>Montant à payer:</strong> {{ montantTotal2 }} DT</p>
+            <p class="remaining"><strong>Reste:</strong> {{ reste2 }} DT</p>
+            <p><strong>Tranches:</strong> {{ nombreTranches2 }}</p>
+          </div>
+          <button class="see-more" (click)="openPaymenetDialog(data.clientID,1)">
+            Voir plus
+          </button>
+        </section>
+      </div>
+      
     </div>
   
     <footer class="actions">

@@ -67,6 +67,18 @@ export class ClientsService {
     return this.http.put<Clients>(`${this.baseUrl}/${idClient}/Unarchive`, {});
   }
 
+  // 📌 Assign client to Admin Italie
+  assignClientToAdminItalie(clientId: number, adminEmail: string): Observable<Clients> {
+    return this.http.post<Clients>(`${this.baseUrl}/${clientId}/assign-italie?adminEmail=${adminEmail}`, {});
+  }
+
+  // 📌 Remove client from Admin Italie
+  removeClientFromAdminItalie(clientId: number, adminEmail: string): Observable<Clients> {
+    return this.http.post<Clients>(`${this.baseUrl}/${clientId}/remove-italie?adminEmail=${adminEmail}`, {});
+  }
+
+
+
   uploadProfileImage( file: File,clientId: number): Observable<string> {
       const formData = new FormData();
       formData.append('file', file);

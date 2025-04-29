@@ -1,0 +1,60 @@
+<app-dashboard></app-dashboard>
+<div class="clients-container">
+  <div class="container-fluid">
+    <header class="text-center text-light my-4">
+      <h1 class="text-uppercase">Client List</h1>
+      <div class="d-flex justify-content-center align-items-center mb-3">
+        <form class="search" (submit)="$event.preventDefault()">
+          <input class="form-control m-auto" type="text" placeholder="Search client" [(ngModel)]="searchTerm" name="search" />
+        </form>
+      </div>
+    </header>
+  </div>    
+    <div *ngIf="loading" class="loading-spinner">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    
+    <div *ngIf="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+    
+    <div *ngIf="!loading && !error" class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Programme d'Étude</th>
+            <th>Ville Italie</th>
+            <th>Agent Italien</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let client of filterClients()">
+            <td>{{ client.nomClient }}</td>
+            <td>{{ client.prenomClient }}</td>
+            <td>{{ client.emailClient }}</td>
+            <td>{{ client.programmedEtude }}</td>
+            <td>{{ client.villeItalie }}</td>
+            <td>{{ client.assignedToItalie?.prenom || 'aucun agent'}} {{ client.assignedToItalie?.nom}}</td>
+            <td class="actions-column">
+                <button *ngIf="!client.assignedToItalie?.idUtilisateur" class="btn btn-primary btn-sm me-2" (click)="takeClient(client)">
+                    <i class="bi bi-check-circle-fill"></i> Take it
+                  </button>                  
+              <button *ngIf="client.assignedToItalie?.adresseMail === email" class="btn btn-danger btn-sm" (click)="removeClient(client)">
+                <i class="bi bi-trash-fill"></i> Remove
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="clients.length === 0">
+            <td colspan="6" class="text-center">No clients found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

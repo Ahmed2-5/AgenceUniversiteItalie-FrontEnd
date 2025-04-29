@@ -15,7 +15,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AdduserComponent } from 'src/app/dialogs/adduser/adduser.component';
 import { UpdateuserComponent } from 'src/app/dialogs/updateuser/updateuser.component';
-import { NotificationsComponent } from 'src/app/dialogs/notifications/notifications.component';
 import { UserslistforaddtaskComponent } from 'src/app/dialogs/userslistforaddtask/userslistforaddtask.component';
 import { AddtaskComponent } from 'src/app/dialogs/addtask/addtask.component';
 import { TaskdetailsComponent } from 'src/app/dialogs/taskdetails/taskdetails.component';
@@ -34,6 +33,7 @@ import { UserslistforaddcondidatComponent } from 'src/app/dialogs/userslistforad
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MyClientsComponent } from 'src/app/pages/my-clients/my-clients.component';
+import { ListClientsAdminitalieComponent } from 'src/app/pages/list-clients-adminitalie/list-clients-adminitalie.component';
 
 @NgModule({
   imports: [
@@ -56,7 +56,6 @@ import { MyClientsComponent } from 'src/app/pages/my-clients/my-clients.componen
     MapsComponent,
     AdduserComponent,
     UpdateuserComponent,
-    NotificationsComponent,
     UserslistforaddtaskComponent,
     AddtaskComponent,
     TaskdetailsComponent,
@@ -72,7 +71,8 @@ import { MyClientsComponent } from 'src/app/pages/my-clients/my-clients.componen
     CredentialByClientComponent,
     DocArchiveComponent,
     UserslistforaddcondidatComponent,
-    MyClientsComponent
+    MyClientsComponent,
+    ListClientsAdminitalieComponent
     ]
 })
 export class AdminLayoutModule {}

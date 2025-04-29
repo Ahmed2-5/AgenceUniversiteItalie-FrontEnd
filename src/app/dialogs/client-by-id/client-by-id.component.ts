@@ -24,10 +24,18 @@ export class ClientByIdComponent implements OnInit {
     editMode: { [key: number]: boolean } = {}; // Object with document id as key and edit mode status as value
     editedName: { [key: number]: string } = {};
   
-    payement!: Payement | null;
-    montantTotal: number = 0;
-    reste: number = 0;
-    nombreTranches: number = 0;
+    payement1!: Payement | null;
+    payement2!: Payement | null;
+
+    montantTotal1: number = 0;
+    montantTotal2: number = 0;
+
+    reste1: number = 0;
+    reste2: number = 0;
+
+    nombreTranches1: number = 0;
+    nombreTranches2: number = 0;
+
     role: string = '';
 
     constructor(
@@ -59,28 +67,38 @@ export class ClientByIdComponent implements OnInit {
       this.clientserv.getPaiementsByClient(clientId).subscribe({
         next: (paiements) => {
           if (paiements.length > 0) {
-            this.payement = paiements[0];
-            this.montantTotal = this.payement.montantaTotal;
-    
-            // Récupérer les tranches à part
-            this.clientserv.getTranchesByPaiement(this.payement.idPayement).subscribe({
+            this.payement1 = paiements[0];
+            this.montantTotal1 = this.payement1?.montantaTotal || 0;
+          
+            this.clientserv.getTranchesByPaiement(this.payement1?.idPayement).subscribe({
               next: (tranches) => {
-                this.nombreTranches = tranches.length;
-    
-                this.clientserv.getResteAPayer(this.payement.idPayement).subscribe({
-                  next: (reste) => {
-                    this.reste = reste;  // Set the remaining amount to pay
-                  },
-                  error: (err) => {
-                    console.error('Error while fetching remaining amount:', err);
-                  }
+                this.nombreTranches1 = tranches.length;
+                this.clientserv.getResteAPayer(this.payement1?.idPayement).subscribe({
+                  next: (reste) => this.reste1 = reste,
+                  error: (err) => console.error('Error while fetching remaining amount:', err)
                 });
               },
-              error: (err) => {
-                console.error('Erreur lors du chargement des tranches :', err);
-              }
+              error: (err) => console.error('Erreur lors du chargement des tranches :', err)
             });
           }
+          
+          if (paiements.length > 1) {
+            this.payement2 = paiements[1];
+
+            this.montantTotal2 = this.payement2?.montantaTotal || 0;
+          
+            this.clientserv.getTranchesByPaiement(this.payement2?.idPayement).subscribe({
+              next: (tranches) => {
+                this.nombreTranches2 = tranches.length;
+                this.clientserv.getResteAPayer(this.payement2?.idPayement).subscribe({
+                  next: (reste) => this.reste2 = reste,
+                  error: (err) => console.error('Error while fetching remaining amount:', err)
+                });
+              },
+              error: (err) => console.error('Erreur lors du chargement des tranches :', err)
+            });
+          }
+          
         },
         error: (err) => {
           console.error('Erreur lors du chargement des paiements :', err);
@@ -235,9 +253,9 @@ export class ClientByIdComponent implements OnInit {
         }
       });
     }
-    openPaymenetDialog(clientID: number) {
+    openPaymenetDialog(clientID: number ,index :number) {
       const dialogRef = this.dialog.open(PayementByClientComponent, {
-        data: { clientID: clientID },
+        data: { clientID: clientID , payementId : index},
         disableClose: true, // This ensures the dialog closes when clicking outside
       });
 

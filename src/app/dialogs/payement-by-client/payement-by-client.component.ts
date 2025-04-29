@@ -26,7 +26,7 @@ export class PayementByClientComponent implements OnInit {
   editTrancheIndexMap: { [key: number]: boolean } = {};
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { clientID: number },
+    @Inject(MAT_DIALOG_DATA) public data: { clientID: number ,payementId :number},
     private dialogRef: MatDialogRef<PayementByClientComponent>, 
     private payementService: ClientsService
   ) { }
@@ -39,7 +39,7 @@ export class PayementByClientComponent implements OnInit {
   loadPaiements() {
     this.payementService.getPaiementsByClient(this.data.clientID).subscribe((paiements: Payement[]) => {
       if (paiements && paiements.length > 0) {
-        this.payement = paiements[0];
+        this.payement = paiements[this.data.payementId];
         this.totalAmountDue = `${this.payement.montantaTotal} DT`;
 
         this.payementService.getTranchesByPaiement(this.payement.idPayement).subscribe({
