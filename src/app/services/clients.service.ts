@@ -77,7 +77,9 @@ export class ClientsService {
     return this.http.post<Clients>(`${this.baseUrl}/${clientId}/remove-italie?adminEmail=${adminEmail}`, {});
   }
 
-
+  UpdateAssignClientToAdminTunisie(clientId: number, adminEmail: string,superadminEmail: string): Observable<Clients> {
+    return this.http.post<Clients>(`${this.baseUrl}/${clientId}/updateassign-tunisie?adminEmail=${adminEmail}&superadminEmail=${superadminEmail}`, {});
+  }
 
   uploadProfileImage( file: File,clientId: number): Observable<string> {
       const formData = new FormData();

@@ -6,5 +6,7 @@ export class UniversiteCredential {
     nomUniversite!: string;
     emailUniversite!: string;
     passwordUniversite!: string;
+    communication!: string;
+    communicationDescripton!: string;
     credential!:Credential;
   }

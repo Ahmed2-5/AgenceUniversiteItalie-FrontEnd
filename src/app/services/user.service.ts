@@ -119,8 +119,8 @@ export class UserService {
     return this.httpclt.get(`${this.baseUrl}/uploads/${filename}`, { responseType: 'blob' });
   }
 
-  getUtilisateurByRole_LibelleRole(libelleRole: string): Observable<any> {
-    return this.httpclt.get<any>(`${this.baseUrl}/getUtilisateurByRole_LibelleRole/${libelleRole}`);
+  getUtilisateurByRole_LibelleRole(libelleRole: string): Observable<any[]> {
+    return this.httpclt.get<any[]>(`${this.baseUrl}/getUtilisateurByRole_LibelleRole/${libelleRole}`);
   }
 
   convertUsersToIds(users: any[]): Observable<number[]> {

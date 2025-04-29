@@ -70,8 +70,18 @@
         <td>{{ client.payementClient?.[0]?.dateCreation || '-' }}</td>
       
         <!-- Agent -->
-        <td *ngIf="role === 'ADMIN_TUNISIE' || role === 'SUPER_ADMIN'" class="green-text">
-          {{ client.assignedToTunisie?.prenom || '' }} {{ client.assignedToTunisie?.nom || '' }}
+        <td *ngIf="role === 'ADMIN_TUNISIE'">
+          <select 
+            style="border-radius: 18px!important;" 
+            class="select-btn agent-select"
+            [(ngModel)]="client.adminFullName"
+            disabled
+            (change)="assignClientToAdminTunisie(client, client.adminFullName)">
+            
+            <option *ngFor="let agent of agentOptions" [value]="agent">
+              {{ agent }}
+            </option>
+          </select>
         </td>
       
         <!-- Montant à payer -->

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddPayementToCLientComponent } from 'src/app/dialogs/add-payement-to-client/add-payement-to-client.component';
 import { ClientByIdComponent } from 'src/app/dialogs/client-by-id/client-by-id.component';
 import { Clients } from 'src/app/models/Clients.model';
+import { Utilisateur } from 'src/app/models/Utilisateur.model';
 import { ClientsService } from 'src/app/services/clients.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
@@ -16,10 +17,12 @@ export class MyClientsComponent implements OnInit {
 
   packOptions = ['GOLD', 'SILVER', 'BRONZE'];
     clients: Clients[] = [];
+    listAdminTunisie: Utilisateur[] = [];
     email: string = '';
     role: string = '';
     searchTerm: string = '';
     selectedStatus: string = 'ALL';
+    agentOptions: string[] = [];
   
     constructor(private clientsService:ClientsService,
                 private dialog: MatDialog,
@@ -33,6 +36,7 @@ export class MyClientsComponent implements OnInit {
   
      if (this.role === "ADMIN_TUNISIE" ) {
         this.loadClientsByAssignedToTUNISIE(this.email);
+        this.loadListAdminTunisie();
       } else if (this.role === "ADMIN_ITALIE") {
         this.loadClientsByAssignedToITALIE(this.email);
       }
@@ -41,7 +45,16 @@ export class MyClientsComponent implements OnInit {
     loadClients() {
       this.clientsService.getAllClients().subscribe({
         next: (data) => {
-          this.clients = data.filter(client => client.archive === 'NON_ARCHIVER');
+          this.clients = data
+            .filter(client => client.archive === 'NON_ARCHIVER')
+            .map(client => {
+              // Safely compute full name for dropdown display
+              const assigned = client.assignedToTunisie;
+              return {
+                ...client,
+                adminFullName: assigned ? `${assigned.nom} ${assigned.prenom}` : ''
+              };
+            });
         },
         error: (err) => console.error('Error loading clients', err)
       });
@@ -50,8 +63,17 @@ export class MyClientsComponent implements OnInit {
     loadClientsByAssignedToTUNISIE(email : string) {
       this.clientsService.getClientsByAssignedToTunisie(email).subscribe({
         next: (data) => {
-          this.clients = data.filter(client => client.archive === 'NON_ARCHIVER');
-        },
+          this.clients = data
+          .filter(client => client.archive === 'NON_ARCHIVER')
+          .map(client => {
+            // Safely compute full name for dropdown display
+            const assigned = client.assignedToTunisie;
+            return {
+              ...client,
+              adminFullName: assigned ? `${assigned.nom} ${assigned.prenom}` : ''
+            };
+          });
+          },
         error: (err) => console.error('Error loading clients', err)
       });
     }
@@ -59,9 +81,27 @@ export class MyClientsComponent implements OnInit {
     loadClientsByAssignedToITALIE(email : string) {
       this.clientsService.getClientsByAssignedToItalie(email).subscribe({
         next: (data) => {
-          this.clients = data.filter(client => client.archive === 'NON_ARCHIVER');
-        },
+          this.clients = data
+          .filter(client => client.archive === 'NON_ARCHIVER'&& client.communication === 'OUI')
+          .map(client => {
+            // Safely compute full name for dropdown display
+            const assigned = client.assignedToTunisie;
+            return {
+              ...client,
+              adminFullName: assigned ? `${assigned.nom} ${assigned.prenom}` : ''
+            };
+          });        },
         error: (err) => console.error('Error loading clients', err)
+      });
+    }
+
+    loadListAdminTunisie() {
+      this.UserService.getUtilisateurByRole_LibelleRole("ADMIN_TUNISIE").subscribe({
+        next: (data) => {
+          this.listAdminTunisie = data;
+          this.agentOptions = data.map(admin => `${admin.nom} ${admin.prenom}`);
+        },
+        error: (err) => console.error('Error loading admins', err)
       });
     }
   

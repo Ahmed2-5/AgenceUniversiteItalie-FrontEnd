@@ -6,6 +6,7 @@ import { Clients } from 'src/app/models/Clients.model';
 import { ClientsService } from 'src/app/services/clients.service';
 import { UserService } from './../../services/user.service';
 import Swal from 'sweetalert2';
+import { Utilisateur } from 'src/app/models/Utilisateur.model';
 
 @Component({
   selector: 'app-list-clients-advanced',
@@ -16,11 +17,12 @@ export class ListClientsAdvancedComponent implements OnInit {
 
   packOptions = ['GOLD', 'SILVER', 'BRONZE'];
   clients: Clients[] = [];
+  listAdminTunisie: Utilisateur[] = [];
   email: string = '';
   role: string = '';
   searchTerm: string = '';
   selectedStatus: string = 'ALL';
-
+  agentOptions: string[] = [];
   constructor(private clientsService:ClientsService,
               private dialog: MatDialog,
               private UserService :UserService
@@ -33,6 +35,7 @@ export class ListClientsAdvancedComponent implements OnInit {
 
     if (this.role !== "ADMIN_ITALIE") {
       this.loadClients();
+      this.loadListAdminTunisie();
     } else if (this.role === "ADMIN_ITALIE") {
       this.loadClientsToAdminITALIE();
     }
@@ -41,11 +44,21 @@ export class ListClientsAdvancedComponent implements OnInit {
   loadClients() {
     this.clientsService.getAllClients().subscribe({
       next: (data) => {
-        this.clients = data.filter(client => client.archive === 'NON_ARCHIVER');
+        this.clients = data
+          .filter(client => client.archive === 'NON_ARCHIVER')
+          .map(client => {
+            // Safely compute full name for dropdown display
+            const assigned = client.assignedToTunisie;
+            return {
+              ...client,
+              adminFullName: assigned ? `${assigned.nom} ${assigned.prenom}` : ''
+            };
+          });
       },
       error: (err) => console.error('Error loading clients', err)
     });
   }
+  
 
 
   loadClientsToAdminITALIE() {
@@ -59,6 +72,39 @@ export class ListClientsAdvancedComponent implements OnInit {
     });
   }
   
+  loadListAdminTunisie() {
+    this.UserService.getUtilisateurByRole_LibelleRole("ADMIN_TUNISIE").subscribe({
+      next: (data) => {
+        this.listAdminTunisie = data;
+        this.agentOptions = data.map(admin => `${admin.nom} ${admin.prenom}`);
+      },
+      error: (err) => console.error('Error loading admins', err)
+    });
+  }
+
+  assignClientToAdminTunisie(client: Clients, selectedAdminFullName: string) {
+  
+    const selectedAdmin = this.listAdminTunisie.find(admin => `${admin.nom} ${admin.prenom}` === selectedAdminFullName);
+    const superadminEmail = this.email;
+    console.log(selectedAdmin)
+    console.log(superadminEmail)
+
+    if (!selectedAdmin || !client.idClients) return;
+  
+    this.clientsService.UpdateAssignClientToAdminTunisie(client.idClients, selectedAdmin.adresseMail, superadminEmail)
+      .subscribe({
+        next: () => {
+          Swal.fire('Success', 'Admin assigned successfully', 'success');
+        },
+        error: (err) => {
+          console.error('Error assigning admin:', err);
+          Swal.fire('Error', 'Failed to assign admin', 'error');
+        }
+      });
+  }
+  
+  
+
   getTrancheMontant(client: Clients, index: number,i: number): string | number {
     const paiement = client.payementClient[i];
     if (paiement && paiement.tranches?.[index]) {

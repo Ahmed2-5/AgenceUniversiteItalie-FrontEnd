@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Role } from 'src/app/models/Role.model';
 import { Utilisateur } from 'src/app/models/Utilisateur.model';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
@@ -15,19 +16,23 @@ export class UpdateuserComponent implements OnInit {
   id!:number;
   user!:Utilisateur;
   showUpdateAlert = false;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: { userId: number },private userserv:UserService,private route:ActivatedRoute,private router:Router){}
   
   ngOnInit(): void {
-    this.user=new Utilisateur;
+    this.user = new Utilisateur();
+  
     this.id = this.data.userId; 
-
     this.userserv.getUserById(this.id).subscribe(data => {
-       this.user = data;
-  }, error => console.log(error));
+      this.user = data;
+
+    }, error => console.log(error));
   }
+  
  
   onSubmit(){
    this.userserv.updateUserById(this.id,this.user).subscribe(data=>{
+    console.log(this.user.role)
     this.goToUserList();
  }, error => console.log(error));
   }

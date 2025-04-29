@@ -34,6 +34,8 @@ export class CredentialByClientComponent implements OnInit {
     nomUniversite: '',
     emailUniversite: '',
     passwordUniversite: '',
+    communication: 'PAS_ENCORE',
+    communicationDescripton: '',
     credential: {} as Credential  // temporary placeholder
   };
   
@@ -177,6 +179,32 @@ export class CredentialByClientComponent implements OnInit {
   openUniversityDialog() {
     this.showUniversityList = true;
   }
+
+  deleteUniversity(index: number): void{
+    const updatedUni = this.universities[index];
+    this.credentialService.deleteUniversiteCredential(updatedUni.idUniversite).subscribe({
+      next: () => {
+        this.loadUniversities(this.credential.idCredential);
+      },
+      error: (err) => {
+        console.error('Erreur lors de la mise à jour de l’université', err);
+      }
+    });
+  }
+
+  confirmDeleteUniversity(index: number) {
+    Swal.fire({
+      title: 'Are you sure you want to delete this university?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.value) {
+        this.deleteUniversity(index);
+      }
+    });
+  }
   
   closeUniversityDialog() {
     this.showUniversityList = false;
@@ -199,6 +227,8 @@ export class CredentialByClientComponent implements OnInit {
       nomUniversite: '',
       emailUniversite: '',
       passwordUniversite: '',
+      communication: 'PAS_ENCORE',
+      communicationDescripton: '',
       credential: {} as Credential
     };
   }
