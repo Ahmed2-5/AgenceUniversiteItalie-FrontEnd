@@ -192,6 +192,13 @@ export class ClientsService {
 
     return this.http.put(url, null, { params: params });
   }
+
+  // clients.service.ts
+
+addTrancheToPayement(idPayement: number, tranche: any): Observable<string> {
+  return this.http.post<string>(`${this.apiUrl1}/${idPayement}/add-tranche-manual`, tranche);
+}
+
   private apiUrl2 = 'http://localhost:8082/api/Credential';
 
   // 🔹 Get all credentials

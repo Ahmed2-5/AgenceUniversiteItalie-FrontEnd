@@ -18,6 +18,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/clientsAV', title: 'client List',  icon: 'fa fa-briefcase text-orange', class: '' },
     { path: '/archive', title: 'Clients Archived ', icon: 'fa fa-archive text-muted', class: '' },
     { path: '/docArchive', title: 'docs Archived ', icon: 'fa fa-archive text-yellow', class: '' },
+    { path: '/logs', title: 'Logs', icon: 'fa fa-history text-primary', class: '' },
     
  //   { path: '/login', title: 'Login',  icon:'ni-key-25 text-info', class: '' },
 ];
@@ -52,6 +53,8 @@ export class SidebarComponent implements OnInit {
       }else if (menuItem.path === '/clientsAV') {
         return this.role === 'SUPER_ADMIN' || this.role === 'ADMIN_TUNISIE';
       }else if (menuItem.path === '/tables') {
+        return this.role === 'SUPER_ADMIN';
+      }else if (menuItem.path === '/logs') {
         return this.role === 'SUPER_ADMIN';
       }
       return true; // Other routes always shown

@@ -42,12 +42,16 @@
             <td>{{ client.villeItalie }}</td>
             <td>{{ client.assignedToItalie?.prenom || 'aucun agent'}} {{ client.assignedToItalie?.nom}}</td>
             <td class="actions-column">
-                <button *ngIf="!client.assignedToItalie?.idUtilisateur" class="btn btn-primary btn-sm me-2" (click)="takeClient(client)">
+                <button *ngIf="!client.assignedToItalie?.idUtilisateur && role ==='ADMIN_ITALIE'"
+                 class="btn btn-primary btn-sm me-2" (click)="takeClient(client)">
                     <i class="bi bi-check-circle-fill"></i> Take it
                   </button>                  
-              <button *ngIf="client.assignedToItalie?.adresseMail === email" class="btn btn-danger btn-sm" (click)="removeClient(client)">
-                <i class="bi bi-trash-fill"></i> Remove
-              </button>
+                  <button 
+                  *ngIf="(client.assignedToItalie?.adresseMail === email && role === 'ADMIN_ITALIE') || (client.assignedToItalie?.idUtilisateur && role === 'SUPER_ADMIN')" 
+                  class="btn btn-danger btn-sm" 
+                  (click)="removeClient(client)">
+                  <i class="bi bi-trash-fill"></i> Remove
+                </button>
             </td>
           </tr>
           <tr *ngIf="clients.length === 0">

@@ -25,6 +25,9 @@ export class PayementByClientComponent implements OnInit {
   email: string = '';
   editTrancheIndexMap: { [key: number]: boolean } = {};
 
+  isAddingTranche: boolean = false;
+  newTrancheMontant: number = null;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { clientID: number ,payementId :number},
     private dialogRef: MatDialogRef<PayementByClientComponent>, 
@@ -107,7 +110,55 @@ export class PayementByClientComponent implements OnInit {
       });
   }
   
+  startAddingTranche() {
+  this.isAddingTranche = true;
+  this.newTrancheMontant = null;
+}
+
+cancelAddingTranche() {
+  this.isAddingTranche = false;
+  this.newTrancheMontant = null;
+}
+
+confirmAddTranche() {
+  if (this.newTrancheMontant && this.newTrancheMontant > 0) {
+    const newTranche: Tranche = {
+      montant: this.newTrancheMontant,
+      dateLimite: null,             // Set this to current date or calculate accordingly
+      dateResglement: new Date(),         // Same as above, or adjust if necessary
+      numero: null,  // Assuming the next tranche number is one more than the length
+      statusTranche: StatusTranche.EN_ATTENTE, // Default status
+      notificationEnvoyee: false,         // Default value
+      notificationRetardEnvoyee: false,  // Default value
+      montantFixe: false,                // Default value
+      payement: null            // Link to current payment
+    };
+
+    this.payementService.addTrancheToPayement(this.payement.idPayement, newTranche)
+      .subscribe({
+        next: () => {
+          console.log('✅ Tranche added');
+          this.loadPaiements();
+          this.cancelAddingTranche();
+        },
+        error: (err) => {
+          console.error('❌ Failed to add tranche:', err);
+          this.loadPaiements();
+          this.cancelAddingTranche();
+        }
+      });
+  }
+}
+  
+
+
+
+
+
+
   closeDialog(): void {
+    this.loadPaiements();
     this.dialogRef.close();
+
   }
 }

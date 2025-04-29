@@ -34,6 +34,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MyClientsComponent } from 'src/app/pages/my-clients/my-clients.component';
 import { ListClientsAdminitalieComponent } from 'src/app/pages/list-clients-adminitalie/list-clients-adminitalie.component';
+import { LogsComponent } from 'src/app/pages/logs/logs.component';
 
 @NgModule({
   imports: [
@@ -72,7 +73,8 @@ import { ListClientsAdminitalieComponent } from 'src/app/pages/list-clients-admi
     DocArchiveComponent,
     UserslistforaddcondidatComponent,
     MyClientsComponent,
-    ListClientsAdminitalieComponent
+    ListClientsAdminitalieComponent,
+    LogsComponent
     ]
 })
 export class AdminLayoutModule {}

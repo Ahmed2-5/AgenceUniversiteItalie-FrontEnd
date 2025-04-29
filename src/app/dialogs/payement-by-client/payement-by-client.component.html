@@ -75,5 +75,22 @@
         </button>
       </div>
     </div>
+
+  
+  <div *ngIf="!isAddingTranche && installments.length < 5" class="text-center mt-3">
+    <button class="btn btn-success" (click)="startAddingTranche()">➕ Add Tranche</button>
+  </div>
+  
+  <div *ngIf="isAddingTranche" class="add-tranche-form">
+    <input
+      type="number"
+      [(ngModel)]="newTrancheMontant"
+      placeholder="Montant"
+      style="width: 100px; margin-right: 10px;" />
+  
+    <button class="btn btn-primary" (click)="confirmAddTranche()" [disabled]="!newTrancheMontant || newTrancheMontant <= 0">✔️ Ajouter</button>
+    <button class="btn btn-secondary ml-2" (click)="cancelAddingTranche()">❌ Annuler</button>
+  </div>
+  
   </div>
 </div>

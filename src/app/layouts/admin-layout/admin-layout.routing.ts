@@ -12,6 +12,7 @@ import { ClientByIdComponent } from 'src/app/dialogs/client-by-id/client-by-id.c
 import { DocArchiveComponent } from 'src/app/pages/doc-archive/doc-archive.component';
 import { MyClientsComponent } from 'src/app/pages/my-clients/my-clients.component';
 import { ListClientsAdminitalieComponent } from 'src/app/pages/list-clients-adminitalie/list-clients-adminitalie.component';
+import { LogsComponent } from 'src/app/pages/logs/logs.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -25,7 +26,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'clientID',           component: ClientByIdComponent },
     { path: 'docArchive',           component: DocArchiveComponent },
     { path: 'listclientsadmin',           component: ListClientsAdminitalieComponent },
-    { path: 'myclients',           component: MyClientsComponent }
+    { path: 'myclients',           component: MyClientsComponent },
+    { path: 'logs',           component: LogsComponent }
+
 
     
 ];

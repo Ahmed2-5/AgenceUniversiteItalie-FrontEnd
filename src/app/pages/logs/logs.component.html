@@ -1,0 +1,39 @@
+<app-dashboard></app-dashboard>
+<div class="logs-container">
+    <h2>System Logs</h2>
+    
+    <div class="search-bar">
+      <input type="text" placeholder="Search logs..." [(ngModel)]="searchText">
+      <button (click)="clearSearch()">Clear</button>
+    </div>
+    
+    <table class="logs-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Message</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of filteredLogs">
+          <td>{{ log.idlog }}</td>
+          <td>{{ log.message }}</td>
+          <td>{{ log.date | date:'medium' }}</td>
+          <td>
+            <button class="view-btn" (click)="viewDetails(log)">View</button>
+          </td>
+        </tr>
+        <tr *ngIf="filteredLogs.length === 0">
+          <td colspan="4" class="no-data">No logs found</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="pagination">
+      <button [disabled]="currentPage === 1" (click)="prevPage()">Previous</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+    </div>
+  </div>
