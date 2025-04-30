@@ -74,12 +74,13 @@ export class AuthService {
     return this.httpclt.get(`${this.baseUrl}/email`, { params: { email } });
   }
 
+// In AuthService:
+private loadingSubject = new BehaviorSubject<boolean>(false);
+loading$ = this.loadingSubject.asObservable();
 
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-  loading$ = this.loadingSubject.asObservable();
+setLoading(isLoading: boolean) {
+  this.loadingSubject.next(isLoading);  // Update the loading state
+}
 
-  setLoading(isLoading: boolean) {
-    this.loadingSubject.next(isLoading);
-  }
   
 }

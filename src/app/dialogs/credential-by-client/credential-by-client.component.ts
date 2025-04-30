@@ -52,6 +52,7 @@ export class CredentialByClientComponent implements OnInit {
   selectedRdv: any = {};
 
   role!:string
+  email!:string
 
  
 
@@ -64,10 +65,10 @@ export class CredentialByClientComponent implements OnInit {
     
   ) {}
   ngOnInit(): void {
-    const email = sessionStorage.getItem("email")
+    this.email = sessionStorage.getItem("email")
     this.role = sessionStorage.getItem("role")
-    if (email) {
-      this.authserv.getUtilisateurByEmail(email).subscribe({
+    if (this.email) {
+      this.authserv.getUtilisateurByEmail(this.email).subscribe({
         next: (data) => {
           this.user = data
         },
@@ -117,7 +118,7 @@ export class CredentialByClientComponent implements OnInit {
   saveFieldAndExitEdit(field: keyof typeof this.editMode): void {
     if (!this.credential) return;
   
-    this.credentialService.updateCredential(this.credential.idCredential, this.credential).subscribe({
+    this.credentialService.updateCredential(this.credential.idCredential, this.credential,this.email).subscribe({
       next: (updated) => {
         this.credential = updated;
         this.editMode[field] = false; // Exit edit mode
@@ -132,7 +133,7 @@ export class CredentialByClientComponent implements OnInit {
   saveFieldUpdate(): void {
     if (!this.credential) return;
   
-    this.credentialService.updateCredential(this.credential.idCredential, this.credential).subscribe({
+    this.credentialService.updateCredential(this.credential.idCredential, this.credential,this.email).subscribe({
       next: (updatedCredential) => {
         this.credential = updatedCredential;
         console.log('Credential updated successfully.');

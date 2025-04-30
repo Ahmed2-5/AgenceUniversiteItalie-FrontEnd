@@ -15,6 +15,36 @@
             <h2>Notifications</h2>
             <button class="mark-all-read" (click)="markAllAsRead()">Mark all as read</button>
           </div>
+          <div class="notification-filters">
+            <button 
+              [ngClass]="{'active': filterType === 'ALL'}" 
+              (click)="setFilter('ALL')"
+              class="filter-btn filter-btn-left">
+              <i class="fa fa-bell"></i>
+              <span>All</span>
+            </button>
+            <button 
+              [ngClass]="{'active': filterType === 'TASK'}" 
+              (click)="setFilter('TASK')"
+              class="filter-btn filter-btn-middle">
+              <i class="fa fa-tasks"></i>
+              <span>Tasks</span>
+            </button>
+            <button 
+              [ngClass]="{'active': filterType === 'CLIENT'}" 
+              (click)="setFilter('CLIENT')"
+              class="filter-btn filter-btn-middle">
+              <i class="fa fa-users"></i>
+              <span>Clients</span>
+            </button>
+            <button 
+              [ngClass]="{'active': filterType === 'PAYMENT'}" 
+              (click)="setFilter('PAYMENT')"
+              class="filter-btn filter-btn-right">
+              <i class="fa fa-credit-card"></i>
+              <span>Payments</span>
+            </button>
+          </div>         
           <div class="notification-content">
             <div class="notification-list" [ngStyle]="{'max-height': notifications.length > 4 ? '440px' : 'auto'}">
               <div *ngFor="let notification of notifications.slice(0, visibleNotifications); let i = index"

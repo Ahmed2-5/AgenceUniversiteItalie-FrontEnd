@@ -39,7 +39,7 @@ export class UpdateCondidatComponent implements OnInit {
   }
 
   submitForm(): void {
-    this.clientsService.updateClient(this.updatedClient,this.data.clientID)
+    this.clientsService.updateClient(this.updatedClient,this.data.clientID,this.email)
       .subscribe({
         next: (updated) => {
           console.log('Client updated:', updated);

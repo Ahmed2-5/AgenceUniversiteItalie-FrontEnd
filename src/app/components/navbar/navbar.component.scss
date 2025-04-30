@@ -2,6 +2,7 @@
 .notification-container {
   position: relative;
   margin-right: 20px;
+
 }
 
 .notification-bell {
@@ -46,11 +47,11 @@
   position: absolute;
   top: calc(100% + 10px);
   right: -10px;
-  width: 350px;
+  width: 390px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
+  z-index: 1150;
   overflow: hidden;
   animation: fadeIn 0.2s ease-out;
   
@@ -94,7 +95,7 @@
   }
   
   .mark-all-read {
-    color: #af2f64;
+    color: #5e72e4;
     border: none;
     padding: 6px 12px;
     font-size: 12px;
@@ -105,7 +106,7 @@
     transition: background-color 0.2s;
     
     &:hover {
-      background-color: rgba(175, 47, 100, 0.1);
+      background-color: #e0e2ee;
     }
   }
 }
@@ -224,15 +225,100 @@
   width: 100%;
   padding: 12px;
   text-align: center;
-  border: none;
-  background-color: #af2f64;
+  background-color: #5e72e4;
   color: white;
+  border: 1px solid #e9ecef;  
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
   transition: background-color 0.2s;
   
   &:hover {
-    background-color: #961c50;
+    background-color: #324cdd;
+
+    color: #f6f9fc;
   }
+  
+  
+}
+
+
+
+/* Notification Filters */
+.notification-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  padding: 8px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background-color: white;
+  color: #525f7f;
+  border: 1px solid #e9ecef;
+  transition: all 0.2s ease;
+  flex: 1;
+  min-width: 80px;
+  position: relative;
+  overflow: hidden;
+  
+  &:hover {
+    background-color: #f6f9fc;
+    color: #172b4d;
+  }
+  
+  &.active {
+    background-color: #5e72e4;
+    color: white;
+    border-color: #5e72e4;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+    
+    &:hover {
+      background-color: #324cdd;
+    }
+  }
+  
+  i {
+    font-size: 14px;
+  }
+  
+  span {
+    white-space: nowrap;
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(94, 114, 228, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.filter-btn-left {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.filter-btn-middle {
+  border-left: none;
+}
+
+.filter-btn-right {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-left: none;
 }

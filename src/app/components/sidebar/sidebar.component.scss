@@ -11,3 +11,9 @@
   width: 65%;  /* keep aspect ratio */
   object-fit: contain; /* make sure it fits nicely without stretching */
 }
+
+#sidenav-main {
+  display: block !important;
+  background: #f8f9fa;
+  min-height: 100vh;
+}

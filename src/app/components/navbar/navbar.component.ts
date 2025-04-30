@@ -28,6 +28,7 @@ export class NavbarComponent implements OnInit {
   NotifDates: Set<Date> = new Set<Date>();
 
   showNotifDialog = false;
+  filterType: string = 'ALL';
 
   constructor(location: Location,  private element: ElementRef, private router: Router,
     private authserv:AuthService,
@@ -37,16 +38,7 @@ export class NavbarComponent implements OnInit {
     this.location = location;
   } 
 
-  @HostListener("document:click", ["$event"])
-  clickOutside(event: Event) {
-    // Close notification dropdown when clicking outside
-    const notificationContainer = this.element.nativeElement.querySelector(".notification-container")
-    if (this.showNotifDialog && notificationContainer && !notificationContainer.contains(event.target)) {
-      this.showNotifDialog = false
-    }
-    this.loadNotificationsCount()
-
-  }
+ 
 
   ngOnInit() {
     const email = sessionStorage.getItem("email")
@@ -113,16 +105,30 @@ export class NavbarComponent implements OnInit {
 
   loadNotifications(): void {
     this.notificationService.getNotifications(this.userId).subscribe((notifications) => {
-      this.notifications = notifications.sort(
+      const sorted = notifications.sort(
         (a, b) => new Date(b.notificationDate).getTime() - new Date(a.notificationDate).getTime(),
-      )
-      this.NotifDates = new Set<Date>(this.notifications.map((notif) => new Date(notif.notificationDate)))
-    })
-
+      );
+  
+      // Apply filtering based on selected filterType
+      if (this.filterType !== 'ALL') {
+        this.notifications = sorted.filter(notif => notif.typeNotif === this.filterType);
+      } else {
+        this.notifications = sorted;
+      }
+  
+      this.NotifDates = new Set<Date>(this.notifications.map((notif) => new Date(notif.notificationDate)));
+    });
+  
     this.notificationService.getcreatedusers(this.userId).subscribe((data) => {
-      this.listofcreatedNotifusers = data.reverse()
-    })
+      this.listofcreatedNotifusers = data.reverse();
+    });
   }
+  
+  setFilter(type: string) {
+    this.filterType = type;
+    this.loadNotifications();
+  }
+  
 
   getcreatedUser(index: number): Utilisateur {
     return this.listofcreatedNotifusers[index]

@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { forkJoin } from 'rxjs';
 import { Utilisateur } from 'src/app/models/Utilisateur.model';
 import { UserService } from 'src/app/services/user.service';
 
@@ -19,15 +20,24 @@ export class UserslistforaddtaskComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userserv.getUtilisateurByRole_LibelleRole("ADMIN_TUNISIE").subscribe(
-      (tab) => {
-        this.listusr = tab.map(user => ({
-          ...user,
-          profileImageUrl: `http://localhost:8082/api/utilisateurs/uploads/${user.profileImageUrl}`
-        }));
-      }
-    );
+    const usersTn$ = this.userserv.getUtilisateurByRole_LibelleRole("ADMIN_TUNISIE");
+    const usersIt$ = this.userserv.getUtilisateurByRole_LibelleRole("ADMIN_ITALIE");
+  
+    forkJoin([usersTn$, usersIt$]).subscribe(([tnUsers, itUsers]) => {
+      const allUsers = [...tnUsers, ...itUsers];
+  
+      // Optional: Remove duplicates by ID
+      const uniqueUsers = Array.from(
+        new Map(allUsers.map(user => [user.idUtilisateur, user])).values()
+      );
+  
+      this.listusr = uniqueUsers.map(user => ({
+        ...user,
+        profileImageUrl: `http://localhost:8082/api/utilisateurs/uploads/${user.profileImageUrl}`
+      }));
+    });
   }
+  
 
   filterTasks() {
     if (!this.searchTerm.trim()) {

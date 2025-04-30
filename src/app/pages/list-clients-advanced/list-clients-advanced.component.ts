@@ -126,7 +126,7 @@ export class ListClientsAdvancedComponent implements OnInit {
   
   changePack(client: Clients) {
     if (client.idClients) {
-      this.clientsService.updateClient(client, client.idClients).subscribe({
+      this.clientsService.updateClient(client, client.idClients,this.email).subscribe({
         next: (updatedClient) => {
           console.log('Pack updated successfully:', updatedClient.service);
           this.openADDPaymenetDialog(client.idClients);

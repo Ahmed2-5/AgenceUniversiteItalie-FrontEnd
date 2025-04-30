@@ -39,6 +39,8 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.role = sessionStorage.getItem('role') || '{}'; // Ensure role is properly parsed
 
+    this.menuItems = ROUTES;
+
     this.menuItems = ROUTES.filter(menuItem => {
       if (menuItem.path === '/clients') {
         return this.role === 'SUPER_ADMIN' || this.role === 'ADMIN_TUNISIE';

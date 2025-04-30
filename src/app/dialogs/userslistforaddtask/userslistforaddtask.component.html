@@ -22,6 +22,9 @@
         >
           <img class="user-image" [src]="usr.profileImageUrl" alt="User Image">
           <h4 class="user-name">{{usr.prenom}} {{usr.nom}}</h4>
+          <span style="margin-bottom: 10px!important;" class="user-role">
+             {{usr.role.libelleRole }}
+          </span>
           <span style="margin-bottom: 10px!important;" class="badge badge-dot mr-4">
             <i *ngIf="usr.statusCompte.idStatusCompte === 2" class="bg-warning"></i>
             <i *ngIf="usr.statusCompte.idStatusCompte === 1" class="bg-success"></i>

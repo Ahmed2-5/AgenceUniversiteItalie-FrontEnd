@@ -28,8 +28,10 @@ export class ClientsService {
   }
 
   // 🔁 Update client
-  updateClient(clientDetails: Clients, idClient: number): Observable<Clients> {
-    return this.http.put<Clients>(`${this.baseUrl}/UpdateClients/${idClient}`, clientDetails);
+  updateClient(clientDetails: Clients, idClient: number, updatedByEmail :string): Observable<Clients> {
+    const params = new HttpParams()
+      .set('updatedByEmail', updatedByEmail)
+    return this.http.put<Clients>(`${this.baseUrl}/UpdateClients/${idClient}`, clientDetails, { params });
   }
 
   // ❌ Delete client
@@ -222,8 +224,10 @@ addTrancheToPayement(idPayement: number, tranche: any): Observable<string> {
   }
 
   // 🔹 Update credential
-  updateCredential(credentialId: number, credential: Credential): Observable<Credential> {
-    return this.http.put<Credential>(`${this.apiUrl2}/${credentialId}`, credential);
+  updateCredential(credentialId: number, credential: Credential,updatedByEmail: string): Observable<Credential> {
+    const params = new HttpParams()
+    .set('updatedByEmail', updatedByEmail)
+    return this.http.put<Credential>(`${this.apiUrl2}/${credentialId}`, credential,{ params: params });
   }
 
   // 🔹 Delete credential
