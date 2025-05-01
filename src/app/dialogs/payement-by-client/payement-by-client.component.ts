@@ -79,7 +79,7 @@ export class PayementByClientComponent implements OnInit {
 
   markAsPaid(index: number) {
     const tranche = this.installments[index];
-    this.payementService.payerTranche(tranche.idTranche).subscribe(() => {
+    this.payementService.payerTranche(tranche.idTranche,this.email).subscribe(() => {
       this.installments[index].statusTranche = StatusTranche.PAYEE;
       this.remainingAmountDue = `${this.calculateRemainingAmount(this.installments)} DT`;
     });

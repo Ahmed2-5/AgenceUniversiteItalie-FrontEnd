@@ -60,8 +60,9 @@ export class ClientsService {
     return this.http.get<Clients[]>(`${this.baseUrl}/assignedToItalie`, { params });
   }
   
-  archiveClient(idClient: number): Observable<Clients> {
-    return this.http.put<Clients>(`${this.baseUrl}/${idClient}/archive`, {});
+  archiveClient(idClient: number,authEmail :string): Observable<Clients> {
+    const params = new HttpParams().set('authEmail', authEmail);
+    return this.http.put<Clients>(`${this.baseUrl}/${idClient}/archive`,null, {params});
   }
 
   // 🔓 Unarchive client
@@ -104,13 +105,13 @@ export class ClientsService {
   private apiUrl = 'http://localhost:8082/api/documents';
 
   // ✅ Upload Document
-  uploadDocument(file: File, nom: string, idClient: number, idUtilisateur: number): Observable<ClientDocument> {
+  uploadDocument(file: File, nom: string, idClient: number, idUtilisateur: number,authEmail: string): Observable<ClientDocument> {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('nom', nom);
     formData.append('idClient', idClient.toString());
     formData.append('idUtilisateur', idUtilisateur.toString());
-
+    formData.append('authEmail', authEmail);
     return this.http.post<ClientDocument>(`${this.apiUrl}`, formData);
   }
 
@@ -125,8 +126,10 @@ export class ClientsService {
   }
 
   // ✅ Rename a Document
-  renameDocument(id: number, nouveauNom: string): Observable<ClientDocument> {
-    const params = new HttpParams().set('nouveauNom', nouveauNom);
+  renameDocument(id: number, nouveauNom: string, authEmail: string): Observable<ClientDocument> {
+    const params = new HttpParams()
+    .set('nouveauNom', nouveauNom)
+    .set('authEmail', authEmail)
     return this.http.patch<ClientDocument>(`${this.apiUrl}/rename/${id}`, null, { params });
   }
 
@@ -146,8 +149,10 @@ export class ClientsService {
     return this.http.patch<ClientDocument>(`${this.apiUrl}/replace/${idDocument}`, formData);
   }
   
-  archiveDoc(idDOc: number): Observable<ClientDocument> {
-    return this.http.put<ClientDocument>(`${this.apiUrl}/${idDOc}/archive`, {});
+  archiveDoc(idDOc: number, authEmail: string): Observable<ClientDocument> {
+    const params = new HttpParams()
+    .set('authEmail', authEmail)
+    return this.http.put<ClientDocument>(`${this.apiUrl}/${idDOc}/archive`, null,{params});
   }
 
   unarchiveDoc(idDOc: number): Observable<ClientDocument> {
@@ -157,13 +162,15 @@ export class ClientsService {
   private apiUrl1 = 'http://localhost:8082/api/paiements';
 
   // 1. Créer un paiement
-  createPaiement(clientId: number, montant: number, nombreTranches: number): Observable<Payement> {
+  createPaiement(clientId: number, montant: number, nombreTranches: number,authEmail:string): Observable<Payement> {
     const body = {
       clientId: clientId,
       montant: montant,
       nombreTranches: nombreTranches
     };
-    return this.http.post<Payement>(`${this.apiUrl1}/ajouterPayment`, body);
+    const params = new HttpParams()
+    .set('authEmail', authEmail)
+    return this.http.post<Payement>(`${this.apiUrl1}/ajouterPayment`, body,{params});
   }
 
   // 2. Récupérer tous les paiements d’un client
@@ -177,9 +184,11 @@ export class ClientsService {
   }
 
   // 4. Régler une tranche
-  payerTranche(trancheId: number): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl1}/Tranches/${trancheId}/payer`, {});
+  payerTranche(trancheId: number, authEmail: string): Observable<void> {
+    const params = new HttpParams().set('authEmail', authEmail);
+    return this.http.post<void>(`${this.apiUrl1}/Tranches/${trancheId}/payer`, null, { params });
   }
+  
 
   getResteAPayer(paiementId: number): Observable<number> {
     return this.http.get<number>(`${this.apiUrl1}/${paiementId}/reste`);
@@ -219,8 +228,10 @@ addTrancheToPayement(idPayement: number, tranche: any): Observable<string> {
   }
 
   // 🔹 Create a new credential
-  createCredential(clientId: number, credential: Credential): Observable<Credential> {
-    return this.http.post<Credential>(`${this.apiUrl2}/createCredential/${clientId}`, credential);
+  createCredential(clientId: number, credential: Credential,authEmail:string): Observable<Credential> {
+    const params = new HttpParams()
+    .set('authEmail', authEmail)
+    return this.http.post<Credential>(`${this.apiUrl2}/createCredential/${clientId}`, credential,{ params: params });
   }
 
   // 🔹 Update credential

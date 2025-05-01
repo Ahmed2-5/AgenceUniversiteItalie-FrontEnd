@@ -37,6 +37,7 @@ export class ClientByIdComponent implements OnInit {
     nombreTranches2: number = 0;
 
     role: string = '';
+    email: string = '';
 
     constructor(
       @Inject(MAT_DIALOG_DATA) public data: { clientID: number },
@@ -46,6 +47,7 @@ export class ClientByIdComponent implements OnInit {
     ) { }
   
     ngOnInit(): void {
+      this.email = sessionStorage.getItem('email');
         this.role = sessionStorage.getItem('role') || '{}'; // Ensure role is properly parsed
 
         this.clientserv.getClientById(this.data.clientID).subscribe({
@@ -129,7 +131,7 @@ export class ClientByIdComponent implements OnInit {
       const idClient = this.client.idClients;
       // const idUtilisateur = this.authserv.getUserId(); // Ensure this method exists
 
-      this.clientserv.uploadDocument(file, nom, idClient, 1).subscribe({
+      this.clientserv.uploadDocument(file, nom, idClient, 1,this.email).subscribe({
         next: (uploadedDoc) => {
           this.documents.push(uploadedDoc); // Add new doc to list
         },
@@ -214,7 +216,7 @@ export class ClientByIdComponent implements OnInit {
     saveDocumentName(docId: number): void {
       const updatedDocName = this.editedName[docId];
       // Call the service to save the updated document name
-      this.clientserv.renameDocument(docId, updatedDocName).subscribe({
+      this.clientserv.renameDocument(docId, updatedDocName,this.email).subscribe({
         next: (updatedDoc) => {
           // Update the documents array with the new name
           const doc = this.documents.find((d) => d.idDocument === docId);
@@ -230,7 +232,7 @@ export class ClientByIdComponent implements OnInit {
     }
 
     archiverDocument(doc: ClientDocument): void {
-      this.clientserv.archiveDoc(doc.idDocument).subscribe({
+      this.clientserv.archiveDoc(doc.idDocument,this.email).subscribe({
         next: () => {
         },
         error: err => console.error('Error:', err)
@@ -285,7 +287,7 @@ export class ClientByIdComponent implements OnInit {
     }
 
     Archiver(clientID: number) {
-          this.clientserv.archiveClient(clientID).subscribe({
+          this.clientserv.archiveClient(clientID,this.email).subscribe({
             next: (updatedClient) => {
               console.log('Client archived successfully:');
             },

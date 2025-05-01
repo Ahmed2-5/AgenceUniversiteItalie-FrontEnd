@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { LogAction } from 'src/app/models/LogAction.model';
+import { Utilisateur } from 'src/app/models/Utilisateur.model';
+import { AuthService } from 'src/app/services/auth.service';
 
-interface Log {
-  idlog: number;
-  message: string;
-  date: Date;
-}
 @Component({
   selector: 'app-logs',
   templateUrl: './logs.component.html',
@@ -12,70 +10,108 @@ interface Log {
 })
 export class LogsComponent implements OnInit {
 
-  logs: Log[] = [
-    { idlog: 1001, message: 'System startup completed', date: new Date('2023-04-15T08:30:00') },
-    { idlog: 1002, message: 'User authentication failed', date: new Date('2023-04-15T09:45:23') },
-    { idlog: 1003, message: 'Database backup completed', date: new Date('2023-04-15T12:00:00') },
-    { idlog: 1004, message: 'API rate limit exceeded', date: new Date('2023-04-15T14:22:10') },
-    { idlog: 1005, message: 'New user registered', date: new Date('2023-04-15T16:05:45') },
-    { idlog: 1006, message: 'Configuration updated', date: new Date('2023-04-16T10:15:30') },
-    { idlog: 1007, message: 'Scheduled maintenance started', date: new Date('2023-04-16T22:00:00') },
-    { idlog: 1008, message: 'Security alert: unauthorized access attempt', date: new Date('2023-04-17T03:12:54') },
-    { idlog: 1009, message: 'Memory usage warning', date: new Date('2023-04-17T11:30:22') },
-    { idlog: 1010, message: 'System shutdown initiated', date: new Date('2023-04-17T18:45:00') }
-  ];
-
-  filteredLogs: Log[] = [];
-  searchText: string = '';
+  logs: LogAction[] = [];
+  filteredLogs: LogAction[] = [];
   currentPage: number = 1;
   pageSize: number = 5;
   totalPages: number = 1;
+  searchTerm: string = '';
+
+  selectedLog: LogAction | null = null;
+  showDetails: boolean = false;
+
+  user:Utilisateur=new Utilisateur()
+
+
+  constructor(private logService: AuthService) {}
 
   ngOnInit(): void {
-    this.applyFilters();
+    this.loadLogs();
   }
 
-  applyFilters(): void {
-    let filtered = this.logs;
-    
-    if (this.searchText) {
-      const search = this.searchText.toLowerCase();
-      filtered = filtered.filter(log => 
-        log.idlog.toString().includes(search) || 
-        log.message.toLowerCase().includes(search) || 
-        log.date.toISOString().includes(search)
+  loadLogs(): void {
+    this.logService.getAllLogs().subscribe({
+      next: (data) => {
+        // Sort logs from newest to oldest
+        this.logs = data.sort((a, b) => new Date(b.dateAction).getTime() - new Date(a.dateAction).getTime());
+        this.applySearchFilter(); // Apply search filter after loading the logs
+      },
+      error: (err) => {
+        console.error('Error fetching logs:', err);
+      }
+    });
+  }
+  
+  applySearchFilter(): void {
+    if (this.searchTerm) {
+      // Convert the search term to lowercase for case-insensitive matching
+      const lowerCaseSearchTerm = this.searchTerm.toLowerCase();
+  
+      // Filter logs where the title contains a word starting with the search term
+      this.filteredLogs = this.logs.filter(log => 
+        log.titre.toLowerCase()
+          .split(' ')  // Split the title into words
+          .some(word => word.startsWith(lowerCaseSearchTerm))  // Check if any word starts with the search term
       );
-    }
-    
-    this.totalPages = Math.ceil(filtered.length / this.pageSize);
-    
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    this.filteredLogs = filtered.slice(startIndex, startIndex + this.pageSize);
-  }
-
-  clearSearch(): void {
-    this.searchText = '';
-    this.currentPage = 1;
-    this.applyFilters();
-  }
-
-  prevPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.applyFilters();
+    } else {
+      // If no search term, reset the filtered logs and apply pagination
+      this.applyPagination();
     }
   }
+  
+  
+  
+  applyPagination(): void {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.filteredLogs = this.logs.slice(start, end);
+    this.totalPages = Math.ceil(this.logs.length / this.pageSize);
+  }
+  
 
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      this.applyFilters();
+      this.applyPagination();
+    }
+  }
+  
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.applyPagination();
+    }
+  }
+  
+  loadAdmin(){
+    const email = sessionStorage.getItem("email")
+
+    if (email) {
+      this.logService.getUtilisateurByEmail(email).subscribe({
+        next: (data) => {
+          this.user = data
+          if (this.user.profileImageUrl) {
+            this.user.profileImageUrl = `http://localhost:8082/api/utilisateurs/uploads/${data.profileImageUrl}`
+          }
+         
+        },
+        error: (error) => {
+          console.error("Error fetching user:", error)
+        },
+      })
     }
   }
 
-  viewDetails(log: Log): void {
-    console.log('Viewing details for log:', log);
-    // Implement view details functionality
+  viewDetails(log: LogAction): void {
+  this.selectedLog = log;
+  this.showDetails = true;
+  this.loadAdmin()
+  }
+  
+  closeDetails(): void {
+  this.selectedLog = null;
+  this.showDetails = false;
+  this.user = null
   }
 
 }

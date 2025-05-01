@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
+import { LogAction } from '../models/LogAction.model';
 
 @Injectable({
   providedIn: 'root'
@@ -82,5 +83,9 @@ setLoading(isLoading: boolean) {
   this.loadingSubject.next(isLoading);  // Update the loading state
 }
 
-  
+    private apiUrl = 'http://localhost:8082/api/logs'; // Adjust base URL as needed
+
+getAllLogs(): Observable<LogAction[]> {
+  return this.httpclt.get<LogAction[]>(`${this.apiUrl}/getAllLogs`);
+}
 }

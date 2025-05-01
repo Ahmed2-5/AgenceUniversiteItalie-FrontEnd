@@ -176,7 +176,7 @@ export class MyClientsComponent implements OnInit {
      }
   
      Archiver(clientID: number) {
-        this.clientsService.archiveClient(clientID).subscribe({
+        this.clientsService.archiveClient(clientID,this.email).subscribe({
           next: (updatedClient) => {
             console.log('Client archived successfully:');
           },

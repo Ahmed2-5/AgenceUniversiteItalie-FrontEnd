@@ -13,6 +13,7 @@ export class AddPayementToCLientComponent implements OnInit {
 
   payementForm!: FormGroup;
   isSubmitting = false;
+  email: string = '';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { clientID: number },
@@ -22,6 +23,8 @@ export class AddPayementToCLientComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.email = sessionStorage.getItem('email');
+
     this.payementForm = this.fb.group({
       montant: [null, [Validators.required, Validators.min(1)]],
       nombreTranches: [1, [Validators.required, Validators.min(1), Validators.max(5)]]
@@ -34,7 +37,7 @@ export class AddPayementToCLientComponent implements OnInit {
     const { montant, nombreTranches } = this.payementForm.value;
     this.isSubmitting = true;
 
-    this.payementService.createPaiement(this.data.clientID, montant, nombreTranches).subscribe({
+    this.payementService.createPaiement(this.data.clientID, montant, nombreTranches,this.email).subscribe({
       next: (res) => {
         this.isSubmitting = false;
         this.dialogRef.close(res);

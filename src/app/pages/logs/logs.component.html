@@ -1,39 +1,84 @@
 <app-dashboard></app-dashboard>
 <div class="logs-container">
-    <h2>System Logs</h2>
-    
-    <div class="search-bar">
-      <input type="text" placeholder="Search logs..." [(ngModel)]="searchText">
-      <button (click)="clearSearch()">Clear</button>
+  <div class="logs-card">
+    <div class="logs-header">
+      <h2>System Logs</h2>
+      <div class="d-flex justify-content-center align-items-center mb-3">
+        <form class="search" (submit)="$event.preventDefault()">
+          <input class="form-control m-auto" type="text" placeholder="Search" [(ngModel)]="searchTerm" name="search" 
+          (ngModelChange)="applySearchFilter()" 
+          />
+        </form>
+      </div>
     </div>
-    
-    <table class="logs-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Message</th>
-          <th>Date</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let log of filteredLogs">
-          <td>{{ log.idlog }}</td>
-          <td>{{ log.message }}</td>
-          <td>{{ log.date | date:'medium' }}</td>
-          <td>
-            <button class="view-btn" (click)="viewDetails(log)">View</button>
-          </td>
-        </tr>
-        <tr *ngIf="filteredLogs.length === 0">
-          <td colspan="4" class="no-data">No logs found</td>
-        </tr>
-      </tbody>
-    </table>
-    
+
+    <div class="logs-table-wrapper">
+      <table class="logs-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Date</th>
+            <th>Admin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let log of filteredLogs" class="log-row">
+            <td class="log-id">{{ log.idLog }}</td>
+            <td class="log-title">{{ log.titre }}</td>
+            <td class="log-content">{{ log.contenu }}</td>
+            <td class="log-date">{{ log.dateAction | date:'medium' }}</td>
+            <td class="log-actions">
+              <button class="view-btn" (click)="viewDetails(log)">
+                <i class="view-icon"></i>
+                View
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="filteredLogs.length === 0">
+            <td colspan="5" class="no-data">
+              <div class="no-data-message">
+                <i class="no-data-icon"></i>
+                <span>No logs found</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Modal outside the table -->
+    <div *ngIf="showDetails && selectedLog" class="profile-info">
+      <div class="profile-details">
+        <p><strong>Nom:</strong> {{ selectedLog.admin?.prenom }} {{ selectedLog.admin?.nom }}</p>
+        <p><strong>Email:</strong> {{ selectedLog.admin?.adresseMail }}</p>
+        <p><strong>Téléphone:</strong> {{ selectedLog.admin?.telephone }}</p>
+        <p><strong>Rôle:</strong> {{ selectedLog.admin?.role?.libelleRole }}</p>
+      </div>
+
+      <div class="profile-image">
+        <img [src]="this.user.profileImageUrl || 'assets/img/new profile image.png'"  alt="Admin photo" />
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+        <button class="close-btn" (click)="closeDetails()">Fermer</button>
+      </div>
+      
+    </div>
+
     <div class="pagination">
-      <button [disabled]="currentPage === 1" (click)="prevPage()">Previous</button>
-      <span>Page {{ currentPage }} of {{ totalPages }}</span>
-      <button [disabled]="currentPage === totalPages" (click)="nextPage()">Next</button>
+      <button class="pagination-btn prev-btn" [disabled]="currentPage === 1" (click)="prevPage()">
+        <i class="prev-icon"></i>
+        Previous
+      </button>
+      <div class="pagination-info">
+        Page {{ currentPage }} of {{ totalPages }}
+      </div>
+      <button class="pagination-btn next-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">
+        Next
+        <i class="next-icon"></i>
+      </button>
     </div>
   </div>
+</div>

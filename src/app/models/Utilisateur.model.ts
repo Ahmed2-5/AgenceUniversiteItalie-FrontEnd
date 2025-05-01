@@ -4,6 +4,7 @@ import { ClientDocument } from "./ClientDocument.model";
 import { Role } from "./Role.model";
 import { StatusCompte } from "./StatusCompte.model";
 import { Tache } from "./Tache.model";
+import { LogAction } from "./LogAction.model";
 
 export class Utilisateur {
     idUtilisateur?: number;
@@ -27,4 +28,5 @@ export class Utilisateur {
     documentAdded!: ClientDocument[];
     clientsCreated!: Clients[];
     clientsAssigned!: Clients[];
+    logActions!:LogAction[]
 }

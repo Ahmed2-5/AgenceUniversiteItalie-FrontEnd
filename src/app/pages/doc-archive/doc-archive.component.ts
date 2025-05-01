@@ -15,6 +15,7 @@ export class DocArchiveComponent implements OnInit {
   selectedClientId: number | null = null;
   documents: ClientDocument[] = [];
   searchTerm: string = '';
+  email: string = '';
 
   editMode: { [key: number]: boolean } = {}; // Object with document id as key and edit mode status as value
     editedName: { [key: number]: string } = {};
@@ -23,6 +24,8 @@ export class DocArchiveComponent implements OnInit {
   ){}
     
   ngOnInit(): void {
+    this.email = sessionStorage.getItem('email');
+
       this.loadClients();
   }
           
@@ -78,7 +81,7 @@ export class DocArchiveComponent implements OnInit {
   saveDocumentName(docId: number): void {
     const updatedDocName = this.editedName[docId];
     // Call the service to save the updated document name
-    this.clientserv.renameDocument(docId, updatedDocName).subscribe({
+    this.clientserv.renameDocument(docId, updatedDocName,this.email).subscribe({
       next: (updatedDoc) => {
         // Update the documents array with the new name
         const doc = this.documents.find((d) => d.idDocument === docId);
