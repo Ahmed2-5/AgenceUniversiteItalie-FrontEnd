@@ -1,91 +1,196 @@
 <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
   <div class="container-fluid">
     <div class="header-body">
-      <!-- Card stats -->
-      <div class="row">
-        <!-- Admins -->
-        <div class="col-xl-3 col-lg-6">
-          <div class="card card-stats mb-4 mb-xl-0">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0">ADMINS</h5>
-                  <span class="h2 font-weight-bold mb-0">{{ totalAdmins }}</span>
-                </div>
-                <div class="col-auto">
-                  <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                    <i class="fas fa-user-shield"></i> <!-- Changed Icon -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+  <div class="row">
 
-        <!-- Total Tasks -->
-        <div class="col-xl-3 col-lg-6">
-          <div class="card card-stats mb-4 mb-xl-0">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0">TOTAL TASKS</h5>
-                  <span class="h2 font-weight-bold mb-0">{{ totalTasks }}</span>
-                </div>
-                <div class="col-auto">
-                  <a href="/#/icons">
-                    <div class="icon icon-shape bg-primary text-white rounded-circle shadow">
-                      <i class="fas fa-tasks"></i> <!-- Unified Icon -->
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tasks In Progress -->
-        <div class="col-xl-3 col-lg-6">
-          <div class="card card-stats mb-4 mb-xl-0">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0">TASKS IN PROGRESS</h5>
-                  <span class="h2 font-weight-bold mb-0">{{ tasksEnCoursPercentage }}%</span>
-                </div>
-                <div class="col-auto">
-                  <a href="/#/icons">
-                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                      <i class="fas fa-tasks"></i> <!-- Unified Icon -->
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tasks Finished -->
-        <div class="col-xl-3 col-lg-6">
-          <div class="card card-stats mb-4 mb-xl-0">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0">TASKS COMPLETED</h5>
-                  <span class="h2 font-weight-bold mb-0">{{ tasksDonePercentage }}%</span>
-                </div>
-                <div class="col-auto">
-                  <a href="/#/icons">
-                    <div class="icon icon-shape bg-success text-white rounded-circle shadow">
-                      <i class="fas fa-check-circle"></i> <!-- Changed Icon -->
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div> <!-- End Row -->
+  <!-- Reçu par Jour -->
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-header">Reçu par Jour</div>
+      <div class="card-body">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Montant</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of recuJour | keyvalue">
+              <td>{{ entry.key }}</td>
+              <td>{{ entry.value  }} TND</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
+
+  <!-- Reçu par Semaine -->
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-header">Reçu par Semaine</div>
+      <div class="card-body">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Semaine</th>
+              <th>Montant</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of recuSemaine | keyvalue">
+              <td>{{ entry.key }}</td>
+              <td>{{ entry.value  }} TND</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reçu par Mois -->
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-header">Reçu par Mois</div>
+      <div class="card-body">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Mois</th>
+              <th>Montant</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of recuMois | keyvalue">
+              <td>{{ entry.key }}</td>
+              <td>{{ entry.value  }} TND</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Attendu (Jour, Semaine, Mois) -->
+<div class="row mt-4">
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-header">Attendu par Jour</div>
+      <div class="card-body">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Montant</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of attenduJour | keyvalue">
+              <td>{{ entry.key }}</td>
+              <td>{{ entry.value  }} TND</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-header">Attendu par Semaine</div>
+      <div class="card-body">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Semaine</th>
+              <th>Montant</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of attenduSemaine | keyvalue">
+              <td>{{ entry.key }}</td>
+              <td>{{ entry.value  }} TND</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card">
+      <div class="card-header">Attendu par Mois</div>
+      <div class="card-body">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Mois</th>
+              <th>Montant</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entry of attenduMois | keyvalue">
+              <td>{{ entry.key }}</td>
+              <td>{{ entry.value  }} TND</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+
+  <!-- TABLE: Clients par Admin -->
+  <div class="row mt-4">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">Clients par Admin</div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Admin</th>
+                <th>Clients</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let entry of clientsAdmin | keyvalue">
+                <td>{{ entry.key }}</td>
+                <td>{{ entry.value }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE: Montant Reçu par Admin -->
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">Montant Reçu par Admin</div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Admin</th>
+                <th>Montant</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let entry of recuAdmin | keyvalue">
+                <td>{{ entry.key }}</td>
+                <td>{{ entry.value  }} TND</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
 </div>

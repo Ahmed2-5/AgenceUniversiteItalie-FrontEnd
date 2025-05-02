@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
           // Wait before navigating
           setTimeout(() => {
               
-              this.router.navigate(["/"]);
+              this.router.navigate(["/home"]);
               this.authService.setLoading(false); 
             
           }, 4000); 

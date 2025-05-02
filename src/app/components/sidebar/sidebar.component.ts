@@ -9,8 +9,8 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'ni-tv-2 text-primary', class: '' },
-    { path: '/icons', title: 'Tasks',  icon:'fa fa-tasks text-blue', class: '' },
     { path: '/user-profile', title: 'User profile',  icon:'ni-single-02 text-yellow', class: '' },
+    { path: '/icons', title: 'Tasks',  icon:'fa fa-tasks text-blue', class: '' },
     { path: '/tables', title: 'Table of Users',  icon:'ni-bullet-list-67 text-red', class: '' },
     { path: '/clients', title: 'candidates List',      icon: 'fa fa-users text-purple',      class: '' },
     { path: '/myclients', title: 'My clients ', icon: 'fa fa-briefcase text-green', class: '' },
@@ -57,6 +57,8 @@ export class SidebarComponent implements OnInit {
       }else if (menuItem.path === '/tables') {
         return this.role === 'SUPER_ADMIN';
       }else if (menuItem.path === '/logs') {
+        return this.role === 'SUPER_ADMIN';
+      }else if (menuItem.path === '/dashboard') {
         return this.role === 'SUPER_ADMIN';
       }
       return true; // Other routes always shown

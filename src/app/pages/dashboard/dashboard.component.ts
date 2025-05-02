@@ -1,8 +1,6 @@
+// dashboard.component.ts
 import { Component, OnInit } from '@angular/core';
-import { Utilisateur } from 'src/app/models/Utilisateur.model';
-import { AuthService } from 'src/app/services/auth.service';
-import { TaskService } from 'src/app/services/task.service';
-import { UserService } from 'src/app/services/user.service';
+import { StatistiqueService } from 'src/app/services/statistique.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,95 +8,52 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  totalUsers: number = 0;
-  totalAdmins: number = 0;
-  totalTasks: number = 0;
-  tasksEnCours: number = 0;
-  tasksDone: number = 0;
-  totalTasksByIdADMIN: number = 0;
-  tasksEnCoursByIdADMIN: number = 0;
-  tasksDoneByIdADMIN: number = 0;
-  tasksEnCoursPercentage: number = 0;
-  tasksDonePercentage: number = 0;
+  recuJour = new Map<string, number>();
+  recuSemaine = new Map<string, number>();
+  recuMois = new Map<string, number>();
+  attenduJour = new Map<string, number>();
+  attenduSemaine = new Map<string, number>();
+  attenduMois = new Map<string, number>();
+  comparaisonMois: Record<string, Record<string, number>> = {};
+  clientsAdmin = new Map<string, number>();
+  recuAdmin = new Map<string, number>();
 
-  isSuperAdmin: boolean = false;
-  user:Utilisateur=new Utilisateur()
+  totalRecu: number = 0;
+  totalAttendu: number = 0;
+  pourcentageRecu: number = 0;
 
-  constructor(private taskService: TaskService,
-     private authserv: AuthService,
-     private userserv: UserService,
-
-    ) {}
+  constructor(private stats: StatistiqueService) {}
 
   ngOnInit(): void {
-    this.userserv.getCountOfAdmins().subscribe((data)=>{
-      this.totalAdmins =data
-  });
-    this.getUserRole();
+    this.loadAllStats();
   }
 
-  getUserRole(): void {
-    const role = sessionStorage.getItem('role'); // Fetch role from session storage (SuperAdmin or Admin)
-    const email = sessionStorage.getItem('email');
-  
-    if (email) {
-      this.authserv.getUtilisateurByEmail(email).subscribe({
-        next: (data) => {
-          this.user = data;  // Now we have the correct user data
-          
-          if (role === 'SUPER_ADMIN') {
-            this.isSuperAdmin = true;
-            this.loadSuperAdminTasks();
-          } else if (role === 'ADMIN') {
-            this.isSuperAdmin = false;
-            this.loadAdminTasks(this.user.idUtilisateur); // Now we have the correct ID
-          }
-        },
-        error: (error) => {
-          console.error("Error fetching user:", error);
-        }
-      });
-    }
-  }
-  
+  loadAllStats(): void {
+    this.stats.getMontantRecuParJour().subscribe(data => this.recuJour = new Map(Object.entries(data)));
+    console.log(this.recuJour)
+    this.stats.getMontantRecuParSemaine().subscribe(data => this.recuSemaine = new Map(Object.entries(data)));
+    this.stats.getMontantRecuParMois().subscribe(data => this.recuMois = new Map(Object.entries(data)));
 
-  loadSuperAdminTasks(): void {
-    this.taskService.getAllTasksCount().subscribe(total => {
-      this.totalTasks = total;
-      this.taskService.getTasksEnCoursCount().subscribe(enCours => {
-        this.tasksEnCours = enCours;
-        this.calculatePercentages();
+    this.stats.getMontantAttenduParJour().subscribe(data => this.attenduJour = new Map(Object.entries(data)));
+    this.stats.getMontantAttenduParSemaine().subscribe(data => this.attenduSemaine = new Map(Object.entries(data)));
+    this.stats.getMontantAttenduParMois().subscribe(data => this.attenduMois = new Map(Object.entries(data)));
+
+    this.stats.getNombreClientsParAdmin().subscribe(data => this.clientsAdmin = new Map(Object.entries(data)));
+    this.stats.getMontantRecuParAdmin().subscribe(data => this.recuAdmin = new Map(Object.entries(data)));
+
+    this.stats.getComparaisonParMois().subscribe(data => {
+      this.comparaisonMois = data;
+      this.totalRecu = 0;
+      this.totalAttendu = 0;
+
+      Object.values(data).forEach(mois => {
+        this.totalRecu += mois.recu;
+        this.totalAttendu += mois.attendu;
       });
-      this.taskService.getTasksDoneCount().subscribe(done => {
-        this.tasksDone = done;
-        this.calculatePercentages();
-      });
+
+      this.pourcentageRecu = this.totalAttendu > 0
+        ? (this.totalRecu / this.totalAttendu) * 100
+        : 0;
     });
-  }
-
-  loadAdminTasks(userId: number): void {
-    this.taskService.countAllTasksAssignedByUser(userId).subscribe(total => {
-      this.totalTasksByIdADMIN = total;
-      this.taskService.countTasksEnCoursByUser(userId).subscribe(enCours => {
-        this.tasksEnCoursByIdADMIN = enCours;
-        this.calculatePercentages();
-      });
-      this.taskService.countTasksDoneByUser(userId).subscribe(done => {
-        this.tasksDoneByIdADMIN = done;
-        this.calculatePercentages();
-      });
-    });
-  }
-
-  private calculatePercentages(): void {
-    let total = this.isSuperAdmin ? this.totalTasks : this.totalTasksByIdADMIN;
-    let enCours = this.isSuperAdmin ? this.tasksEnCours : this.tasksEnCoursByIdADMIN;
-    let done = this.isSuperAdmin ? this.tasksDone : this.tasksDoneByIdADMIN;
-
-    if (total > 0) {
-      this.totalTasks = total;
-      this.tasksEnCoursPercentage = (enCours / total) * 100;
-      this.tasksDonePercentage = (done / total) * 100;
-    }
   }
 }

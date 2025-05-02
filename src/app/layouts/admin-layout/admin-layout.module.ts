@@ -47,7 +47,7 @@ import { LogsComponent } from 'src/app/pages/logs/logs.component';
     MatDialogModule,
     ReactiveFormsModule,
     MatMenuModule,
-    MatButtonModule,
+    MatButtonModule
     ],
   declarations: [
     DashboardComponent,
