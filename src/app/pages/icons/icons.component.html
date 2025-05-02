@@ -66,7 +66,7 @@
           </select>
         </ng-template>
         
-        <i *ngIf="isSuperAdmin" class="far fa-trash-alt delete" (click)="deleteTask(task.idTache)"></i>
+        <i *ngIf="isSuperAdmin" class="far fa-trash-alt delete" (click)="confirmArchiveBox(task.idTache)"></i>
         <i *ngIf="isSuperAdmin && editingTaskId !== task.idTache" class="far fa-edit edit" (click)="toggleEdit(task.idTache)"></i>
         <i *ngIf="isSuperAdmin && editingTaskId === task.idTache" class="far fa-check-circle save" (click)="updateTask(task.idTache, task)"></i>
         <i *ngIf="isSuperAdmin" class="far fa-comment-alt comment" (click)="openCommentDialog(task.idTache)"></i>

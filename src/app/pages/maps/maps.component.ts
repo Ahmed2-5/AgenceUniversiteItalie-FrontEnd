@@ -7,6 +7,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./maps.component.scss']
 })
 export class MapsComponent {
+  isLoading = false;
 
 constructor() {}
 

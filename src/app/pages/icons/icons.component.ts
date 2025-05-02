@@ -4,6 +4,7 @@ import { CommentsComponent } from 'src/app/dialogs/comments/comments.component';
 import { TaskdetailsComponent } from 'src/app/dialogs/taskdetails/taskdetails.component';
 import { Tache } from 'src/app/models/Tache.model';
 import { TaskService } from 'src/app/services/task.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-icons',
@@ -34,7 +35,7 @@ export class IconsComponent implements OnInit {
     if (role === "SUPER_ADMIN") {
       this.isSuperAdmin = true;
       this.loadTasks();
-    } else if (role === "ADMIN_TUNISIE") {
+    } else if (role === "ADMIN_TUNISIE" || role === "ADMIN_ITALIE") {
       this.loadAdminTasks(this.email);
     }
     
@@ -107,6 +108,19 @@ export class IconsComponent implements OnInit {
     );
   }
   
+  confirmArchiveBox(idtask: number) {
+         Swal.fire({
+           title: 'Are you sure you want to delete this task?',
+           icon: 'warning',
+           showCancelButton: true,
+           confirmButtonText: 'Yes, delete it',
+           cancelButtonText: 'No, keep it'
+         }).then((result) => {
+           if (result.value) {
+             this.deleteTask(idtask); // Activate user
+           }
+         });
+       }
   
 
 

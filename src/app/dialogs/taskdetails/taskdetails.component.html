@@ -62,9 +62,9 @@
       <hr>
       <div class="button-container">
         <button class="btn btn-cancel" (click)="closeDialog()">Cancel</button>
-        <button *ngIf="usrr.role?.libelleRole === 'ADMIN' && task.status === 'PAS_ENCORE'" 
+        <button *ngIf="usrr.role?.libelleRole !== 'SUPER_ADMIN' && task.status === 'PAS_ENCORE'" 
         class="btn btn-primary" (click)="TakeTask()">Take</button>
-        <button *ngIf="usrr.role?.libelleRole === 'ADMIN' && task.status === 'EN_COURS' && usrr.idUtilisateur === usr.idUtilisateur" 
+        <button *ngIf="usrr.role?.libelleRole !== 'SUPER_ADMIN' && task.status === 'EN_COURS' && usrr.idUtilisateur === usr.idUtilisateur" 
         class="btn btn-primary" 
         (click)="Finish()">Finish</button>
       </div>

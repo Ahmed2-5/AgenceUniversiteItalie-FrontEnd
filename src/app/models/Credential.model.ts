@@ -10,6 +10,8 @@ import { UniversiteCredential } from "./UniversiteCredential.model";
     passwrodGmail!: string;
     prenotami!: string;
     passwordPrenotami!: string;
+    universitaly!: string;
+    passwordUniversitaly!: string;
     programmeEtude!: string;
     preInscrit!: string;
    // montantPayerItalie!: number;

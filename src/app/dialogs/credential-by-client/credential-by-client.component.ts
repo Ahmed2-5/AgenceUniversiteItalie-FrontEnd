@@ -22,7 +22,9 @@ export class CredentialByClientComponent implements OnInit {
     emailGmail: false,
     passwrodGmail: false,
     prenotami: false,
-    passwordPrenotami: false
+    passwordPrenotami: false,
+    universitaly: false,
+    passwordUniversitaly: false
   };
 
   showUniversityList = false;
