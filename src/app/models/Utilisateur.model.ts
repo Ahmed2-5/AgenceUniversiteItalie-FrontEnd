@@ -5,6 +5,7 @@ import { Role } from "./Role.model";
 import { StatusCompte } from "./StatusCompte.model";
 import { Tache } from "./Tache.model";
 import { LogAction } from "./LogAction.model";
+import { CommentaireCredential } from "./CommentaireCredential.model";
 
 export class Utilisateur {
     idUtilisateur?: number;
@@ -29,4 +30,5 @@ export class Utilisateur {
     clientsCreated!: Clients[];
     clientsAssigned!: Clients[];
     logActions!:LogAction[]
+    credentialCommentaires!:CommentaireCredential[]
 }

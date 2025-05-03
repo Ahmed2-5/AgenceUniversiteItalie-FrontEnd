@@ -7,6 +7,7 @@ import { RDV } from 'src/app/models/RDV.model';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
 import { Utilisateur } from 'src/app/models/Utilisateur.model';
+import { CredentialCommentsComponent } from '../credential-comments/credential-comments.component';
 
 @Component({
   selector: 'app-credential-by-client',
@@ -355,5 +356,16 @@ export class CredentialByClientComponent implements OnInit {
                     }
                   });
                 }
-  
+  openCommentDialog(credentialID: number) {
+      const dialogRef = this.dialog.open(CredentialCommentsComponent, {
+        data: { credentialID: credentialID },
+        disableClose: true, // This ensures the dialog closes when clicking outside
+      });
+    
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          console.log('Dialog closed with result:', result);
+        }
+      });
+    }
 }

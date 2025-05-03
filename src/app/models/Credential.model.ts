@@ -1,4 +1,5 @@
 import { Clients } from "./Clients.model";
+import { CommentaireCredential } from "./CommentaireCredential.model";
 import { RDV } from "./RDV.model";
 import { UniversiteCredential } from "./UniversiteCredential.model";
 
@@ -18,4 +19,5 @@ import { UniversiteCredential } from "./UniversiteCredential.model";
     clients!:Clients
     RDVs!:RDV[]
     universiteCredentials!: UniversiteCredential[];
+    commentaires!:CommentaireCredential[]
   }

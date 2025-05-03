@@ -35,6 +35,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MyClientsComponent } from 'src/app/pages/my-clients/my-clients.component';
 import { ListClientsAdminitalieComponent } from 'src/app/pages/list-clients-adminitalie/list-clients-adminitalie.component';
 import { LogsComponent } from 'src/app/pages/logs/logs.component';
+import { CredentialCommentsComponent } from 'src/app/dialogs/credential-comments/credential-comments.component';
 
 @NgModule({
   imports: [
@@ -74,7 +75,8 @@ import { LogsComponent } from 'src/app/pages/logs/logs.component';
     UserslistforaddcondidatComponent,
     MyClientsComponent,
     ListClientsAdminitalieComponent,
-    LogsComponent
+    LogsComponent,
+    CredentialCommentsComponent
     ]
 })
 export class AdminLayoutModule {}

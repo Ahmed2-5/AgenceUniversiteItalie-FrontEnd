@@ -134,6 +134,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1050;
+  overflow: auto; /* important! */
+
 }
 
 .app-container {
@@ -148,7 +150,6 @@
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   font-family: "Inter", sans-serif;
   color: #1e293b;
-  position: relative;
 }
 
 .app-container::-webkit-scrollbar {
